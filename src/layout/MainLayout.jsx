@@ -20,7 +20,8 @@ export default function MainLayout() {
                 <SideBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
                 {/* Main Content */}
-                <main className="flex-1 py-10 px-40  md:ml-0 overflow-y-auto ">
+                <main className="flex-1 py-10 px-40 overflow-y-auto">
+                    <div className="main-content-centered">
                     {/* Top bar with hamburger (mobile) */}
                     <div className="flex justify-between items-center mb-6 md:hidden">
                         <button onClick={() => setSidebarOpen(true)}>
@@ -85,6 +86,7 @@ export default function MainLayout() {
                             <h3 className="text-lg text-dark-text1 font-semibold mb-2">Project Delta</h3>
                             <p className="text-gray-400 text-sm">Prepare for the upcoming presentation</p>
                         </div>
+                    </div>
                     </div>
                 </main>
             </div>
