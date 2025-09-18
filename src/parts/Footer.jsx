@@ -3,21 +3,19 @@ import React from 'react';
 function Footer(props) {
     return (
         <>
-            {/* Bottom Bar */}
-            <footer className="flex justify-between items-center p-6 px-8 border-t border-dark-stroke bg-dark-bg2">
-                <div className="flex space-x-6">
-                    <button className="text-sm">Home</button>
-                    <button className="text-sm">Reports</button>
-                </div>
-                <div className="flex items-center space-x-4">
-                    <button className="px-4 py-1 rounded-full bg-indigo-500 text-white hover:bg-indigo-600">
-                        Add new task
+            {/* Responsive Footer */}
+            <footer className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 sm:p-6 px-4 sm:px-8 border-t border-dark-stroke bg-dark-bg2 gap-4 sm:gap-0">
+                {/* Left Section - Navigation */}
+                <div className="flex flex-wrap gap-4 sm:gap-6">
+                    <button className="text-sm hover:text-white transition-colors duration-200">
+                        Home
                     </button>
-                    <div className="flex items-center gap-1 text-sm text-gray-400">
-                        <span>3/5</span>
-                        <button className="underline">Help center</button>
-                    </div>
+                    <button className="text-sm hover:text-white transition-colors duration-200">
+                        Reports
+                    </button>
                 </div>
+                
+               
             </footer>
         </>
     );

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { IoIosArrowDown } from "react-icons/io";
+import { FaBars } from "react-icons/fa";
 
 function generateFakeKey(length = 256) {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -19,7 +20,7 @@ export const services = [
     { name: 'WORKSPACE', icon: 'yellow', available: true, url: "" },
 ];
 
-function Navbar() {
+function Navbar({ setSidebarOpen }) {
     const [open, setOpen] = useState(false);
     const dropdownRef = useRef(null);
     const darkMode = true;
@@ -41,7 +42,7 @@ function Navbar() {
                 <button
                     onClick={() => setOpen(!open)}
                     className="flex items-center space-x-2 border border-dark-stroke  m-2
-                     rounded-default px-3 py-2 hover:border-dark-stroke
+                     rounded-lg px-3 py-2 hover:border-dark-stroke
                      transition"
                 >
                     {darkMode ? (
@@ -101,9 +102,12 @@ function Navbar() {
                 </a>
             </nav>
 
-            {/* Mobile menu button */}
-            <button className="md:hidden">
-                <div className="w-6 h-6 bg-gray-700 rounded"></div>
+            <button 
+                onClick={() => setSidebarOpen(true)}
+                className="xl:hidden p-2 hover:bg-gray-800 rounded transition-colors duration-200"
+                aria-label="Open sidebar"
+            >
+                <FaBars className="text-2xl" />
             </button>
         </header>
     );

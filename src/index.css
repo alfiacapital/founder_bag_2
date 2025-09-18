@@ -43,6 +43,10 @@
   /* Hover border classes */
   .hover\:border-dark-stroke:hover { border-color: #444444; }
   
+  /* Hover background classes */
+  .hover\:bg-dark-hover:hover { background-color: #444444; }
+ 
+  
   /* Custom rounded class */
   .rounded-default { border-radius: 22px; }
 
@@ -51,6 +55,20 @@
     margin: 0 auto;
     max-width: 1200px;
     width: 100%;
+  }
+
+  /* Sidebar responsive improvements */
+  .sidebar-responsive {
+    /* Smooth transitions for sidebar */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Better mobile sidebar */
+  @media (max-width: 1279px) {
+    .sidebar-mobile {
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
   }
 }
 
@@ -72,6 +90,24 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #212222;
+}
+
+/* Sidebar navigation scrollbar only */
+.sidebar-nav-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-nav-scroll::-webkit-scrollbar-track {
+  background: #000;
+}
+
+.sidebar-nav-scroll::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 3px;
+}
+
+.sidebar-nav-scroll::-webkit-scrollbar-thumb:hover {
+  background: #555555;
 }
 
 /* Mobile responsive */
