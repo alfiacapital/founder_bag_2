@@ -23,7 +23,7 @@
   .hover\:border-dark-stroke:hover { border-color: #444444; }
   
   /* Custom rounded class */
-  .rounded-default { border-radius: 10px; }
+  .rounded-default { border-radius: 22px; }
 
 }
 
