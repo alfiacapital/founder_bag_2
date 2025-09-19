@@ -22,10 +22,10 @@ export default function MainLayout() {
                         {/* Left: Greeting */}
                         <div>
                             <h2 className="text-2xl font-semibold">
-                                Good Afternoon, Aymane MTS
+                                Good Afternoon, STARTUP FOUNDER
                             </h2>
                             <p className="text-dark-text2 text-sm">
-                                Ready to blitz through your afternoon?
+                                Ready to Alfia System through your afternoon?
                             </p>
                         </div>
                     </div>
@@ -36,19 +36,23 @@ export default function MainLayout() {
                     <h1 className="text-md font-medium mb-4 mt-6">Your Spaces</h1>
                     {/* Content Cards */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mb-4">
-                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px]">
+
+
+                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px] hover:text-white hover:border-dark-stroke hover:bg-dark-hover cursor-pointer transition-all duration-300">
                             <h3 className="text-lg font-semibold mb-2">Project Alpha</h3>
                             <p className="text-dark-text2 text-sm">Complete the user interface design</p>
                         </div>
-                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px]">
+
+
+                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px] hover:text-white hover:border-dark-stroke hover:bg-dark-hover cursor-pointer transition-all duration-300">
                             <h3 className="text-lg font-semibold mb-2">Project Beta</h3>
                             <p className="text-dark-text2 text-sm">Review and test the new features</p>
                         </div>
-                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px]">
+                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px] hover:text-white hover:border-dark-stroke hover:bg-dark-hover cursor-pointer transition-all duration-300">
                             <h3 className="text-lg font-semibold mb-2">Project Gamma</h3>
                             <p className="text-dark-text2 text-sm">Update documentation and guides</p>
                         </div>
-                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px]">
+                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px] hover:text-white hover:border-dark-stroke hover:bg-dark-hover cursor-pointer transition-all duration-300">
                             <h3 className="text-lg text-dark-text1 font-semibold mb-2">Project Delta</h3>
                             <p className="text-dark-text2 text-sm">Prepare for the upcoming presentation</p>
                         </div>
@@ -57,19 +61,19 @@ export default function MainLayout() {
                     
                     {/* Content Cards */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px]">
+                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px] hover:text-white hover:border-dark-stroke hover:bg-dark-hover cursor-pointer transition-all duration-300">
                             <h3 className="text-lg font-semibold mb-2">Project Alpha</h3>
                             <p className="text-dark-text2 text-sm">Complete the user interface design</p>
                         </div>
-                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px]">
+                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px] hover:text-white hover:border-dark-stroke hover:bg-dark-hover cursor-pointer transition-all duration-300">
                             <h3 className="text-lg font-semibold mb-2">Project Beta</h3>
                             <p className="text-dark-text2 text-sm">Review and test the new features</p>
                         </div>
-                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px]">
+                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px] hover:text-white hover:border-dark-stroke hover:bg-dark-hover cursor-pointer transition-all duration-300">
                             <h3 className="text-lg font-semibold mb-2">Project Gamma</h3>
                             <p className="text-dark-text2 text-sm">Update documentation and guides</p>
                         </div>
-                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px]">
+                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px] hover:text-white hover:border-dark-stroke hover:bg-dark-hover cursor-pointer transition-all duration-300">
                             <h3 className="text-lg text-dark-text1 font-semibold mb-2">Project Delta</h3>
                             <p className="text-dark-text2 text-sm">Prepare for the upcoming presentation</p>
                         </div>

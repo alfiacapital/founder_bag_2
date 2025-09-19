@@ -36,7 +36,7 @@ function Navbar({ setSidebarOpen }) {
     }, []);
 
     return (
-        <header className="flex items-senter justify-between px-4 md:px-6 py-0 pb-6 bg-dark-bg2 border-b border-dark-stroke">
+        <header className="flex items-senter justify-between px-4 md:px-6 py-2   bg-dark-bg2 border-b border-dark-stroke">
             <div ref={dropdownRef} className="relative inline-block">
                 {/* Logo button */}
                 <button
@@ -69,7 +69,7 @@ function Navbar({ setSidebarOpen }) {
                             key={idx}
                             className="flex flex-col justify-start h-[120px] bg-dark-bg2
                            border border-dark-stroke hover:border-dark-stroke
-                           rounded-button px-4 py-3 cursor-pointer transition"
+                           rounded-button px-4 py-3 cursor-pointer transition "
                         >
                             <div className="flex flex-col">
                                 <span className="text-lg font-semibold text-navy-900 dark:text-white ">
@@ -82,29 +82,32 @@ function Navbar({ setSidebarOpen }) {
             </div>
 
             <nav className="hidden md:flex items-center space-x-3  ">
-                <a
-                    href="#"
-                    className="text-navy-900 dark:text-white hover:underline text-sm border border-dark-stroke rounded-button px-4 py-2 hover:border-dark-stroke"
+                <span
+                    
+                    className="text-navy-900 cursor-pointer dark:text-white text-sm border border-dark-stroke rounded-button px-4 py-2 hover:border-dark-stroke  text-white border-dark-stroke hover:text-white hover:border-dark-stroke hover:bg-dark-hover font-bold
+                     transition-all duration-300"
                 >
                     Support Portal
-                </a>
-                <a
-                    href="#"
-                    className="text-navy-900 dark:text-white hover:underline text-sm border border-dark-stroke rounded-button px-4 py-2 hover:border-dark-stroke"
+                </span>
+                <span
+                    
+                    className="text-navy-900 cursor-pointer dark:text-white text-sm border border-dark-stroke rounded-button px-4 py-2 hover:border-dark-stroke text-white border-dark-stroke hover:text-white hover:border-dark-stroke hover:bg-dark-hover font-bold
+                     transition-all duration-300"
                 >
                     Manage Funds
-                </a>
-                <a
-                    href="#"
-                    className="text-navy-900 dark:text-white hover:underline text-sm border border-dark-stroke rounded-button px-4 py-2 hover:border-dark-stroke"
+                </span>
+                <span
+                    
+                    className="text-navy-900 cursor-pointer dark:text-white text-sm border border-dark-stroke rounded-button px-4 py-2 hover:border-dark-stroke text-dark-text2 border-dark-stroke hover:text-white hover:border-dark-stroke hover:bg-dark-hover font-bold
+                     transition-all duration-300"
                 >
                     Docs
-                </a>
+                </span>
             </nav>
 
             <button 
                 onClick={() => setSidebarOpen(true)}
-                className="xl:hidden p-2 hover:bg-gray-800 rounded transition-colors duration-200"
+                className="xl:hidden p-2 hover:bg-gray-800 rounded transition-all duration-300"
                 aria-label="Open sidebar"
             >
                 <FaBars className="text-2xl" />

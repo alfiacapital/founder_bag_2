@@ -12,31 +12,31 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
     const {pathname} = useLocation();
     // Menu items data for better organization
     const mainMenuItems = [
-        { icon: GoSearch, label: "Search", id: "search" },
-        { icon: LiaHomeSolid , label: "Home", id: "home", active: pathname === "/" },
-        { image: "/alfia-ai.png", label: "Alfia AI", id: "alfia-ai" },
-        { icon: FaRegCalendarCheck , label: "Calendar", id: "calendar" }
+        { icon: GoSearch, label: "Search", id: "search", active: false },
+        { icon: LiaHomeSolid , label: "Home", id: "home", active: true },
+        { image: "/alfia-ai.png", label: "Alfia AI", id: "alfia-ai", active: false },
+        { icon: FaRegCalendarCheck , label: "Calendar", id: "calendar", active: false }
     ];
 
     const listMenuItems = [
-        { label: "All my lists", id: "all-lists" },
-        { label: "Archived lists", id: "archived-lists" }
+        { label: "All my lists", id: "all-lists", active: false },
+        { label: "Archived lists", id: "archived-lists", active: false }
     ];
 
     const privateItems = [
-        { icon: FiPlus , label: "Add new", id: "add-private" }
+        { icon: FiPlus , label: "Add new", id: "add-private", active: false }
     ];
 
     const sharedItems = [
-        { icon: FiPlus , label: "Add new", id: "add-shared" }
+        { icon: FiPlus , label: "Add new", id: "add-shared", active: false }
     ];
 
-    const trashItem = { icon: IoTrashOutline , label: "Trash", id: "trash" };
+    const trashItem = { icon: IoTrashOutline , label: "Trash", id: "trash", active: false };
 
     // Menu item component for reusability
-    const MenuItem = ({ icon: Icon, image, label, onClick, className = "" }) => (
+    const MenuItem = ({ icon: Icon, image, label, onClick, className = "", active  }) => (
         <div 
-            className={`flex items-center gap-2 p-[0.5px] px-4 rounded-button hover:bg-dark-hover text-dark-text2 hover:text-white cursor-pointer transition-colors duration-200 ${className}`}
+            className={`flex items-center gap-2 p-1 px-4 rounded-button hover:bg-dark-hover text-dark-text2 hover:text-white cursor-pointer transition-all duration-300 ${active ? "bg-white text-white" : "text-dark-text2"} ${className}`}
             onClick={onClick}
             role="button"
             tabIndex={0}
@@ -47,9 +47,9 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                 }
             }}
         >
-            {Icon && <Icon className="text-xl text-dark-text2  transition-colors duration-200" />}
-            {image && <img src={image} alt={label} className="h-7 w-7" />}
-            <span className="text-sm  font-bold pt-1  transition-colors duration-200">{label}</span>
+            {Icon && <Icon className="text-xl text-dark-text2  transition-all duration-300" />}
+            {image && <img src={image} alt={label} className="h-5 w-5" />}
+            <span className={`text-sm  font-bold pt-1  transition-all duration-300 ${active ? "text-white" : "text-dark-text2"}`}>{label}</span>
         </div>
     );
 
@@ -59,7 +59,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
             <aside
                 className={`
                     fixed xl:static inset-y-0 left-0 z-40 
-                    w-72 sm:w-80 md:w-72 xl:w-[360px]
+                    w-72 sm:w-80 md:w-72 xl:w-[330px]
                     bg-black xl:py-6 px-6 xl:px-8
                     transform transition-all duration-300 ease-in-out
                     ${sidebarOpen ? "translate-x-0 py-6" : "-translate-x-full"} 
@@ -75,7 +75,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                     <h1 className="text-lg font-bold text-white">ALFIA SYSTEM</h1>
                     <button 
                         onClick={() => setSidebarOpen(false)}
-                        className="p-2 hover:bg-gray-800 rounded-button transition-colors duration-200"
+                        className="p-2 hover:bg-gray-800 rounded-button transition-all duration-300"
                         aria-label="Close sidebar"
                     >
                         <FaTimes className="text-xl text-white" />
@@ -83,7 +83,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                 </div>
 
                 {/* Lists Section */}
-                <div className="bg-dark-bg2 p-4 rounded-default mb-5 xl:mb-2 border border-dark-stroke">
+                <div className="bg-dark-active  p-4 rounded-default mb-5 xl:mb-5 border border-dark-stroke">
                     {/* Search Input */}
                     <div className="relative mb-4">
                         <div className="absolute inset-y-0 left-0 pl-1 flex items-center pointer-events-none">
@@ -92,24 +92,32 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                         <input
                             type="text"
                             placeholder="Create new list"
-                            className="w-full pl-7 pr-4 py-2 text-sm border-b border-dark-stroke  text-dark-text2 placeholder-[#9b9b96] focus:outline-none  transition-colors duration-200"
+                            className="w-full pl-7 pr-4 py-2 pt-3 text-sm border-b border-dark-stroke  text-dark-text2 placeholder:text-dark-text2 placeholder:font-bold focus:outline-none  transition-all duration-300 font-bold"
                         />
                     </div>
-                    
                     <div className="space-y-1">
-                        {listMenuItems.map((item) => (
-                            <MenuItem 
-                                key={item.id}
-                                label={item.label}
-                                onClick={() => console.log(`Clicked ${item.id}`)}
-                            />
-                        ))}
+                        <div 
+                            className={`flex items-center gap-2 p-1 px-4 rounded-button bg-dark-active text-dark-text2 hover:bg-[#444444] hover:text-white   cursor-pointer transition-all duration-300 `}
+                            role="button"
+                            tabIndex={0}
+                        >
+                            <span className={`text-sm  font-bold pt-1  transition-all duration-300 `}>All my spaces</span>
+                        </div>
+                        <div 
+                            className={`flex items-center gap-2 p-1 px-4 rounded-button bg-dark-active text-dark-text2 hover:bg-[#444444] hover:text-white  cursor-pointer transition-all duration-300 `}
+                            role="button"
+                            tabIndex={0}
+                        >
+                            <span className={`text-sm  font-bold pt-1  transition-all duration-300 `}>Archived spaces</span>
+                        </div>
+
+                  
                     </div>
                 </div>
 
                 {/* Main Navigation */}
-                <nav className="flex-1 bg-dark-bg2 p-4 rounded-default mb-4 xl:mb-0 border border-dark-blue-border overflow-y-auto sidebar-nav-scroll flex flex-col">
-                    <div className="space-y-2 flex-1">
+                <nav className="flex-1 bg-dark-bg2 p-4 rounded-default mb-4 xl:mb-0 border border-[#444444] overflow-y-auto sidebar-nav-scroll flex flex-col">
+                    <div className="space-y-[1px] flex-1">
                         {/* Main menu items */}
                         {mainMenuItems.map((item) => (
                             <MenuItem 
@@ -117,6 +125,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                 icon={item.icon}
                                 image={item.image}
                                 label={item.label}
+                                active={false}
                                 onClick={() => console.log(`Clicked ${item.id}`)}
                             />
                         ))}
