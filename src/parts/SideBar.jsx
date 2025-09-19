@@ -1,13 +1,21 @@
 import React from 'react';
-import { FaCalendarAlt, FaHome, FaPlus, FaSearch, FaTimes, FaTrash } from "react-icons/fa";
+import { FaRegCalendarCheck, FaTimes } from "react-icons/fa";
 import { HiPlus } from "react-icons/hi";
+import { GoSearch } from "react-icons/go";
+import { LiaHomeSolid } from "react-icons/lia";
+import { FiPlus } from "react-icons/fi";
+import { IoTrashOutline } from "react-icons/io5";
+import { useLocation } from "react-router-dom";
+
 
 function SideBar({ sidebarOpen, setSidebarOpen }) {
+    const {pathname} = useLocation();
     // Menu items data for better organization
     const mainMenuItems = [
-        { icon: FaSearch, label: "Search", id: "search" },
-        { icon: FaHome, label: "Home", id: "home" },
-        { icon: FaCalendarAlt, label: "Calendar", id: "calendar" }
+        { icon: GoSearch, label: "Search", id: "search" },
+        { icon: LiaHomeSolid , label: "Home", id: "home", active: pathname === "/" },
+        { image: "/alfia-ai.png", label: "Alfia AI", id: "alfia-ai" },
+        { icon: FaRegCalendarCheck , label: "Calendar", id: "calendar" }
     ];
 
     const listMenuItems = [
@@ -16,19 +24,19 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
     ];
 
     const privateItems = [
-        { icon: FaPlus, label: "Add new", id: "add-private" }
+        { icon: FiPlus , label: "Add new", id: "add-private" }
     ];
 
     const sharedItems = [
-        { icon: FaPlus, label: "Add new", id: "add-shared" }
+        { icon: FiPlus , label: "Add new", id: "add-shared" }
     ];
 
-    const trashItem = { icon: FaTrash, label: "Trash", id: "trash" };
+    const trashItem = { icon: IoTrashOutline , label: "Trash", id: "trash" };
 
     // Menu item component for reusability
-    const MenuItem = ({ icon: Icon, label, onClick, className = "" }) => (
+    const MenuItem = ({ icon: Icon, image, label, onClick, className = "" }) => (
         <div 
-            className={`flex items-center gap-2 p-2 rounded-default hover:bg-dark-hover hover:text-white cursor-pointer transition-colors duration-200 ${className}`}
+            className={`flex items-center gap-2 p-[0.5px] px-4 rounded-button hover:bg-dark-hover text-dark-text2 hover:text-white cursor-pointer transition-colors duration-200 ${className}`}
             onClick={onClick}
             role="button"
             tabIndex={0}
@@ -39,8 +47,9 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                 }
             }}
         >
-            {Icon && <Icon className="text-sm text-dark-text2  transition-colors duration-200" />}
-            <span className="text-sm text-dark-text2  transition-colors duration-200">{label}</span>
+            {Icon && <Icon className="text-xl text-dark-text2  transition-colors duration-200" />}
+            {image && <img src={image} alt={label} className="h-7 w-7" />}
+            <span className="text-sm  font-bold pt-1  transition-colors duration-200">{label}</span>
         </div>
     );
 
@@ -50,13 +59,13 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
             <aside
                 className={`
                     fixed xl:static inset-y-0 left-0 z-40 
-                    w-72 sm:w-80 md:w-72 xl:w-64 
+                    w-72 sm:w-80 md:w-72 xl:w-[360px]
                     bg-black xl:py-6 px-6 xl:px-8
                     transform transition-all duration-300 ease-in-out
                     ${sidebarOpen ? "translate-x-0 py-6" : "-translate-x-full"} 
                     xl:translate-x-0
-                    flex flex-col h-screen xl:h-full xl:my-4
-                    shadow-xl xl:shadow-none
+                    flex flex-col h-screen xl:h-full xl:my-0
+                    shadow-xl xl:shadow-none xl:ml-0
                 `}
             >
                
@@ -66,7 +75,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                     <h1 className="text-lg font-bold text-white">ALFIA SYSTEM</h1>
                     <button 
                         onClick={() => setSidebarOpen(false)}
-                        className="p-2 hover:bg-gray-800 rounded transition-colors duration-200"
+                        className="p-2 hover:bg-gray-800 rounded-button transition-colors duration-200"
                         aria-label="Close sidebar"
                     >
                         <FaTimes className="text-xl text-white" />
@@ -99,13 +108,14 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                 </div>
 
                 {/* Main Navigation */}
-                <nav className="flex-1 bg-dark-bg2 p-4 rounded-default mb-4 xl:mb-6 border border-dark-blue-border overflow-y-auto sidebar-nav-scroll">
-                    <div className="space-y-2">
+                <nav className="flex-1 bg-dark-bg2 p-4 rounded-default mb-4 xl:mb-0 border border-dark-blue-border overflow-y-auto sidebar-nav-scroll flex flex-col">
+                    <div className="space-y-2 flex-1">
                         {/* Main menu items */}
                         {mainMenuItems.map((item) => (
                             <MenuItem 
                                 key={item.id}
                                 icon={item.icon}
+                                image={item.image}
                                 label={item.label}
                                 onClick={() => console.log(`Clicked ${item.id}`)}
                             />
@@ -113,7 +123,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
 
                         {/* Private section */}
                         <div className="mt-6">
-                            <p className="text-xs text-dark-text2 mb-2 font-medium">Private</p>
+                            <p className="text-sm font-bold text-dark-text2 px-4 mt-2">Private</p>
                             {privateItems.map((item) => (
                                 <MenuItem 
                                     key={item.id}
@@ -126,7 +136,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
 
                         {/* Shared section */}
                         <div className="mt-4">
-                            <p className="text-xs text-dark-text2 mb-2 font-medium">Shared</p>
+                            <p className="text-sm font-bold text-dark-text2  mb-2 px-4">Shared</p>
                             {sharedItems.map((item) => (
                                 <MenuItem 
                                     key={item.id}
@@ -136,15 +146,15 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                 />
                             ))}
                         </div>
+                    </div>
 
-                        {/* Trash */}
-                        <div className="mt-6 pt-4 border-t border-gray-700">
-                            <MenuItem 
-                                icon={trashItem.icon}
-                                label={trashItem.label}
-                                onClick={() => console.log(`Clicked ${trashItem.id}`)}
-                            />
-                        </div>
+                    {/* Trash - positioned at bottom */}
+                    <div className="mt-auto pt-4 ">
+                        <MenuItem 
+                            icon={trashItem.icon}
+                            label={trashItem.label}
+                            onClick={() => console.log(`Clicked ${trashItem.id}`)}
+                        />
                     </div>
                 </nav>
             </aside>

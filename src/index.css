@@ -1,8 +1,73 @@
 @import "tailwindcss";
 
+/* Custom Font Face Declarations */
+@font-face {
+  font-family: 'PingAR+LT';
+  src: url('./font/PingAR+LT-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PingAR+LT';
+  src: url('./font/PingAR+LT-ExtraLight.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PingAR+LT';
+  src: url('./font/PingAR+LT-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PingAR+LT';
+  src: url('./font/PingAR+LT-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PingAR+LT';
+  src: url('./font/PingAR+LT-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PingAR+LT';
+  src: url('./font/PingAR+LT-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PingAR+LT';
+  src: url('./font/PingAR+LT-Heavy.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PingAR+LT';
+  src: url('./font/PingAR+LT-Hairline.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   html {
-    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'PingAR+LT', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   }
   
   body {
@@ -32,6 +97,7 @@
   /* Custom color utilities */
   .bg-dark-bg { background-color: #000; }
   .bg-dark-bg2 { background-color: #070707; }
+  .bg-dark-active { background-color: #181818; }
   
   .text-dark-text1 { color: #ffffff; }
   .text-dark-text2 { color: #9b9b96; }
@@ -49,6 +115,7 @@
   
   /* Custom rounded class */
   .rounded-default { border-radius: 22px; }
+  .rounded-button { border-radius: 8px; }
 
   /* Content centering utility */
   .main-content-centered {

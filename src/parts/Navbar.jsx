@@ -36,7 +36,7 @@ function Navbar({ setSidebarOpen }) {
     }, []);
 
     return (
-        <header className="flex items-center justify-between px-4 md:px-6 py-4 bg-dark-bg2 border-b border-dark-stroke">
+        <header className="flex items-senter justify-between px-4 md:px-6 py-0 pb-6 bg-dark-bg2 border-b border-dark-stroke">
             <div ref={dropdownRef} className="relative inline-block">
                 {/* Logo button */}
                 <button
@@ -46,9 +46,9 @@ function Navbar({ setSidebarOpen }) {
                      transition"
                 >
                     {darkMode ? (
-                        <img src={"/ALFIA_SYSTEM.png"} alt="Logo" className="h-8 " />
+                        <img src={"/ALFIA_SYSTEM.png"} alt="Logo" className="h-6 " />
                     ) : (
-                        <img src={"/ALFIA_SYSTEM_DARK.png"} alt="Logo" className="h-8 " />
+                        <img src={"/ALFIA_SYSTEM_DARK.png"} alt="Logo" className="h-6" />
                     )}
                     <IoIosArrowDown className="w-4 h-4 text-gray-400" />
                 </button>
@@ -57,7 +57,7 @@ function Navbar({ setSidebarOpen }) {
                 <div
                     className={`absolute left-0 mt-3 w-[700px] bg-dark-bg 
                       border border-dark-stroke 
-                      rounded-default shadow-lg p-3 grid grid-cols-2 gap-2 z-50
+                      rounded-button shadow-lg p-3 grid grid-cols-2 gap-2 z-50
                       transform transition-all duration-300 ease-out
                       ${open ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}`}
                 >
@@ -69,10 +69,10 @@ function Navbar({ setSidebarOpen }) {
                             key={idx}
                             className="flex flex-col justify-start h-[120px] bg-dark-bg2
                            border border-dark-stroke hover:border-dark-stroke
-                           rounded-default px-4 py-3 cursor-pointer transition"
+                           rounded-button px-4 py-3 cursor-pointer transition"
                         >
                             <div className="flex flex-col">
-                                <span className="text-lg font-semibold text-navy-900 dark:text-white">
+                                <span className="text-lg font-semibold text-navy-900 dark:text-white ">
                                     {service.name}
                                 </span>
                             </div>
@@ -81,22 +81,22 @@ function Navbar({ setSidebarOpen }) {
                 </div>
             </div>
 
-            <nav className="hidden md:flex items-center space-x-6">
+            <nav className="hidden md:flex items-center space-x-3  ">
                 <a
                     href="#"
-                    className="text-navy-900 dark:text-white hover:underline text-sm"
+                    className="text-navy-900 dark:text-white hover:underline text-sm border border-dark-stroke rounded-button px-4 py-2 hover:border-dark-stroke"
                 >
                     Support Portal
                 </a>
                 <a
                     href="#"
-                    className="text-navy-900 dark:text-white hover:underline text-sm"
+                    className="text-navy-900 dark:text-white hover:underline text-sm border border-dark-stroke rounded-button px-4 py-2 hover:border-dark-stroke"
                 >
                     Manage Funds
                 </a>
                 <a
                     href="#"
-                    className="text-navy-900 dark:text-white hover:underline text-sm"
+                    className="text-navy-900 dark:text-white hover:underline text-sm border border-dark-stroke rounded-button px-4 py-2 hover:border-dark-stroke"
                 >
                     Docs
                 </a>

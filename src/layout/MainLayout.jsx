@@ -9,11 +9,11 @@ export default function MainLayout() {
         <div className="flex flex-col h-screen bg-black text-white overflow-hidden">
             <Navbar setSidebarOpen={setSidebarOpen} />
 
-            <div className="flex flex-1 overflow-hidden">
+            <div className="flex flex-1 overflow-hidden mx-0">
                 <SideBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
                 {/* Main Content */}
-                <main className="flex-1 py-6 xl:py-10 px-4 md:px-8 xl:px-40 overflow-y-auto">
+                <main className="flex-1 py-6 xl:py-7 px-4 md:px-8 xl:px-40 overflow-y-auto">
                     <div className="main-content-centered">
                     
 
@@ -24,7 +24,7 @@ export default function MainLayout() {
                             <h2 className="text-2xl font-semibold">
                                 Good Afternoon, Aymane MTS
                             </h2>
-                            <p className="text-gray-400 text-sm">
+                            <p className="text-dark-text2 text-sm">
                                 Ready to blitz through your afternoon?
                             </p>
                         </div>
@@ -33,45 +33,45 @@ export default function MainLayout() {
                    
 
                 
-                    <h1 className="text-xl font-medium mb-6 mt-10">Your Spaces</h1>
+                    <h1 className="text-md font-medium mb-4 mt-6">Your Spaces</h1>
                     {/* Content Cards */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-6">
-                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[350px]">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mb-4">
+                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px]">
                             <h3 className="text-lg font-semibold mb-2">Project Alpha</h3>
-                            <p className="text-gray-400 text-sm">Complete the user interface design</p>
+                            <p className="text-dark-text2 text-sm">Complete the user interface design</p>
                         </div>
-                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[350px]">
+                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px]">
                             <h3 className="text-lg font-semibold mb-2">Project Beta</h3>
-                            <p className="text-gray-400 text-sm">Review and test the new features</p>
+                            <p className="text-dark-text2 text-sm">Review and test the new features</p>
                         </div>
-                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[350px]">
+                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px]">
                             <h3 className="text-lg font-semibold mb-2">Project Gamma</h3>
-                            <p className="text-gray-400 text-sm">Update documentation and guides</p>
+                            <p className="text-dark-text2 text-sm">Update documentation and guides</p>
                         </div>
-                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[350px]">
+                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px]">
                             <h3 className="text-lg text-dark-text1 font-semibold mb-2">Project Delta</h3>
-                            <p className="text-gray-400 text-sm">Prepare for the upcoming presentation</p>
+                            <p className="text-dark-text2 text-sm">Prepare for the upcoming presentation</p>
                         </div>
                     </div>
 
                     
                     {/* Content Cards */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[350px]">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px]">
                             <h3 className="text-lg font-semibold mb-2">Project Alpha</h3>
-                            <p className="text-gray-400 text-sm">Complete the user interface design</p>
+                            <p className="text-dark-text2 text-sm">Complete the user interface design</p>
                         </div>
-                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[350px]">
+                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px]">
                             <h3 className="text-lg font-semibold mb-2">Project Beta</h3>
-                            <p className="text-gray-400 text-sm">Review and test the new features</p>
+                            <p className="text-dark-text2 text-sm">Review and test the new features</p>
                         </div>
-                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[350px]">
+                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px]">
                             <h3 className="text-lg font-semibold mb-2">Project Gamma</h3>
-                            <p className="text-gray-400 text-sm">Update documentation and guides</p>
+                            <p className="text-dark-text2 text-sm">Update documentation and guides</p>
                         </div>
-                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[350px]">
+                        <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 h-[280px]">
                             <h3 className="text-lg text-dark-text1 font-semibold mb-2">Project Delta</h3>
-                            <p className="text-gray-400 text-sm">Prepare for the upcoming presentation</p>
+                            <p className="text-dark-text2 text-sm">Prepare for the upcoming presentation</p>
                         </div>
                     </div>
                     </div>
