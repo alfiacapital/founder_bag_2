@@ -621,7 +621,11 @@ function TaskBoard() {
                                                 {editingTask === task._id && editingField === 'estimatedDate' ? (
                                                     <DatePicker
                                                         ref={estimatedDatePickerRef}
-                                                        selected={editValue ? new Date(`1970-01-01T${editValue}`) : null}
+                                                        selected={
+                                                            editValue && editValue !== "hh:mm"
+                                                                ? new Date(`1970-01-01T${editValue}`)
+                                                                : null
+                                                        }
                                                         onChange={(date) => {
                                                             if (date) {
                                                                 const hours = date.getHours().toString().padStart(2, "0");
