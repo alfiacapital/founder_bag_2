@@ -114,7 +114,7 @@ function Home() {
                                                 className="w-full rounded-button border border-dark-stroke py-2 pt-3 px-4
                                                  text-dark-text2 flex justify-between"
                                                 >
-                                                <div>{task?.title}</div>
+                                                <div className={"max-w-30 truncate"}>{task?.title}</div>
                                                 <div>{task?.estimatedDate}</div>
                                             </div>
                                         ))}
