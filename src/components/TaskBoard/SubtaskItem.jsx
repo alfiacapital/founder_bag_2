@@ -7,14 +7,14 @@ import { axiosClient } from "../../api/axios.jsx";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
-const SubtaskItem = ({ 
-    subtask, 
-    taskId, 
-    index, 
-    totalSubtasks, 
-    editingSubtaskId, 
-    editSubtaskValue, 
-    setEditingSubtaskId, 
+const SubtaskItem = ({
+    subtask,
+    taskId,
+    index,
+    totalSubtasks,
+    editingSubtaskId,
+    editSubtaskValue,
+    setEditingSubtaskId,
     setEditSubtaskValue,
     subtasks
 }) => {
@@ -44,8 +44,8 @@ const SubtaskItem = ({
 
     const handleSubtaskEdit = async () => {
         try {
-            await axiosClient.put(`/tasks/${taskId}/subtasks/${subtask._id}`, { 
-                title: editSubtaskValue 
+            await axiosClient.put(`/tasks/${taskId}/subtasks/${subtask._id}`, {
+                title: editSubtaskValue
             });
             await queryClient.invalidateQueries("tasks");
         } catch (e) {
@@ -147,7 +147,7 @@ const SubtaskItem = ({
                     />
                 ) : (
                     <div
-                        className={`pt-1 cursor-pointer truncate max-w-[8rem] ${
+                        className={`pt-1 cursor-pointer truncate max-w-[5rem] ${
                             subtask.status === "completed" ? "line-through opacity-50" : ""
                         }`}
                         onClick={(e) => {
@@ -167,7 +167,7 @@ const SubtaskItem = ({
                     title="move up"
                     disabled={index === 0}
                     onClick={handleMoveUp}
-                    className="opacity-0 group-hover/subtask:opacity-100 text-dark-text2 hover:text-white cursor-pointer transition-all duration-300"
+                    className="opacity-100 md:opacity-0 group-hover/subtask:opacity-100 text-dark-text2 hover:text-white cursor-pointer transition-all duration-300"
                 >
                     <IoArrowUp className="h-5 w-5" />
                 </button>
@@ -177,7 +177,7 @@ const SubtaskItem = ({
                     title="move down"
                     disabled={index === totalSubtasks - 1}
                     onClick={handleMoveDown}
-                    className="opacity-0 group-hover/subtask:opacity-100 text-dark-text2 hover:text-white cursor-pointer transition-all duration-300"
+                    className="opacity-100 md:opacity-0 group-hover/subtask:opacity-100 text-dark-text2 hover:text-white cursor-pointer transition-all duration-300"
                 >
                     <IoArrowDown className="h-5 w-5" />
                 </button>
@@ -186,7 +186,7 @@ const SubtaskItem = ({
                 <button
                     title="delete"
                     onClick={handleDelete}
-                    className="opacity-0 group-hover/subtask:opacity-100 text-dark-text2 hover:text-white cursor-pointer transition-all duration-300"
+                    className="opacity-100 md:opacity-0 group-hover/subtask:opacity-100 text-dark-text2 hover:text-white cursor-pointer transition-all duration-300"
                 >
                     <AiOutlineDelete className="h-4.5 w-4.5" />
                 </button>

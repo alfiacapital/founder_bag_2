@@ -1,15 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { FaRegCalendarCheck, FaTimes } from "react-icons/fa";
 import { GoSearch } from "react-icons/go";
 import { LiaHomeSolid } from "react-icons/lia";
 import { FiPlus } from "react-icons/fi";
 import { IoTrashOutline } from "react-icons/io5";
-import { useLocation } from "react-router-dom";
+import SpaceForm from "../components/space/SpaceForm.jsx";
+import {useNavigate} from "react-router-dom";
 
 
 function SideBar({ sidebarOpen, setSidebarOpen }) {
-    // const {pathname} = useLocation();
-    // Menu items data for better organization
+    const navigate = useNavigate()
+    const [createSpaceForm, setCreateSpaceForm] = useState(false)
     const mainMenuItems = [
         { icon: GoSearch, label: "Search", id: "search", active: false },
         { icon: LiaHomeSolid , label: "Home", id: "home", active: true },
@@ -132,7 +133,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                 {/* Lists Section */}
                 <div className="bg-dark-active  p-4 rounded-default  border border-dark-stroke ">
                     <div className="space-y-1">
-                        <div
+                        <div onClick={() => setCreateSpaceForm(!createSpaceForm)}
                             className={`flex items-center gap-1 p-1 px-4 rounded-button bg-dark-active text-dark-text2 hover:bg-[#444444] hover:text-white   cursor-pointer transition-all duration-300 ease-in-out `}
                             role="button"
                             tabIndex={0}
@@ -140,7 +141,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                             <FiPlus className={"text-xl  font-bold   transition-all duration-300 ease-in-out"}/>
                             <span className={`text-sm  font-bold pt-1  transition-all duration-300 ease-in-out `}>Create new space</span>
                         </div>
-                        <div
+                        <div onClick={() => navigate("/")}
                             className={`flex items-center gap-2 p-1 px-4 rounded-button bg-dark-active text-dark-text2 hover:bg-[#444444] hover:text-white   cursor-pointer transition-all duration-300 ease-in-out `}
                             role="button"
                             tabIndex={0}
@@ -169,6 +170,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                     aria-label="Close sidebar"
                 />
             )}
+            {createSpaceForm && <SpaceForm open={createSpaceForm} onClose={() => setCreateSpaceForm(!createSpaceForm)} mode={"create"} /> }
         </>
     );
 }

@@ -6,6 +6,7 @@ import ReportsLayout from "../layout/ReportsLayout.jsx";
 import Reports from "../pages/Reports.jsx";
 import AuthenticatedLayout from "../layout/AuthenticatedLayout.jsx";
 import TaskBoard from "../pages/space/TaskBoard.jsx";
+import Test from "../pages/Test.jsx";
 
 
 export const router = createBrowserRouter([
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
                     {
                         path: "/space/:id/board",
                         element: <TaskBoard />
+                    },
+                    {
+                        path: "/test",
+                        element: <Test />
                     }
 
                 ]
@@ -34,8 +39,9 @@ export const router = createBrowserRouter([
                         element: <Reports />,
                     }
                 ]
-            }
-        ]
+            },
+
+        ],
     },
     {
         path: "*",

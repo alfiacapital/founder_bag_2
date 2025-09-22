@@ -3,12 +3,13 @@ import { FiPlus } from "react-icons/fi";
 import SpaceForm from "../components/space/SpaceForm.jsx";
 import {useUserContext} from "../context/UserProvider.jsx";
 import {axiosClient} from "../api/axios.jsx";
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {FaEllipsisVertical} from "react-icons/fa6";
 import Menu from "../components/Menu.jsx";
 import {MdDone, MdOpenInFull} from "react-icons/md";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import DeleteModal from "../components/DeleteModal.jsx";
 
 function Home() {
     const {user} = useUserContext()
@@ -21,12 +22,28 @@ function Home() {
     const navigate = useNavigate()
     const hasSpaces = spaces.length > 0;
     const [createSpaceForm, setCreateSpaceForm] = useState(false)
+    const [deleteSpaceForm, setDeleteSpaceForm] = useState(null)
     const [editSpaceForm, setEditSpaceForm] = useState(null)
+    const queryClient = useQueryClient()
+
     useEffect(() => {
         if (isError) {
             toast.error("Server Error!");
         }
     }, [isError]);
+
+    const deleteSpace = async (space) => {
+        try {
+            if (!space || !space?._id) return;
+            await axiosClient.delete(`/space/${space._id}`)
+            await queryClient.invalidateQueries("spaces")
+        } catch (e) {
+            console.error(e)
+            toast.error(e.message || "Server Error!");
+        } finally {
+            setDeleteSpaceForm(null)
+        }
+    }
 
     return (
         <>
@@ -104,8 +121,7 @@ function Home() {
                                             }
                                             items={[
                                                 { label: "Edit", onClick: () => setEditSpaceForm(space) },
-                                                { label: "Share", onClick: () => console.log("Share clicked") },
-                                                { label: "Delete", danger: true, onClick: () => console.log("Delete clicked") },
+                                                { label: "Delete", danger: true, onClick: () => setDeleteSpaceForm(space) },
                                             ]}
                                         />
                                     </div>
@@ -142,10 +158,10 @@ function Home() {
                                     {/* Hover footer button */}
                                     <div onClick={() => navigate(`/space/${space?._id}/board`)}
                                         className="
-                                        absolute bottom-6 left-1/2 -translate-x-1/2
+                                        absolute bottom-20 md:bottom-6 left-1/2 -translate-x-1/2
                                         flex justify-center items-center space-x-2 w-fit px-6 py-2 rounded-full
                                         border border-dark-stroke text-dark-text2 bg-dark-bg2 cursor-pointer
-                                        opacity-0 translate-y-6
+                                        opacity-100 md:opacity-0 translate-y-6
                                         group-hover:opacity-100 group-hover:translate-y-0
                                         transition-all duration-300 hover:border-dark-stroke hover:bg-dark-hover hover:text-white
                                       "
@@ -173,6 +189,12 @@ function Home() {
             )}
             {createSpaceForm && <SpaceForm open={createSpaceForm} onClose={() => setCreateSpaceForm(!createSpaceForm)} mode={"create"} /> }
             {editSpaceForm && <SpaceForm open={!!editSpaceForm} onClose={() => setEditSpaceForm(null)} initialData={editSpaceForm} mode={"edit"} /> }
+            {deleteSpaceForm &&  <DeleteModal
+                isOpen={!!deleteSpaceForm} title="Delete Space"
+                message="Are you sure you want to delete this Space? This action cannot be undone."
+                onClick={() => deleteSpace(deleteSpaceForm)}
+                onClose={() => setDeleteSpaceForm(null)}
+            />}
         </>
     );
 }

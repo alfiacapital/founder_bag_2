@@ -48,29 +48,35 @@ const TaskCard = ({
             className={`bg-dark-active rounded-button p-3 sm:p-3 shadow-sm border border-dark-stroke hover:border-dark-stroke hover:shadow-md transition-all duration-200 relative group ${draggedTask ? 'cursor-grabbing' : 'cursor-grab'}`}
         >
             {/* Task Header */}
-            <div className="relative flex items-center justify-between mb-3">
+            <div className="relative flex items-center justify-between mb-3 group">
                 {/* Left side with icon and title */}
                 <div className="flex items-center relative flex-1 min-w-0">
-                    {/* Animated check icon */}
-                    <button 
+                    {/* Check icon */}
+                    <button
                         title="complete"
                         onClick={(e) => {
                             e.stopPropagation();
                             handleTaskComplete(task._id);
                         }}
-                        className="task-action-button absolute left-3 top-1/2 pb-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300 text-dark-text2 hover:text-white z-10 cursor-pointer"
+                        className="
+                task-action-button absolute left-3 top-1/2 pb-1 -translate-y-1/2
+                opacity-100 md:opacity-0 md:group-hover:opacity-100
+                transform md:-translate-x-2 md:group-hover:translate-x-0
+                transition-all duration-300 text-dark-text2 hover:text-white z-10 cursor-pointer
+            "
                     >
                         <FaRegSquareCheck className="w-4 h-4" />
                     </button>
 
                     <div className="flex items-center">
-                        {/* Task number and title */}
+                        {/* Task number */}
                         <div className="flex items-center transition-all duration-300">
                             <span className="text-dark-text2 pr-2 flex-shrink-0">{index + 1}</span>
                         </div>
 
-                        <div className="flex items-center transition-all duration-300 group-hover:pl-5 group-hover:max-w-[4rem]">
-                            {editingTask === task._id && editingField === 'title' ? (
+                        {/* Task title */}
+                        <div className="flex items-center transition-all duration-300 pl-6 md:pl-0 md:group-hover:pl-5 md:group-hover:max-w-[4rem]">
+                            {editingTask === task._id && editingField === "title" ? (
                                 <input
                                     ref={editInputRef}
                                     type="text"
@@ -81,15 +87,15 @@ const TaskCard = ({
                                     }}
                                     onKeyDown={handleEditKeyDown}
                                     onBlur={handleEditSave}
-                                    className="font-medium text-dark-text1 bg-transparent border-b border-[#444444] focus:border-white focus:outline-none leading-tight max-w-42 pt-1"
+                                    className="font-medium text-dark-text1 bg-transparent border-b border-[#444444] focus:border-white focus:outline-none leading-tight max-w-20 md:max-w-42 pt-1"
                                     autoFocus
                                 />
                             ) : (
                                 <h4
-                                    className="font-medium text-dark-text1 text- leading-tight truncate max-w-[10rem] pt-1 cursor-pointer hover:text-white transition-colors"
+                                    className="font-medium text-dark-text1 leading-tight truncate max-w-16 md:max-w-[10rem] pt-1 cursor-pointer hover:text-white transition-colors"
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        handleEditStart(task._id, 'title', task.title);
+                                        handleEditStart(task._id, "title", task.title);
                                     }}
                                 >
                                     {task.title}
@@ -101,9 +107,16 @@ const TaskCard = ({
 
                 {/* Right side with actions and image */}
                 <div className="relative flex items-center ml-2">
-                    {/* Action buttons container */}
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300 z-20">
-                        <button 
+                    {/* Action buttons */}
+                    <div
+                        className="
+                absolute right-0 top-1/2 -translate-y-1/2 flex items-center
+                opacity-100 md:opacity-0 md:group-hover:opacity-100
+                transform md:translate-x-2 md:group-hover:translate-x-0
+                transition-all duration-300 z-20
+            "
+                    >
+                        <button
                             title="subtasks"
                             onClick={(e) => {
                                 e.stopPropagation();
@@ -114,7 +127,7 @@ const TaskCard = ({
                         >
                             <FaTasks className="h-4 w-4" />
                         </button>
-                        <button 
+                        <button
                             title="note"
                             onClick={(e) => {
                                 e.stopPropagation();
@@ -123,7 +136,7 @@ const TaskCard = ({
                         >
                             <BiNote className="h-5 w-5" />
                         </button>
-                        <button 
+                        <button
                             title="duplicate"
                             onClick={(e) => {
                                 e.stopPropagation();
@@ -133,7 +146,7 @@ const TaskCard = ({
                         >
                             <FaRegCopy className="h-4 w-4" />
                         </button>
-                        <button 
+                        <button
                             title="delete"
                             onClick={(e) => {
                                 e.stopPropagation();
@@ -149,10 +162,15 @@ const TaskCard = ({
                     <img
                         src={task?.spaceId?.image || "/icon.png"}
                         alt={task?.title}
-                        className="w-6 h-6 rounded-button border border-[#444444] object-cover group-hover:opacity-0 transition-opacity duration-300 flex-shrink-0"
+                        className="
+                w-6 h-6 rounded-button border border-[#444444] object-cover flex-shrink-0
+                opacity-0 md:opacity-100 md:group-hover:opacity-0
+                transition-opacity duration-300
+            "
                     />
                 </div>
             </div>
+
 
             {/* Task Meta */}
             <div className="flex justify-between">

@@ -45,7 +45,7 @@ const StatusColumn = ({
     return (
         <div
             key={status._id}
-            className="h-[calc(100vh-15rem)] flex flex-col rounded-default border border-dashed border-dark-stroke bg-dark-bg2 transition-all duration-300 "
+            className="h-[calc(100vh-25rem)] md:h-[calc(100vh-15rem)] flex flex-col rounded-default border border-dashed border-dark-stroke bg-dark-bg2 transition-all duration-300 "
             onDragOver={(e) => handleDragOver(e, status._id)}
             onDragLeave={handleDragLeave}
             onDrop={(e) => handleDrop(e, status._id)}
