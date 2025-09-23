@@ -102,7 +102,6 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                 onClick={() => console.log(`Clicked ${item.id}`)}
                             />
                         ))}
-
                         
                         {/* Private section */}
                         <div className="mt-6">
