@@ -6,6 +6,8 @@ import { FiPlus } from "react-icons/fi";
 import { IoTrashOutline } from "react-icons/io5";
 import SpaceForm from "../components/space/SpaceForm.jsx";
 import {useNavigate} from "react-router-dom";
+import {useQuery} from "@tanstack/react-query";
+import {axiosClient} from "@/api/axios.jsx";
 
 
 function SideBar({ sidebarOpen, setSidebarOpen }) {
@@ -17,6 +19,14 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
         { image: "/alfia-ai.png", label: "Alfia AI", id: "alfia-ai", active: false },
         { icon: FaRegCalendarCheck , label: "Calendar", id: "calendar", active: false }
     ];
+    const { data: notes = [] } = useQuery({
+        queryKey: "notes",
+        queryFn: async () => {
+            const res = await axiosClient.get('/notes')
+            return res.data;
+        },
+    });
+    console.log(notes)
 
 
     const privateItems = [
@@ -103,6 +113,17 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                     label={item.label}
                                     onClick={() => console.log(`Clicked ${item.id}`)}
                                 />
+                            ))}
+                            {notes?.map((note, key) => (
+                                <div className={"ml-7"} key={key}>
+                                    <div
+                                        className={`flex items-center gap-2 p-1 px-4  rounded-button hover:bg-[#1f1f1f] text-dark-text2 hover:text-white cursor-pointer transition-all duration-300 ease-in-out  `}
+                                        role="button"
+                                        tabIndex={0}
+                                    >
+                                        <span className={`text-sm  font-bold pt-1  transition-all duration-300 ease-in-out`}>{note?.title}</span>
+                                    </div>
+                                </div>
                             ))}
                         </div>
 

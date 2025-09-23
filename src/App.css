@@ -1,36 +1,136 @@
-/* Overall background */
-.react-datepicker {
+/* =========================
+   Editor.js Dark Mode Customization
+   ========================= */
+
+/* Editor container */
+.dark #editorjs {
+    background-color: #000; /* bg-dark-bg */
+    color: #ffffff; /* text-dark-text1 */
+}
+
+/* Toolbar, Plus button, Actions, Popovers */
+.dark .ce-toolbar,
+.dark .ce-toolbar__plus,
+.dark .ce-toolbar__actions,
+.dark .ce-popover {
+    background-color: #181818; /* bg-dark-active */
+    color: #9b9b96; /* text-dark-text2 */
+    /*border: 1px solid #1f1f1f; !* border-dark-stroke *!*/
+}
+
+/* Toolbar buttons */
+.dark .ce-toolbar__button {
+    color: #9b9b96; /* text-dark-text2 */
+}
+
+.dark .ce-toolbar__button:hover {
+    color: #ffffff; /* text-dark-text1 */
+}
+
+/* Toolbar and popover SVG icons */
+.dark .ce-toolbar__button svg,
+.dark .ce-toolbar__settings-btn svg,
+.dark .ce-toolbar__plus svg,
+.dark .ce-popover-item__icon svg,
+.dark .cdx-search-field__icon svg {
+    stroke: #9b9b96; /* text-dark-text2 */
+}
+
+.dark .ce-toolbar__button:hover svg,
+.dark .ce-toolbar__settings-btn:hover svg,
+.dark .ce-toolbar__plus:hover svg,
+.dark .ce-popover-item:hover .ce-popover-item__icon svg,
+.dark .cdx-search-field__icon:hover svg {
+    stroke: #ffffff; /* text-dark-text1 */
+}
+
+/* Block settings button (gear icon) */
+.dark .ce-block__settings-btn {
+    color: #9b9b96; /* text-dark-text2 */
+}
+
+.dark .ce-block__settings-btn:hover {
+    color: #ffffff; /* text-dark-text1 */
+}
+
+/* Popovers (link, image tool, etc.) */
+.dark .ce-popover {
+    background-color: #181818; /* bg-dark-active */
+    color: #ffffff; /* text-dark-text1 */
+    border: 1px solid #1f1f1f; /* border-dark-stroke */
+}
+
+/* Paragraphs, headers, lists */
+.dark .ce-paragraph,
+.dark .ce-header,
+.dark .ce-list {
+    color: #ffffff; /* text-dark-text1 */
+}
+
+/* List bullets */
+.dark .ce-list ul li::marker {
+    color: #9b9b96; /* text-dark-text2 */
+}
+
+/* Popover container */
+.dark .ce-popover__container {
+    background-color: #181818 !important; /* bg-dark-active */
+    border: 1px solid #1f1f1f !important; /* border-dark-stroke */
+    color: #ffffff !important; /* text-dark-text1 */
+}
+
+/* Search field inside popover */
+.dark .ce-popover__container .cdx-search-field {
+    background-color: #181818; /* bg-dark-active */
+    border: 1px solid #1f1f1f; /* border-dark-stroke */
+}
+
+.dark .ce-popover__container .cdx-search-field__input {
+    color: #ffffff; /* text-dark-text1 */
+    background-color: #181818; /* bg-dark-active */
+    border: none;
+}
+
+/* Popover items (Text, Heading, List, Checklist) */
+.dark .ce-popover-item {
+    background-color: #181818; /* bg-dark-active */
+    border-bottom: 1px solid #1f1f1f; /* border-dark-stroke */
+    color: #ffffff; /* text-dark-text1 */
+}
+
+.dark .ce-popover-item:hover {
+    background-color: #070707; /* bg-dark-bg2 */
+    color: #ffffff; /* text-dark-text1 */
+}
+
+/* Nothing found message */
+.dark .ce-popover__nothing-found-message {
+    color: #9b9b96; /* text-dark-text2 */
+}
+
+/* Toolbar settings button (gear icon) */
+.dark .ce-toolbar__settings-btn {
+    color: #9b9b96; /* text-dark-text2 */
+}
+
+.dark .ce-toolbar__settings-btn:hover {
+    color: #ffffff; /* text-dark-text1 */
+}
+
+/* Optional: adjust plus button hover */
+.dark .ce-toolbar__plus:hover {
+    color: #ffffff;
+}
+
+/* Popover icons hover */
+.dark .ce-popover-item:hover .ce-popover-item__icon svg {
+    stroke: #ffffff; /* text-dark-text1 */
+}
+
+.dark .ce-toolbar__settings-btn:hover {
     background-color: #1f1f1f;
-    color: #fff;
-    border: 1px solid #444;
-    font-size: 0.875rem;
-    border-radius: 0.5rem;
 }
 
-/* Header */
-.react-datepicker__header {
-    background-color: #2a2a2a;
-    border-bottom: 1px solid #444;
-}
-
-/* Day names */
-.react-datepicker__day-name {
-    color: #aaa;
-}
-
-/* Days */
-.react-datepicker__day {
-    color: #fff;
-}
-
-/* Selected day */
-.react-datepicker__day--selected {
-    background-color: #4f46e5;
-    color: white;
-}
-
-/* Today */
-.react-datepicker__day--today {
-    color: #4f46e5;
-    font-weight: bold;
+.dark .ce-block--selected .ce-block__content {
+    background: transparent;
 }

@@ -7,6 +7,7 @@ import Reports from "../pages/Reports.jsx";
 import AuthenticatedLayout from "../layout/AuthenticatedLayout.jsx";
 import TaskBoard from "../pages/space/TaskBoard.jsx";
 import Test from "../pages/Test.jsx";
+import NovelEditorDemo from "../pages/NovelEditorDemo.jsx";
 
 
 export const router = createBrowserRouter([
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
                     {
                         path: "/test",
                         element: <Test />
+                    },
+                    {
+                        path: "/novel-editor",
+                        element: <NovelEditorDemo />
                     }
 
                 ]

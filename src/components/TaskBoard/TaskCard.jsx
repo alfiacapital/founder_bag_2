@@ -8,34 +8,34 @@ import { CustomTimeInput, CustomDateInput } from './CustomInputs';
 import SubtaskList from './SubtaskList';
 
 const TaskCard = ({
-    task,
-    index,
-    draggedTask,
-    editingTask,
-    editingField,
-    editValue,
-    setEditValue,
-    currentEditValueRef,
-    handleDragStart,
-    handleTaskComplete,
-    handleTaskDelete,
-    handleTaskCopy,
-    handleEditStart,
-    handleEditSave,
-    handleEditCancel,
-    handleEditKeyDown,
-    visibleSubtasks,
-    toggleSubtasks,
-    addingSubtaskFor,
-    newSubtaskTitle,
-    setNewSubtaskTitle,
-    setAddingSubtaskFor,
-    handleAddSubtask,
-    editingSubtaskId,
-    editSubtaskValue,
-    setEditingSubtaskId,
-    setEditSubtaskValue
-}) => {
+                      task,
+                      index,
+                      draggedTask,
+                      editingTask,
+                      editingField,
+                      editValue,
+                      setEditValue,
+                      currentEditValueRef,
+                      handleDragStart,
+                      handleTaskComplete,
+                      handleTaskDelete,
+                      handleTaskCopy,
+                      handleEditStart,
+                      handleEditSave,
+                      handleEditCancel,
+                      handleEditKeyDown,
+                      visibleSubtasks,
+                      toggleSubtasks,
+                      addingSubtaskFor,
+                      newSubtaskTitle,
+                      setNewSubtaskTitle,
+                      setAddingSubtaskFor,
+                      handleAddSubtask,
+                      editingSubtaskId,
+                      editSubtaskValue,
+                      setEditingSubtaskId,
+                      setEditSubtaskValue
+                  }) => {
     const editInputRef = useRef(null);
     const estimatedDatePickerRef = useRef(null);
     const dueDatePickerRef = useRef(null);
@@ -59,7 +59,7 @@ const TaskCard = ({
                             handleTaskComplete(task._id);
                         }}
                         className="
-                task-action-button absolute left-3 top-1/2 pb-1 -translate-y-1/2
+                task-action-button absolute left-3.5 top-3.5 pb-1 -translate-y-1/2
                 opacity-100 md:opacity-0 md:group-hover:opacity-100
                 transform md:-translate-x-2 md:group-hover:translate-x-0
                 transition-all duration-300 text-dark-text2 hover:text-white z-10 cursor-pointer
@@ -71,11 +71,11 @@ const TaskCard = ({
                     <div className="flex items-center">
                         {/* Task number */}
                         <div className="flex items-center transition-all duration-300">
-                            <span className="text-dark-text2 pr-2 flex-shrink-0">{index + 1}</span>
+                            <span className="text-dark-text2 pr-2  flex-shrink-0">{index + 1}</span>
                         </div>
 
                         {/* Task title */}
-                        <div className="flex items-center transition-all duration-300 pl-6 md:pl-0 md:group-hover:pl-5 md:group-hover:max-w-[4rem]">
+                        <div className="flex items-center transition-all duration-300 pl-6 md:pl-0 md:group-hover:pl-5 md:group-hover:max-w-[5rem]">
                             {editingTask === task._id && editingField === "title" ? (
                                 <input
                                     ref={editInputRef}
@@ -92,7 +92,7 @@ const TaskCard = ({
                                 />
                             ) : (
                                 <h4
-                                    className="font-medium text-dark-text1 leading-tight truncate max-w-16 md:max-w-[10rem] pt-1 cursor-pointer hover:text-white transition-colors"
+                                    className="font-medium text-dark-text1 leading-tight truncate max-w-16 md:max-w-[10rem] pb-0.5 cursor-pointer hover:text-white transition-colors"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         handleEditStart(task._id, "title", task.title);
