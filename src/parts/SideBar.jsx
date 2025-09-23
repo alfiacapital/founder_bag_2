@@ -6,6 +6,7 @@ import { FiPlus } from "react-icons/fi";
 import { IoTrashOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 import SpaceForm from "../components/space/SpaceForm.jsx";
+import DeleteModal from "../components/DeleteModal.jsx";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {axiosClient} from "@/api/axios.jsx";
@@ -16,6 +17,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
     const location = useLocation()
     const queryClient = useQueryClient()
     const [createSpaceForm, setCreateSpaceForm] = useState(false)
+    const [deleteModal, setDeleteModal] = useState({ isOpen: false, note: null })
     const mainMenuItems = [
         { icon: GoSearch, label: "Search", id: "search", active: false },
         { icon: LiaHomeSolid , label: "Home", id: "home", active: true },
@@ -33,6 +35,35 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
 
 
     const trashItem = { icon: IoTrashOutline , label: "Trash", id: "trash", active: false };
+
+    // Delete note handlers
+    const handleDeleteNote = (note) => {
+        setDeleteModal({ isOpen: true, note });
+    };
+
+    const confirmDeleteNote = () => {
+        if (deleteModal.note) {
+            const note = deleteModal.note;
+            const isActive = location.pathname === `/note/${note._id}`;
+            
+            axiosClient.delete(`/notes/${note._id}`)
+                .then(() => {
+                    queryClient.invalidateQueries({ queryKey: ["notes"] });
+                    // If we're currently viewing this note, navigate away
+                    if (isActive) {
+                        navigate('/');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting note:', error);
+                });
+        }
+        setDeleteModal({ isOpen: false, note: null });
+    };
+
+    const cancelDeleteNote = () => {
+        setDeleteModal({ isOpen: false, note: null });
+    };
 
     // Menu item component for reusability
     const MenuItem = ({ icon: Icon, image, label, onClick, className = "", active  }) => (
@@ -145,19 +176,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                                 }`}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    if (window.confirm('Are you sure you want to delete this note?')) {
-                                                        axiosClient.delete(`/notes/${note._id}`)
-                                                            .then(() => {
-                                                                queryClient.invalidateQueries({ queryKey: ["notes"] });
-                                                                // If we're currently viewing this note, navigate away
-                                                                if (isActive) {
-                                                                    navigate('/');
-                                                                }
-                                                            })
-                                                            .catch(error => {
-                                                                console.error('Error deleting note:', error);
-                                                            });
-                                                    }
+                                                    handleDeleteNote(note);
                                                 }}
                                                 onKeyDown={(e) => {
                                                     if (e.key === 'Enter' || e.key === ' ') {
@@ -236,6 +255,13 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                 />
             )}
             {createSpaceForm && <SpaceForm open={createSpaceForm} onClose={() => setCreateSpaceForm(!createSpaceForm)} mode={"create"} /> }
+            <DeleteModal
+                isOpen={deleteModal.isOpen}
+                title="Delete Note"
+                message={`Are you sure you want to delete "${deleteModal.note?.title}"? This action cannot be undone.`}
+                onClick={confirmDeleteNote}
+                onClose={cancelDeleteNote}
+            />
         </>
     );
 }
