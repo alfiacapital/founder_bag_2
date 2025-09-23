@@ -103,6 +103,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                             />
                         ))}
 
+                        
                         {/* Private section */}
                         <div className="mt-6">
                             <p className="text-sm font-bold text-dark-text2 px-4 mt-2">Private</p>
