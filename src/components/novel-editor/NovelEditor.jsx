@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
+  EditorBubble,
   EditorCommand,
   EditorCommandEmpty,
   EditorCommandItem,
@@ -14,6 +15,13 @@ import {
 import { useDebouncedCallback } from 'use-debounce';
 import { defaultExtensions } from './extensions';
 import { slashCommand, suggestionItems } from './slash-command.jsx';
+import { NodeSelector } from './selectors/node-selector.jsx';
+import { TextButtons } from './selectors/text-buttons.jsx';
+import { LinkSelector } from './selectors/link-selector.jsx';
+import { ColorSelector } from './selectors/color-selector.jsx';
+import { MathSelector } from './selectors/math-selector.jsx';
+import { Separator } from './selectors/separator.jsx';
+import GenerativeMenuSwitch from './selectors/generative-menu-switch.jsx';
 // Combine extensions with slash command
 const extensions = [...defaultExtensions, slashCommand];
 import './novel-editor.css';
@@ -40,10 +48,18 @@ const NovelEditor = ({
   showStatusBar = true,
   autoSave = true,
   saveDelay = 500,
-  onUpdate = null
+  onUpdate = null,
+  initialContent: propInitialContent = null
 }) => {
   const [initialContent, setInitialContent] = useState(null);
   const [saveStatus, setSaveStatus] = useState("Saved");
+  const editorRef = useRef(null);
+  
+  // Bubble menu state
+  const [openNode, setOpenNode] = useState(false);
+  const [openColor, setOpenColor] = useState(false);
+  const [openLink, setOpenLink] = useState(false);
+  const [openAI, setOpenAI] = useState(false);
 
   // Apply Codeblock Highlighting on the HTML from editor.getHTML()
   const highlightCodeblocks = (content) => {
@@ -142,8 +158,15 @@ const NovelEditor = ({
   };
 
   useEffect(() => {
-    setInitialContent(defaultEditorContent);
-  }, []);
+    setInitialContent(propInitialContent || defaultEditorContent);
+  }, [propInitialContent]);
+
+  // Update editor content when initialContent changes
+  useEffect(() => {
+    if (initialContent && editorRef.current) {
+      editorRef.current.commands.setContent(initialContent);
+    }
+  }, [initialContent]);
 
   if (!initialContent) return null;
 
@@ -175,6 +198,7 @@ const NovelEditor = ({
             },
           }}
           onCreate={({ editor }) => {
+            editorRef.current = editor;
             // Add transaction filter to prevent deletion of first line
             editor.view.dom.addEventListener('keydown', (event) => {
               if (event.key === 'Backspace' || event.key === 'Delete') {
@@ -232,6 +256,20 @@ const NovelEditor = ({
               ))}
             </EditorCommandList>
           </EditorCommand>
+
+          {/* Bubble Menu - Text Selection Toolbar */}
+          <GenerativeMenuSwitch open={openAI} onOpenChange={setOpenAI}>
+            <Separator orientation="vertical" />
+            <NodeSelector open={openNode} onOpenChange={setOpenNode} />
+            <Separator orientation="vertical" />
+            <LinkSelector open={openLink} onOpenChange={setOpenLink} />
+            <Separator orientation="vertical" />
+            <MathSelector />
+            <Separator orientation="vertical" />
+            <TextButtons />
+            <Separator orientation="vertical" />
+            <ColorSelector open={openColor} onOpenChange={setOpenColor} />
+          </GenerativeMenuSwitch>
 
         </EditorContent>
       </EditorRoot>

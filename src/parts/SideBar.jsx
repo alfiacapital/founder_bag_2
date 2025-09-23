@@ -4,14 +4,17 @@ import { GoSearch } from "react-icons/go";
 import { LiaHomeSolid } from "react-icons/lia";
 import { FiPlus } from "react-icons/fi";
 import { IoTrashOutline } from "react-icons/io5";
+import { MdDeleteOutline } from "react-icons/md";
 import SpaceForm from "../components/space/SpaceForm.jsx";
-import {useNavigate} from "react-router-dom";
-import {useQuery} from "@tanstack/react-query";
+import {useNavigate, useLocation} from "react-router-dom";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {axiosClient} from "@/api/axios.jsx";
 
 
 function SideBar({ sidebarOpen, setSidebarOpen }) {
     const navigate = useNavigate()
+    const location = useLocation()
+    const queryClient = useQueryClient()
     const [createSpaceForm, setCreateSpaceForm] = useState(false)
     const mainMenuItems = [
         { icon: GoSearch, label: "Search", id: "search", active: false },
@@ -20,22 +23,14 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
         { icon: FaRegCalendarCheck , label: "Calendar", id: "calendar", active: false }
     ];
     const { data: notes = [] } = useQuery({
-        queryKey: "notes",
+        queryKey: ["notes"],
         queryFn: async () => {
             const res = await axiosClient.get('/notes')
             return res.data;
         },
     });
-    console.log(notes)
 
 
-    const privateItems = [
-        { icon: FiPlus , label: "Add new", id: "add-private", active: false }
-    ];
-
-    const sharedItems = [
-        { icon: FiPlus , label: "Add new", id: "add-shared", active: false }
-    ];
 
     const trashItem = { icon: IoTrashOutline , label: "Trash", id: "trash", active: false };
 
@@ -106,38 +101,87 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                         {/* Private section */}
                         <div className="mt-6">
                             <p className="text-sm font-bold text-dark-text2 px-4 mt-2">Private</p>
-                            {privateItems.map((item) => (
-                                <MenuItem
-                                    key={item.id}
-                                    icon={item.icon}
-                                    label={item.label}
-                                    onClick={() => console.log(`Clicked ${item.id}`)}
-                                />
-                            ))}
-                            {notes?.map((note, key) => (
-                                <div className={"ml-7"} key={key}>
-                                    <div
-                                        className={`flex items-center gap-2 p-1 px-4  rounded-button hover:bg-[#1f1f1f] text-dark-text2 hover:text-white cursor-pointer transition-all duration-300 ease-in-out  `}
-                                        role="button"
-                                        tabIndex={0}
-                                    >
-                                        <span className={`text-sm  font-bold pt-1  transition-all duration-300 ease-in-out`}>{note?.title}</span>
+                            <MenuItem
+                                icon={FiPlus}
+                                label="Add new"
+                                onClick={() => {
+                                    // Create new note
+                                    axiosClient.post('/notes', {
+                                        title: 'New Note',
+                                        description: ''
+                                    }).then(response => {
+                                        // Invalidate notes query to refresh the sidebar
+                                        queryClient.invalidateQueries({ queryKey: ["notes"] });
+                                        navigate(`/note/${response.data._id}`);
+                                    }).catch(error => {
+                                        console.error('Error creating note:', error);
+                                    });
+                                }}
+                            />
+                            {notes?.map((note, key) => {
+                                const isActive = location.pathname === `/note/${note._id}`;
+                                return (
+                                    <div className={"ml-7"} key={key}>
+                                        <div
+                                            className={`flex items-center justify-between my-1 p-1 px-4 rounded-button hover:bg-[#1f1f1f] text-dark-text2 hover:text-white cursor-pointer group transition-all duration-300 ease-in-out ${
+                                                isActive ? 'bg-[#181818] text-white' : ''
+                                            }`}
+                                            role="button"
+                                            tabIndex={0}
+                                            onClick={() => navigate(`/note/${note._id}`)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter' || e.key === ' ') {
+                                                    e.preventDefault();
+                                                    navigate(`/note/${note._id}`);
+                                                }
+                                            }}
+                                        >
+                                            <span className={`text-sm font-bold pt-1 transition-all duration-300 ease-in-out ${
+                                                isActive ? 'text-white' : 'text-dark-text2'
+                                            }`}>{note?.title}</span>
+                                            <button
+                                                className={`p-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 text-dark-text2 hover:text-white cursor-pointer transition-all duration-300 ease-in-out ${
+                                                    isActive ? 'text-white hover:text-white' : 'text-dark-text2 hover:text-white'
+                                                }`}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    if (window.confirm('Are you sure you want to delete this note?')) {
+                                                        axiosClient.delete(`/notes/${note._id}`)
+                                                            .then(() => {
+                                                                queryClient.invalidateQueries({ queryKey: ["notes"] });
+                                                                // If we're currently viewing this note, navigate away
+                                                                if (isActive) {
+                                                                    navigate('/');
+                                                                }
+                                                            })
+                                                            .catch(error => {
+                                                                console.error('Error deleting note:', error);
+                                                            });
+                                                    }
+                                                }}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === 'Enter' || e.key === ' ') {
+                                                        e.preventDefault();
+                                                        e.stopPropagation();
+                                                    }
+                                                }}
+                                            >
+                                                <MdDeleteOutline className="" />
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
 
                         {/* Shared section */}
                         <div className="mt-4">
                             <p className="text-sm font-bold text-dark-text2  mb-2 px-4">Shared</p>
-                            {sharedItems.map((item) => (
-                                <MenuItem
-                                    key={item.id}
-                                    icon={item.icon}
-                                    label={item.label}
-                                    onClick={() => console.log(`Clicked ${item.id}`)}
-                                />
-                            ))}
+                            {/* <MenuItem
+                                icon={FiPlus}
+                                label="Add new"
+                                onClick={() => console.log('Add shared note')}
+                            /> */}
                         </div>
                     </div>
 
