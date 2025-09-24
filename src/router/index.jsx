@@ -8,6 +8,7 @@ import AuthenticatedLayout from "../layout/AuthenticatedLayout.jsx";
 import TaskBoard from "../pages/space/TaskBoard.jsx";
 import Test from "../pages/Test.jsx";
 import Note from "../pages/note/Note.jsx";
+import Notes from "@/pages/note/Notes.jsx";
 
 
 export const router = createBrowserRouter([
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
                     {
                         path: "/test",
                         element: <Test />
+                    },
+                    {
+                        path: "/notes",
+                        element: <Notes />
                     },
                     {
                         path: "/note/:id",

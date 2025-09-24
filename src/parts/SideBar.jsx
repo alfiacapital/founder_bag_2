@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import { FaRegCalendarCheck, FaTimes } from "react-icons/fa";
-import { GoSearch } from "react-icons/go";
+import {FaPlus, FaRegCalendarCheck, FaTimes} from "react-icons/fa";
+import {GoPlus, GoSearch} from "react-icons/go";
 import { LiaHomeSolid } from "react-icons/lia";
 import { FiPlus } from "react-icons/fi";
 import { IoTrashOutline } from "react-icons/io5";
@@ -10,6 +10,7 @@ import DeleteModal from "../components/DeleteModal.jsx";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {axiosClient} from "@/api/axios.jsx";
+import {SiGoogledocs} from "react-icons/si";
 
 
 function SideBar({ sidebarOpen, setSidebarOpen }) {
@@ -28,7 +29,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
         queryKey: ["notes"],
         queryFn: async () => {
             const res = await axiosClient.get('/notes')
-            return res.data;
+            return res.data.notes;
         },
     });
 
@@ -45,7 +46,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
         if (deleteModal.note) {
             const note = deleteModal.note;
             const isActive = location.pathname === `/note/${note._id}`;
-            
+
             axiosClient.delete(`/notes/${note._id}`)
                 .then(() => {
                     queryClient.invalidateQueries({ queryKey: ["notes"] });
@@ -68,7 +69,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
     // Menu item component for reusability
     const MenuItem = ({ icon: Icon, image, label, onClick, className = "", active  }) => (
         <div
-            className={`flex items-center gap-2 p-1 px-4 rounded-button hover:bg-[#1f1f1f] text-dark-text2 hover:text-white cursor-pointer transition-all duration-300 ease-in-out ${active ? "bg-white text-white" : "text-dark-text2"} ${className}`}
+            className={`flex items-center gap-2 p-1 px-4 rounded-button hover:bg-[#1f1f1f] text-dark-text2 hover:text-white cursor-pointer transition-all duration-300 ease-in-out ${active ? "bg-dark-active text-white" : "text-dark-text2"} ${className}`}
             onClick={onClick}
             role="button"
             tabIndex={0}
@@ -84,6 +85,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
             <span className={`text-sm  font-bold pt-1  transition-all duration-300 ease-in-out ${active ? "text-white" : "text-dark-text2"}`}>{label}</span>
         </div>
     );
+    console.log(notes)
 
     return (
         <>
@@ -128,28 +130,47 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                 onClick={() => console.log(`Clicked ${item.id}`)}
                             />
                         ))}
+                        <MenuItem
+                            icon={SiGoogledocs}
+                            label={"Docs"}
+                            active={location.pathname === "/notes"}
+                            onClick={() => navigate("/notes")}
+                        />
 
                         {/* Private section */}
                         <div className="mt-6">
-                            <p className="text-sm font-bold text-dark-text2 px-4 mt-2">Private</p>
-                            <MenuItem
-                                icon={FiPlus}
-                                label="Add new"
-                                onClick={() => {
-                                    // Create new note
-                                    axiosClient.post('/notes', {
+                            <div className={"flex items-center justify-between"}>
+                                <p className="text-[13px] font-bold text-dark-text2 px-4 pt-1 ">Private</p>
+                                <GoPlus className={"text-dark-text2 h-5 w-5 hover:text-white transition-all duration-300 ease-in-out cursor-pointer "} onClick={async () => {
+                                    await axiosClient.post('/notes', {
                                         title: 'New Note',
                                         description: ''
                                     }).then(response => {
-                                        // Invalidate notes query to refresh the sidebar
                                         queryClient.invalidateQueries({ queryKey: ["notes"] });
                                         navigate(`/note/${response.data._id}`);
                                     }).catch(error => {
                                         console.error('Error creating note:', error);
                                     });
-                                }}
-                            />
-                            {notes?.map((note, key) => {
+                                }}/>
+                            </div>
+                            {notes.length === 0 && (
+                                <MenuItem
+                                    icon={FiPlus}
+                                    label="Add new"
+                                    onClick={() => {
+                                        axiosClient.post('/notes', {
+                                            title: 'New Note',
+                                            description: ''
+                                        }).then(response => {
+                                            queryClient.invalidateQueries({ queryKey: ["notes"] });
+                                            navigate(`/note/${response.data._id}`);
+                                        }).catch(error => {
+                                            console.error('Error creating note:', error);
+                                        });
+                                    }}
+                                />
+                            )}
+                            {notes?.slice(0,3)?.filter(note => !note?.sharedWith?.length)?.map((note, key) => {
                                 const isActive = location.pathname === `/note/${note._id}`;
                                 return (
                                     <div className={"ml-7"} key={key}>
@@ -191,16 +212,93 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                     </div>
                                 );
                             })}
+                            {notes?.length > 3 && (
+                                <div className={"ml-7"} >
+                                    <div
+                                        className={`flex items-center justify-between my-1 p-1 px-4 rounded-button hover:bg-[#1f1f1f]  cursor-pointer group transition-all duration-300 ease-in-out text-white ${
+                                            location.pathname === "/notes" ? 'text-white  bg-dark-active' : 'text-dark-text2 hover:text-white'
+                                        }`}
+                                        role="button"
+                                        tabIndex={0}
+                                        onClick={() => navigate("/notes")}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter' || e.key === ' ') {
+                                                e.preventDefault();
+                                                navigate("/notes")
+                                            }
+                                        }}
+                                    >
+                                            <span className={`text-sm font-bold pt-1 transition-all duration-300 ease-in-out `}>Show All ...</span>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         {/* Shared section */}
                         <div className="mt-4">
-                            <p className="text-sm font-bold text-dark-text2  mb-2 px-4">Shared</p>
-                            {/* <MenuItem
-                                icon={FiPlus}
-                                label="Add new"
-                                onClick={() => console.log('Add shared note')}
-                            /> */}
+                            <p className="text-[13px] font-bold text-dark-text2  mb-2 px-4">Shared</p>
+                            {notes?.slice(0,3)?.filter(note => note?.sharedWith?.length > 0)?.map((note, key) => {
+                                const isActive = location.pathname === `/note/${note._id}`;
+                                return (
+                                    <div className={"ml-7"} key={key}>
+                                        <div
+                                            className={`flex items-center justify-between my-1 p-1 px-4 rounded-button hover:bg-[#1f1f1f] text-dark-text2 hover:text-white cursor-pointer group transition-all duration-300 ease-in-out ${
+                                                isActive ? 'bg-[#181818] text-white' : ''
+                                            }`}
+                                            role="button"
+                                            tabIndex={0}
+                                            onClick={() => navigate(`/note/${note._id}`)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter' || e.key === ' ') {
+                                                    e.preventDefault();
+                                                    navigate(`/note/${note._id}`);
+                                                }
+                                            }}
+                                        >
+                                            <span className={`text-sm font-bold pt-1 transition-all duration-300 ease-in-out ${
+                                                isActive ? 'text-white' : 'text-dark-text2'
+                                            }`}>{note?.title}</span>
+                                            <button
+                                                className={`p-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 text-dark-text2 hover:text-white cursor-pointer transition-all duration-300 ease-in-out ${
+                                                    isActive ? 'text-white hover:text-white' : 'text-dark-text2 hover:text-white'
+                                                }`}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleDeleteNote(note);
+                                                }}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === 'Enter' || e.key === ' ') {
+                                                        e.preventDefault();
+                                                        e.stopPropagation();
+                                                    }
+                                                }}
+                                            >
+                                                <MdDeleteOutline className="" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                            {notes?.length > 3 && (
+                                <div className={"ml-7"} >
+                                    <div
+                                        className={`flex items-center justify-between my-1 p-1 px-4 rounded-button hover:bg-[#1f1f1f]  cursor-pointer group transition-all duration-300 ease-in-out text-white ${
+                                            location.pathname === "/notes" ? 'text-white  bg-dark-active' : 'text-dark-text2 hover:text-white'
+                                        }`}
+                                        role="button"
+                                        tabIndex={0}
+                                        onClick={() => navigate("/notes")}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter' || e.key === ' ') {
+                                                e.preventDefault();
+                                                navigate("/notes")
+                                            }
+                                        }}
+                                    >
+                                        <span className={`text-sm font-bold pt-1 transition-all duration-300 ease-in-out `}>Show All ...</span>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
 
