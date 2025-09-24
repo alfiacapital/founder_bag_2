@@ -25,6 +25,8 @@ import GenerativeMenuSwitch from './selectors/generative-menu-switch.jsx';
 // Combine extensions with slash command
 const extensions = [...defaultExtensions, slashCommand];
 import './novel-editor.css';
+import './editor-content.css';
+import './editor-menus.css';
 
 // Simple upload function - you can customize this for your backend
 const uploadFn = async (file) => {
@@ -219,13 +221,9 @@ const NovelEditor = ({
             });
           }}
           onUpdate={({ editor }) => {
-            console.log('🔥 NovelEditor onUpdate triggered!');
-            console.log('🔥 onUpdate prop exists:', !!onUpdate);
-
             // Call onUpdate immediately for real-time updates
             if (onUpdate) {
               const data = editor.getJSON();
-              console.log('🔥 Calling onUpdate with data:', data);
               onUpdate(data);
             }
 

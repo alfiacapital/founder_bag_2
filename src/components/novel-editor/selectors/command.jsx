@@ -103,6 +103,7 @@ const Button = ({ children, className = "", size = "sm", variant = "ghost", onCl
   const sizeClasses = {
     sm: "h-9 px-3 text-sm",
     icon: "h-10 w-10",
+    aymane: "py-1 px-1",
   };
   const variantClasses = {
     ghost: "hover:bg-accent hover:text-accent-foreground",

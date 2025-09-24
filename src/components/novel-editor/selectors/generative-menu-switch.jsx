@@ -47,7 +47,7 @@ const GenerativeMenuSwitch = ({ children, open, onOpenChange }) => {
           }
         },
       }}
-      className="flex w-fit max-w-[90vw] overflow-hidden rounded-md !border !border-dark-stroke bg-dark-bg2 shadow-xl"
+      className="flex w-fit max-w-[90vw] overflow-hidden rounded-md !border !border-[#1f1f1f] bg-dark-bg2 shadow-xl"
     >
       {open && <AISelector open={open} onOpenChange={onOpenChange} />}
       {!open && (

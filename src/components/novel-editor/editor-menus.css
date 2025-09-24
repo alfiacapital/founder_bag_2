@@ -1,0 +1,452 @@
+/* Novel Editor Menu Styles - Slash Menu and Bubble Menu Styling */
+
+/* Slash Command Menu Styling */
+[data-tippy-root] {
+  z-index: 50 !important;
+}
+
+/* Slash command menu container */
+#slash-command {
+  background: white !important;
+  border: 1px solid #1f1f1f !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  padding: 0.25rem !important;
+  z-index: 9999 !important;
+}
+
+/* Dark mode for slash command menu */
+.dark #slash-command {
+  background: #070707 !important;
+  border: 1px solid #1f1f1f !important;
+  color: #ffffff !important;
+}
+
+/* Command items in slash menu */
+[data-command-item] {
+  display: flex !important;
+  width: 100% !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  border-radius: 0.375rem !important;
+  padding: 0.5rem 0.75rem !important;
+  margin: 0.125rem !important;
+  text-align: left !important;
+  font-size: 0.875rem !important;
+  transition: all 0.15s ease !important;
+  background: transparent !important;
+  color: #000000 !important;
+  border: none !important;
+  cursor: pointer !important;
+}
+
+[data-command-item]:hover {
+  background-color: #f8f9fa !important;
+  color: #000000 !important;
+}
+
+[data-command-item][aria-selected="true"] {
+  background-color: #f8f9fa !important;
+  color: #000000 !important;
+}
+
+[data-command-empty] {
+  padding: 0.75rem !important;
+  color: #6b7280 !important;
+  text-align: center !important;
+  font-size: 0.875rem !important;
+}
+
+/* Dark mode for command items */
+.dark [data-command-item] {
+  background: transparent !important;
+  color: #ffffff !important;
+}
+
+.dark [data-command-item]:hover {
+  background-color: #181818 !important;
+  color: #ffffff !important;
+}
+
+.dark [data-command-item][aria-selected="true"] {
+  background-color: #181818 !important;
+  color: #ffffff !important;
+}
+
+.dark [data-command-empty] {
+  color: #6b7280 !important;
+}
+
+/* Style the actual menu items from the DOM structure */
+#slash-command [cmdk-item] {
+  color: #000000 !important;
+  background: transparent !important;
+  border-radius: 0.375rem !important;
+  padding: 8px 8px !important;
+  margin: 2px !important;
+  transition: all 0.15s ease !important;
+}
+
+#slash-command [cmdk-item]:hover {
+  background-color: #f8f9fa !important;
+  color: #000000 !important;
+}
+
+#slash-command [cmdk-item][aria-selected="true"] {
+  background-color: #f8f9fa !important;
+  color: #000000 !important;
+}
+
+/* Style the icon containers */
+#slash-command [cmdk-item] .flex.h-10.w-10 {
+  background: transparent !important;
+  border: 1px solid #1f1f1f !important;
+  border-radius: 0.375rem !important;
+}
+
+/* Style the text content */
+#slash-command [cmdk-item] .font-medium {
+  color: #000000 !important;
+}
+
+#slash-command [cmdk-item] .text-xs.text-muted-foreground {
+  color: #6b7280 !important;
+}
+
+/* Dark mode for the actual menu items */
+.dark #slash-command [cmdk-item] {
+  color: #ffffff !important;
+  background: transparent !important;
+}
+
+.dark #slash-command [cmdk-item]:hover {
+  background-color: #181818 !important;
+  color: #ffffff !important;
+}
+
+.dark #slash-command [cmdk-item][aria-selected="true"] {
+  background-color: #181818 !important;
+  color: #ffffff !important;
+}
+
+.dark #slash-command [cmdk-item] .flex.h-10.w-10 {
+  background: transparent !important;
+  border: 1px solid #374151 !important;
+}
+
+.dark #slash-command [cmdk-item] .font-medium {
+  color: #ffffff !important;
+}
+
+.dark #slash-command [cmdk-item] .text-xs.text-muted-foreground {
+  color: #9ca3af !important;
+}
+
+/* Bubble Menu Styling */
+.novel-editor .ProseMirror .tippy-box {
+  background: white !important;
+  border: 1px solid #1f1f1f !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  padding: 0 !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  z-index: 9999 !important;
+}
+
+.novel-editor .ProseMirror .tippy-box .tippy-content {
+  padding: 0 !important;
+}
+
+/* Bubble menu container */
+.novel-editor .ProseMirror .tippy-box > div {
+  display: flex !important;
+  align-items: center !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* Separator styling */
+.novel-editor .ProseMirror .tippy-box [role="separator"] {
+  height: 1.5rem !important;
+  width: 1px !important;
+  background-color: #e5e7eb !important;
+  margin: 0 0.25rem !important;
+}
+
+/* Button styling in bubble menu */
+.novel-editor .ProseMirror .tippy-box button {
+  background: transparent !important;
+  border: none !important;
+  color: #000000 !important;
+  padding: 0.5rem !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  transition: all 0.15s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.25rem !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  height: 2.25rem !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+}
+
+.novel-editor .ProseMirror .tippy-box button:hover {
+  background-color: #f8f9fa !important;
+  color: #000000 !important;
+}
+
+.novel-editor .ProseMirror .tippy-box button:focus {
+  outline: none !important;
+  background-color: #f8f9fa !important;
+}
+
+/* Ask AI button specific styling */
+.novel-editor .ProseMirror .tippy-box button.text-purple-500 {
+  gap: 0.5rem !important;
+  display: flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+  flex-direction: row !important;
+  min-width: auto !important;
+  width: auto !important;
+}
+
+.novel-editor .ProseMirror .tippy-box button.text-purple-500 span {
+  display: inline !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+}
+
+/* Dark mode bubble menu */
+.dark .novel-editor .ProseMirror .tippy-box {
+  background: #070707 !important;
+  border: 1px solid #1f1f1f !important;
+  color: #ffffff !important;
+}
+
+.dark .novel-editor .ProseMirror .tippy-box [role="separator"] {
+  background-color: #374151 !important;
+}
+
+.dark .novel-editor .ProseMirror .tippy-box button {
+  color: #ffffff !important;
+}
+
+.dark .novel-editor .ProseMirror .tippy-box button:hover {
+  background-color: #181818 !important;
+  color: #ffffff !important;
+}
+
+.dark .novel-editor .ProseMirror .tippy-box button:focus {
+  background-color: #181818 !important;
+  color: #ffffff !important;
+}
+
+.dark .novel-editor .ProseMirror .tippy-box button.text-purple-500 {
+  color: #a855f7 !important;
+}
+
+.dark .novel-editor .ProseMirror .tippy-box button.text-purple-500:hover {
+  background-color: #181818 !important;
+  color: #a855f7 !important;
+}
+
+/* Dropdown styling */
+.novel-editor .ProseMirror .tippy-box .absolute {
+  background: white !important;
+  border: 1px solid #1f1f1f !important;
+  border-radius: 0.375rem !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  padding: 0.25rem !important;
+  z-index: 9999 !important;
+  color: #111827 !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  margin-top: 2px !important;
+  transform: none !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.dark .novel-editor .ProseMirror .tippy-box .absolute {
+  background: #070707 !important;
+  border: 1px solid #1f1f1f !important;
+  color: #ffffff !important;
+}
+
+/* Dropdown items */
+.novel-editor .ProseMirror .tippy-box .fixed > div {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0.5rem !important;
+  border-radius: 0.25rem !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  color: #111827 !important;
+}
+
+.novel-editor .ProseMirror .tippy-box .fixed > div:hover {
+  background-color: #f8f9fa !important;
+}
+
+.dark .novel-editor .ProseMirror .tippy-box .fixed > div {
+  color: #ffffff !important;
+}
+
+.dark .novel-editor .ProseMirror .tippy-box .fixed > div:hover {
+  background-color: #181818 !important;
+}
+
+/* Ensure dropdown items are properly styled */
+.novel-editor .ProseMirror .tippy-box .fixed [data-bubble-item] {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0.5rem !important;
+  border-radius: 0.25rem !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  color: #111827 !important;
+}
+
+.novel-editor .ProseMirror .tippy-box .fixed [data-bubble-item]:hover {
+  background-color: #f8f9fa !important;
+}
+
+.dark .novel-editor .ProseMirror .tippy-box .fixed [data-bubble-item] {
+  color: #ffffff !important;
+}
+
+.dark .novel-editor .ProseMirror .tippy-box .fixed [data-bubble-item]:hover {
+  background-color: #181818 !important;
+}
+
+/* Input styling in dropdowns */
+.novel-editor .ProseMirror .tippy-box input {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  color: #000000 !important;
+  padding: 0.5rem !important;
+  width: 100% !important;
+  font-size: 0.875rem !important;
+}
+
+.dark .novel-editor .ProseMirror .tippy-box input {
+  color: #ffffff !important;
+}
+
+/* Color picker styling */
+.novel-editor .ProseMirror .tippy-box .color-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  padding: 0.5rem !important;
+  border-radius: 0.25rem !important;
+  transition: all 0.15s ease !important;
+  cursor: pointer !important;
+}
+
+.novel-editor .ProseMirror .tippy-box .color-item:hover {
+  background-color: #f8f9fa !important;
+}
+
+.dark .novel-editor .ProseMirror .tippy-box .color-item:hover {
+  background-color: #181818 !important;
+}
+
+/* AI Response Content Styling */
+.ai-response-content {
+  color: #ffffff !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+}
+
+.ai-response-content h1,
+.ai-response-content h2,
+.ai-response-content h3,
+.ai-response-content h4,
+.ai-response-content h5,
+.ai-response-content h6 {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  margin: 0.5rem 0 !important;
+}
+
+.ai-response-content h1 {
+  font-size: 1.5rem !important;
+}
+
+.ai-response-content h2 {
+  font-size: 1.25rem !important;
+}
+
+.ai-response-content h3 {
+  font-size: 1.125rem !important;
+}
+
+.ai-response-content h4,
+.ai-response-content h5,
+.ai-response-content h6 {
+  font-size: 1rem !important;
+}
+
+.ai-response-content p {
+  color: #ffffff !important;
+  margin: 0.5rem 0 !important;
+}
+
+.ai-response-content strong,
+.ai-response-content b {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.ai-response-content ul,
+.ai-response-content ol {
+  color: #ffffff !important;
+  margin: 0.5rem 0 !important;
+  padding-left: 1.5rem !important;
+}
+
+.ai-response-content li {
+  color: #ffffff !important;
+  margin: 0.25rem 0 !important;
+}
+
+.ai-response-content li strong,
+.ai-response-content li b {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.ai-response-content code {
+  background-color: #374151 !important;
+  color: #ffffff !important;
+  padding: 0.125rem 0.25rem !important;
+  border-radius: 0.25rem !important;
+  font-size: 0.875rem !important;
+}
+
+.ai-response-content pre {
+  background-color: #374151 !important;
+  color: #ffffff !important;
+  padding: 0.75rem !important;
+  border-radius: 0.5rem !important;
+  overflow-x: auto !important;
+  margin: 0.5rem 0 !important;
+}
+
+.ai-response-content pre code {
+  background-color: transparent !important;
+  padding: 0 !important;
+}

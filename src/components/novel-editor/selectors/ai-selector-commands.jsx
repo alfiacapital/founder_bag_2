@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowDownWideNarrow, CheckCheck, RefreshCcwDot, StepForward, WrapText } from "lucide-react";
+import { ArrowDownWideNarrow, CheckCheck, RefreshCcwDot, StepForward, WrapText, Type, List, Hash } from "lucide-react";
 import { useEditor } from "novel";
 import { CommandGroup, CommandItem, CommandSeparator } from "./command";
 
@@ -47,6 +47,45 @@ const AISelectorCommands = ({ onSelect }) => {
             {option.label}
           </CommandItem>
         ))}
+      </CommandGroup>
+      <CommandSeparator />
+      <CommandGroup heading="Quick Formatting">
+        <CommandItem
+          onSelect={() => {
+            const { from, to } = editor.state.selection;
+            const text = editor.state.doc.textBetween(from, to);
+            onSelect(text, "bold");
+          }}
+          value="bold"
+          className="gap-2 px-4 text-dark-text2 hover:text-white"
+        >
+          <Type className="h-4 w-4 text-blue-500" />
+          **Bold** text
+        </CommandItem>
+        <CommandItem
+          onSelect={() => {
+            const { from, to } = editor.state.selection;
+            const text = editor.state.doc.textBetween(from, to);
+            onSelect(text, "heading");
+          }}
+          value="heading"
+          className="gap-2 px-4 text-dark-text2 hover:text-white"
+        >
+          <Hash className="h-4 w-4 text-blue-500" />
+          ### Heading
+        </CommandItem>
+        <CommandItem
+          onSelect={() => {
+            const { from, to } = editor.state.selection;
+            const text = editor.state.doc.textBetween(from, to);
+            onSelect(text, "list");
+          }}
+          value="list"
+          className="gap-2 px-4 text-dark-text2 hover:text-white"
+        >
+          <List className="h-4 w-4 text-blue-500" />
+          * Bullet point
+        </CommandItem>
       </CommandGroup>
       <CommandSeparator />
       <CommandGroup heading="Use AI to do more">
