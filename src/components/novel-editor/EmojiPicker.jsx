@@ -3,8 +3,6 @@ import EmojiPicker from 'emoji-picker-react';
 
 const CustomEmojiPicker = ({ onSelect, onClose, position = { top: 0, left: 0 } }) => {
   const handleEmojiClick = (emojiObject) => {
-    console.log('EmojiPicker: Emoji clicked:', emojiObject); // Debug log
-    console.log('EmojiPicker: Emoji string:', emojiObject.emoji); // Debug log
     onSelect(emojiObject.emoji);
     onClose();
   };
