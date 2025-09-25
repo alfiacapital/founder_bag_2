@@ -22,6 +22,7 @@ import { ColorSelector } from './selectors/color-selector.jsx';
 import { MathSelector } from './selectors/math-selector.jsx';
 import { Separator } from './selectors/separator.jsx';
 import GenerativeMenuSwitch from './selectors/generative-menu-switch.jsx';
+import EmojiPicker from './EmojiPicker.jsx';
 // Combine extensions with slash command
 const extensions = [...defaultExtensions, slashCommand];
 import './novel-editor.css';
@@ -33,16 +34,10 @@ const uploadFn = async (file) => {
   return URL.createObjectURL(file);
 };
 
-// Default content for the editor - First line is always H1 title (empty)
+// Default content for the editor - Description only (no title)
 const defaultEditorContent = {
   type: "doc",
-  content: [
-    {
-      type: "heading",
-      attrs: { level: 1 },
-      content: []
-    },
-  ]
+  content: []
 };
 
 const NovelEditor = ({
@@ -51,11 +46,20 @@ const NovelEditor = ({
   autoSave = true,
   saveDelay = 500,
   onUpdate = null,
-  initialContent: propInitialContent = null
+  initialContent: propInitialContent = null,
+  initialTitle = "📝 New Note" // New prop for initial title
 }) => {
   const [initialContent, setInitialContent] = useState(null);
   const [saveStatus, setSaveStatus] = useState("Saved");
   const editorRef = useRef(null);
+  
+  // Title state (separate from editor)
+  const [titleText, setTitleText] = useState('');
+  const [titleEmoji, setTitleEmoji] = useState('📝');
+  
+  // Emoji picker state
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [emojiPickerPosition, setEmojiPickerPosition] = useState({ top: 0, left: 0 });
   
   // Bubble menu state
   const [openNode, setOpenNode] = useState(false);
@@ -75,6 +79,83 @@ const NovelEditor = ({
     return new XMLSerializer().serializeToString(doc);
   };
 
+  // Initialize title from prop
+  useEffect(() => {
+    if (initialTitle) {
+      const emojiMatch = initialTitle.match(/^(\p{Emoji})\s*(.*)/u);
+      if (emojiMatch) {
+        setTitleEmoji(emojiMatch[1]);
+        setTitleText(emojiMatch[2] || '');
+      } else {
+        setTitleEmoji('📝');
+        setTitleText(initialTitle);
+      }
+    }
+  }, [initialTitle]);
+
+  // Handle emoji selection
+  const handleEmojiSelect = (emoji) => {
+    setTitleEmoji(emoji);
+    setShowEmojiPicker(false);
+    
+    // Trigger auto-save
+    const fullTitle = emoji + (titleText ? ' ' + titleText : '');
+    if (onUpdate) {
+      onUpdate({ title: fullTitle, content: editorRef.current?.getJSON() });
+    }
+  };
+
+  // Handle title text change
+  const handleTitleChange = (e) => {
+    const newText = e.target.value;
+    setTitleText(newText);
+    
+    // Trigger auto-save
+    const fullTitle = titleEmoji + (newText ? ' ' + newText : '');
+    if (onUpdate) {
+      onUpdate({ title: fullTitle, content: editorRef.current?.getJSON() });
+    }
+  };
+
+  // Handle Enter key in title input to focus editor
+  const handleTitleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      // Try to find and focus the editor element directly
+      const editorElement = document.querySelector('.ProseMirror');
+      if (editorElement) {
+        editorElement.focus();
+      }
+    }
+  };
+
+  // Handle emoji click
+  const handleEmojiClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    const rect = event.target.getBoundingClientRect();
+    setEmojiPickerPosition({
+      top: rect.bottom + 5,
+      left: rect.left
+    });
+    setShowEmojiPicker(true);
+  };
+
+  // Close emoji picker when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showEmojiPicker && !event.target.closest('.emoji-picker-container')) {
+        setShowEmojiPicker(false);
+      }
+    };
+
+    if (showEmojiPicker) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [showEmojiPicker]);
+
   // Ensure first line is always H1 and can't be deleted
   const ensureFirstLineIsH1 = (editor) => {
     const { state } = editor;
@@ -90,83 +171,44 @@ const NovelEditor = ({
   const debouncedUpdates = useDebouncedCallback(async (editor) => {
     const json = editor.getJSON();
 
-    // Ensure first line is always H1
-    ensureFirstLineIsH1(editor);
-
     setSaveStatus("Saved");
 
     // Call the onUpdate prop if provided
     if (onUpdate) {
-      onUpdate(json);
+      const fullTitle = titleEmoji + (titleText ? ' ' + titleText : '');
+      onUpdate({ title: fullTitle, content: json });
     }
   }, saveDelay);
 
-  // Handle special keydown behavior for title line
-  const handleTitleKeydown = (view, event) => {
-    const { state, dispatch } = view;
-    const { selection } = state;
-    const { $from } = selection;
-
-    // Check if we're in the first line (title)
-    const isInFirstLine = $from.depth === 1 && $from.parent === state.doc.firstChild;
-
-    if (isInFirstLine) {
-      // Allow Enter key only if there's text in the title
-      if (event.key === 'Enter') {
-        const titleText = $from.parent.textContent.trim();
-        if (titleText.length === 0) {
-          // Prevent Enter if title is empty
-          event.preventDefault();
-          return true;
-        }
-        // Allow Enter if title has text - this will create a new paragraph below
-      }
-
-      // Prevent slash commands in title
-      if (event.key === '/') {
-        event.preventDefault();
-        return true;
-      }
-
-      // Prevent bullet lists, numbered lists, etc. in title
-      if (event.key === '-' || event.key === '*') {
-        event.preventDefault();
-        return true;
-      }
-
-      // Prevent Backspace/Delete from deleting the entire title line
-      if ((event.key === 'Backspace' || event.key === 'Delete') && $from.parent.textContent.length === 0) {
-        event.preventDefault();
-        return true;
-      }
-
-      // Prevent Backspace at the beginning of title when title is empty
-      if (event.key === 'Backspace' && $from.parentOffset === 0 && $from.parent.textContent.length === 0) {
-        event.preventDefault();
-        return true;
-      }
-    }
-
-    // Prevent deletion of the first line entirely
-    if (event.key === 'Backspace' && $from.depth === 1 && $from.parent === state.doc.firstChild) {
-      const titleText = $from.parent.textContent;
-      if (titleText.length === 0 || ($from.parentOffset === 0 && titleText.length === 1)) {
-        event.preventDefault();
-        return true;
-      }
-    }
-
-    return false;
-  };
 
   useEffect(() => {
-    setInitialContent(propInitialContent || defaultEditorContent);
+    // Always ensure we have at least an empty paragraph for placeholder
+    const content = propInitialContent || defaultEditorContent;
+    if (!content.content || content.content.length === 0) {
+      setInitialContent({
+        type: "doc",
+        content: [
+          {
+            type: "paragraph",
+            content: []
+          }
+        ]
+      });
+    } else {
+      setInitialContent(content);
+    }
   }, [propInitialContent]);
 
   // Update editor content when initialContent changes
   useEffect(() => {
     if (initialContent && editorRef.current) {
-      editorRef.current.commands.setContent(initialContent);
+      console.log('Updating editor content:', initialContent); // Debug log
+      
+      // Force a complete content update
+      setTimeout(() => {
+        editorRef.current.commands.setContent(initialContent);
+        console.log('Content set, current editor content:', editorRef.current.getJSON()); // Debug log
+      }, 50);
     }
   }, [initialContent]);
 
@@ -174,18 +216,36 @@ const NovelEditor = ({
 
   return (
     <div className={`novel-editor w-full min-h-screen ${className}`}>
-
+      {/* Separate Title Input */}
+      <div className="w-full ">
+        <div className="title-input-container flex items-center ">
+          <button
+            onClick={handleEmojiClick}
+            className="emoji-button "
+            type="button"
+          >
+            {titleEmoji}
+          </button>
+          <input
+            type="text"
+            value={titleText}
+            onChange={handleTitleChange}
+            onKeyDown={handleTitleKeyDown}
+            placeholder="Untitled" 
+            className="title-input focus:outline-none text-[4rem] font-bold"
+            autoFocus
+          />
+        </div>
+      </div>
 
       <EditorRoot>
         <EditorContent
           initialContent={initialContent}
           extensions={extensions}
-          className="relative min-h-screen w-full max-w-4xl mx-auto px-8 py-8"
+          className="relative min-h-screen w-full pl-4"
           editorProps={{
             handleDOMEvents: {
               keydown: (view, event) => {
-                // Handle special behavior for first line (title)
-                handleTitleKeydown(view, event);
                 handleCommandNavigation(event);
               },
             },
@@ -201,30 +261,24 @@ const NovelEditor = ({
           }}
           onCreate={({ editor }) => {
             editorRef.current = editor;
-            // Add transaction filter to prevent deletion of first line
-            editor.view.dom.addEventListener('keydown', (event) => {
-              if (event.key === 'Backspace' || event.key === 'Delete') {
-                const { state } = editor;
-                const { selection } = state;
-                const { $from } = selection;
-
-                // If trying to delete the first line entirely
-                if ($from.depth === 1 && $from.parent === state.doc.firstChild) {
-                  const titleText = $from.parent.textContent;
-                  if (titleText.length === 0 || ($from.parentOffset === 0 && titleText.length === 1)) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    return false;
-                  }
-                }
+            
+            // Ensure editor has an empty paragraph for placeholder to show
+            setTimeout(() => {
+              const editorData = editor.getJSON();
+              if (!editorData.content || editorData.content.length === 0) {
+                editor.commands.insertContent({
+                  type: "paragraph",
+                  content: []
+                });
               }
-            });
+            }, 100);
           }}
           onUpdate={({ editor }) => {
             // Call onUpdate immediately for real-time updates
             if (onUpdate) {
               const data = editor.getJSON();
-              onUpdate(data);
+              const fullTitle = titleEmoji + (titleText ? ' ' + titleText : '');
+              onUpdate({ title: fullTitle, content: data });
             }
 
             debouncedUpdates(editor);
@@ -271,6 +325,15 @@ const NovelEditor = ({
 
         </EditorContent>
       </EditorRoot>
+      
+      {/* Emoji Picker */}
+      {showEmojiPicker && (
+        <EmojiPicker
+          onSelect={handleEmojiSelect}
+          onClose={() => setShowEmojiPicker(false)}
+          position={emojiPickerPosition}
+        />
+      )}
     </div>
   );
 };

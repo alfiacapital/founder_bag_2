@@ -19,7 +19,7 @@ function Notes() {
     const { data, isLoading } = useQuery({
         queryKey: ["notes", page],
         queryFn: async () => {
-            const res = await axiosClient.get(`/notes?page=${page}`);
+            const res = await axiosClient.get(`/notes/by-order?page=${page}`);
             return res.data;
         },
         keepPreviousData: true,

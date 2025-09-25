@@ -85,7 +85,6 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
             <span className={`text-sm  font-bold pt-1  transition-all duration-300 ease-in-out ${active ? "text-white" : "text-dark-text2"}`}>{label}</span>
         </div>
     );
-    console.log(notes)
 
     return (
         <>
@@ -143,8 +142,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                 <p className="text-[13px] font-bold text-dark-text2 px-4 pt-1 ">Private</p>
                                 <GoPlus className={"text-dark-text2 h-5 w-5 hover:text-white transition-all duration-300 ease-in-out cursor-pointer "} onClick={async () => {
                                     await axiosClient.post('/notes', {
-                                        title: 'New Note',
-                                        description: ''
+                                        title: '📝 New Note',
                                     }).then(response => {
                                         queryClient.invalidateQueries({ queryKey: ["notes"] });
                                         navigate(`/note/${response.data._id}`);
@@ -159,8 +157,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                     label="Add new"
                                     onClick={() => {
                                         axiosClient.post('/notes', {
-                                            title: 'New Note',
-                                            description: ''
+                                            title: '📝 New Note',
                                         }).then(response => {
                                             queryClient.invalidateQueries({ queryKey: ["notes"] });
                                             navigate(`/note/${response.data._id}`);

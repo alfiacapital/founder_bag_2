@@ -32,9 +32,6 @@ const aiHighlight = AIHighlight;
 // Placeholder extension with custom configuration
 const placeholder = Placeholder.configure({
   placeholder: ({ node }) => {
-    if (node.type.name === "heading" && node.attrs.level === 1) {
-      return "New Note";
-    }
     return "Press '/' for commands";
   },
   includeChildren: true,
