@@ -1,0 +1,276 @@
+/* Month View Styling */
+.rbc-month-view {
+    border: 0px solid #1f1f1f;
+}
+
+.rbc-month-row {
+    border-top: 1px solid #1f1f1f !important;
+}
+
+.rbc-month-header {
+    border: 0px solid #fff !important;
+}
+
+.rbc-header {
+    border: none !important;
+}
+
+.rbc-off-range-bg {
+    background-color: #000 !important;
+}
+
+.rbc-today {
+    background-color: #000 !important;
+}
+
+.rbc-button-link {
+    padding: 8px;
+    font-weight: bold;
+}
+
+.rbc-now .rbc-current {
+    color: #fff !important;
+}
+
+.rbc-date-cell.rbc-now.rbc-current button {
+    color: white;
+}
+
+.rbc-date-cell {
+    padding-bottom: 15px;
+}
+
+/* Week/Day View Styling - Simple and Clean */
+.rbc-time-view {
+    border: 1px solid #1f1f1f !important;
+}
+
+.rbc-time-view .rbc-header {
+    border-right: 1px solid #1f1f1f !important;
+    border-bottom: 1px solid #1f1f1f !important;
+    background-color: none !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.rbc-time-view .rbc-time-gutter {
+    border-right: 0px solid #1f1f1f !important;
+    background-color: none !important;
+    color: #9b9b96 !important;
+    padding-inline: 2px !important;
+}
+
+.rbc-time-view .rbc-time-content {
+    border-left: 0px solid #1f1f1f !important;
+}
+
+.rbc-time-view .rbc-timeslot-group {
+    border-bottom: 1px solid #1f1f1f !important;
+}
+
+.rbc-time-view .rbc-time-slot {
+    border-top: 0px solid #1f1f1f !important;
+    border-bottom: 0px solid #1f1f1f !important;
+}
+
+.rbc-time-view .rbc-day-slot {
+    border-right: 0px solid #1f1f1f !important;
+}
+
+.rbc-time-view .rbc-day-slot:last-child {
+    border-right: 0px !important;
+}
+
+.rbc-time-content {
+    border-top: 1px solid #1f1f1f !important;
+}
+
+.rbc-time-content > * + * > * {
+    border-left: 1px solid #1f1f1f !important;
+}
+
+.rbc-time-header.rbc-overflowing {
+    border-right: 1px solid #1f1f1f !important;
+    border-left: 1px solid #1f1f1f !important;
+}
+
+.rbc-time-header-content {
+    border-left: 1px solid #1f1f1f !important;
+}
+
+
+
+.rbc-time-view *:not(.rbc-event) {
+    border-left-color: #1f1f1f !important;
+}
+
+.rbc-row-content {
+    border-top: none !important;
+
+}
+
+
+.rbc-time-view .rbc-time-content > *:last-child {
+    border-right: none !important;
+}
+
+/* Alternative approach for day columns */
+.rbc-time-view table td {
+    border-right: none !important;
+}
+
+.rbc-time-view table td:last-child {
+    border-right: none !important;
+}
+
+.rbc-row  {
+    color: #fff !important;
+}
+
+.rbc-button-link {
+    color: #9b9b96 !important;
+}
+
+.rbc-date-cell.rbc-now.rbc-current button {
+    background-color: #212222; 
+    color: white;             
+    border-radius: 50%;        
+    width: 35px;               
+    height: 35px;             
+}
+
+/* Mini Calendar Styles */
+.mini-calendar .rbc-toolbar {
+    display: none !important;
+}
+
+.mini-calendar .rbc-month-view {
+    border: none !important;
+}
+
+.mini-calendar .rbc-month-row {
+    border-top: 1px solid #1f1f1f !important;
+    min-height: 30px !important;
+}
+
+.mini-calendar .rbc-date-cell {
+    padding: 2px !important;
+    font-size: 12px !important;
+}
+
+.mini-calendar .rbc-date-cell button {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 12px !important;
+    padding: 0 !important;
+    border-radius: 4px !important;
+    border: none !important;
+    background: transparent !important;
+    color: #9b9b96 !important;
+}
+
+.mini-calendar .rbc-date-cell button:hover {
+    background-color: #2a2a2a !important;
+    color: white !important;
+}
+
+.mini-calendar .rbc-date-cell.rbc-now button {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+.mini-calendar .rbc-date-cell.rbc-selected button {
+    background-color: #1f1f1f !important;
+    color: white !important;
+}
+
+.mini-calendar .rbc-off-range-bg {
+    background-color: transparent !important;
+}
+
+.mini-calendar .rbc-today {
+    background-color: transparent !important;
+}
+
+/* React Calendar Dark Theme */
+.react-calendar-custom {
+    background-color: #1a1a1a !important;
+    border: 1px solid #1f1f1f !important;
+    border-radius: 8px !important;
+    font-family: inherit !important;
+    width: 100% !important;
+}
+
+.react-calendar-custom .react-calendar__navigation {
+    background-color: #1a1a1a !important;
+    border-bottom: 1px solid #1f1f1f !important;
+    padding: 10px !important;
+}
+
+.react-calendar-custom .react-calendar__navigation button {
+    background-color: transparent !important;
+    color: #9b9b96 !important;
+    border: none !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+}
+
+.react-calendar-custom .react-calendar__navigation button:hover {
+    background-color: #2a2a2a !important;
+    color: white !important;
+}
+
+.react-calendar-custom .react-calendar__navigation button:disabled {
+    color: #444444 !important;
+}
+
+.react-calendar-custom .react-calendar__month-view__weekdays {
+    background-color: #1a1a1a !important;
+    border-bottom: 1px solid #1f1f1f !important;
+}
+
+.react-calendar-custom .react-calendar__month-view__weekdays__weekday {
+    color: #9b9b96 !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    padding: 8px 4px !important;
+}
+
+.react-calendar-custom .react-calendar__month-view__days {
+    background-color: #1a1a1a !important;
+}
+
+.react-calendar-custom .react-calendar__tile {
+    background-color: transparent !important;
+    color: #9b9b96 !important;
+    border: none !important;
+    font-size: 14px !important;
+    padding: 8px 4px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.react-calendar-custom .react-calendar__tile:hover {
+    background-color: #2a2a2a !important;
+    color: white !important;
+}
+
+.react-calendar-custom .react-calendar__tile--active {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+.react-calendar-custom .react-calendar__tile--now {
+    background-color: #212222 !important;
+    color: white !important;
+}
+
+.react-calendar-custom .react-calendar__tile--neighboringMonth {
+    color: #444444 !important;
+}
+
+.react-calendar-custom .react-calendar__tile--neighboringMonth:hover {
+    color: #666666 !important;
+}

@@ -27,10 +27,6 @@ export const router = createBrowserRouter([
                         element: <TaskBoard />
                     },
                     {
-                        path: "/test",
-                        element: <Test />
-                    },
-                    {
                         path: "/notes",
                         element: <Notes />
                     },
@@ -56,5 +52,9 @@ export const router = createBrowserRouter([
     {
         path: "*",
         element: <NotFound />
-    }
+    },
+    {
+        path: "/test",
+        element: <Test />
+    },
 ])

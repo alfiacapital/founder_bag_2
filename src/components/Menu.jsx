@@ -4,7 +4,6 @@ function Menu({ button, items = [] }) {
     const [open, setOpen] = useState(false);
     const menuRef = useRef(null);
 
-    // Close menu if clicked outside
     useEffect(() => {
         function handleClickOutside(e) {
             if (menuRef.current && !menuRef.current.contains(e.target)) {
