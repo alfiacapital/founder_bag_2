@@ -180,7 +180,7 @@ function MonthDateCellWrapper({ value, children }) {
 // Custom Week View using TimeGrid
 
 export default function MyCalendar() {
-  const [currentView, setCurrentView] = useState("week");
+  const [currentView, setCurrentView] = useState("month");
   const [currentDate, setCurrentDate] = useState(new Date());
   const [showMiniCalendar, setShowMiniCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
