@@ -9,6 +9,7 @@ import TaskBoard from "../pages/space/TaskBoard.jsx";
 import Test from "../pages/Test.jsx";
 import Note from "../pages/note/Note.jsx";
 import Notes from "@/pages/note/Notes.jsx";
+import Calendar from "@/pages/calendar/Calendar.jsx";
 
 
 export const router = createBrowserRouter([
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
                     }
                 ]
             },
+            {
+                path: "/calendar",
+                element: <Calendar />
+            }
 
         ],
     },

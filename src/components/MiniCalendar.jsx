@@ -42,7 +42,7 @@ function MiniCalendar({ onDateSelect, selectedDate, isOpen, onClose }) {
   return (
     <div 
       ref={calendarRef}
-      className="absolute top-full left-0 mt-2  rounded-lg shadow-lg z-50"
+      className="absolute top-full left-0 mt-2 bg-dark-bg2 border border-dark-stroke rounded-lg shadow-lg z-50 p-4"
       style={{ width: '280px' }}
     >
       {/* React Calendar */}

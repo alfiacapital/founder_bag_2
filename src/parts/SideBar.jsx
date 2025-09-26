@@ -20,10 +20,10 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
     const [createSpaceForm, setCreateSpaceForm] = useState(false)
     const [deleteModal, setDeleteModal] = useState({ isOpen: false, note: null })
     const mainMenuItems = [
-        { icon: GoSearch, label: "Search", id: "search", active: false },
-        { icon: LiaHomeSolid , label: "Home", id: "home", active: true },
-        { image: "/alfia-ai.png", label: "Alfia AI", id: "alfia-ai", active: false },
-        { icon: FaRegCalendarCheck , label: "Calendar", id: "calendar", active: false }
+        { icon: GoSearch, label: "Search", id: "search", active: false, onClick: () => {} },
+        { icon: LiaHomeSolid , label: "Home", id: "home", active: true, onClick: () => {} },
+        { image: "/alfia-ai.png", label: "Alfia AI", id: "alfia-ai", active: false, onClick: () => {} },
+        { icon: FaRegCalendarCheck , label: "Calendar", id: "calendar", active: false, onClick: () => navigate("/calendar") },
     ];
     const { data: notes = [] } = useQuery({
         queryKey: ["notes"],
@@ -126,7 +126,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                 image={item.image}
                                 label={item.label}
                                 active={false}
-                                onClick={() => console.log(`Clicked ${item.id}`)}
+                                onClick={() => item.onClick()}
                             />
                         ))}
                         <MenuItem
