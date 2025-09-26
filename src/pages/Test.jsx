@@ -161,7 +161,7 @@ function CustomDateCellWrapper({ value, children }) {
   const showDayName = isCurrentMonth && value.getDate() <= 7;
 
   return (
-      <div className="w-full border-l border-[#444444] p-2">
+      <div className="w-full border-l !border-[#1f1f1f] p-2">
         {showDayName && (
           <div className="text-sm font-bold text-dark-text-2 mb-0">
             {format(value, "EEE")}
@@ -180,7 +180,7 @@ function MonthDateCellWrapper({ value, children }) {
 // Custom Week View using TimeGrid
 
 export default function MyCalendar() {
-  const [currentView, setCurrentView] = useState("month");
+  const [currentView, setCurrentView] = useState("week");
   const [currentDate, setCurrentDate] = useState(new Date());
   const [showMiniCalendar, setShowMiniCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());

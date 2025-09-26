@@ -5,6 +5,7 @@
 
 .rbc-month-row {
     border-top: 1px solid #1f1f1f !important;
+    border-right: 1px solid #1f1f1f !important;
 }
 
 .rbc-month-header {
@@ -274,3 +275,4 @@
 .react-calendar-custom .react-calendar__tile--neighboringMonth:hover {
     color: #666666 !important;
 }
+
