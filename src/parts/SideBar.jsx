@@ -22,7 +22,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
     const mainMenuItems = [
         { icon: GoSearch, label: "Search", id: "search", active: false, onClick: () => {} },
         { icon: LiaHomeSolid , label: "Home", id: "home", active: true, onClick: () => {} },
-        { image: "/alfia-ai.png", label: "Alfia AI", id: "alfia-ai", active: false, onClick: () => {} },
+        { image: "/alfia-ai.png", label: "Alfia AI", id: "alfia-ai", active: false, onClick: () => navigate("/alfia-ai") },
         { icon: FaRegCalendarCheck , label: "Calendar", id: "calendar", active: false, onClick: () => navigate("/calendar") },
     ];
     const { data: notes = [] } = useQuery({
