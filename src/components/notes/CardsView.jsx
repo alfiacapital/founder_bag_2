@@ -64,7 +64,7 @@ function CardsView({setDeleteModal, setShareModal, setManageUsersModal}) {
                                         onClick: () => setManageUsersModal({ isOpen: true, note }),
                                     },
                                     {
-                                        label: "Delete",
+                                        label: "Trash",
                                         onClick: () => setDeleteModal({ isOpen: true, note }),
                                     },
                                 ]}

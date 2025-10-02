@@ -51,6 +51,8 @@ function Notes() {
                 .delete(`/notes/${note._id}`)
                 .then(() => {
                     queryClient.invalidateQueries({ queryKey: ["notes"] });
+                    queryClient.invalidateQueries({ queryKey: ["notes-trash-counts"] });
+                    queryClient.invalidateQueries({ queryKey: ["trashed-notes"] });
                     if (isActive) {
                         navigate("/");
                     }
@@ -116,10 +118,11 @@ function Notes() {
 
             <DeleteModal
                 isOpen={deleteModal.isOpen}
-                title="Delete Note"
-                message={`Are you sure you want to delete "${deleteModal.note?.title}"? This action cannot be undone.`}
+                title="Trash Note"
+                message={`Are you sure you want to trash "${deleteModal.note?.title}"? `}
                 onClick={confirmDeleteNote}
                 onClose={() => setDeleteModal({ isOpen: false, note: null })}
+                buttonMessage="Trash"
             />
 
             <ShareNote

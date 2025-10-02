@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {FaPlus, FaRegCalendarCheck, FaTimes} from "react-icons/fa";
 import {GoPlus, GoSearch} from "react-icons/go";
 import { LiaHomeSolid } from "react-icons/lia";
@@ -7,6 +7,7 @@ import { IoTrashOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 import SpaceForm from "../components/space/SpaceForm.jsx";
 import DeleteModal from "../components/DeleteModal.jsx";
+import SearchModal from "../components/SearchModal.jsx";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {axiosClient} from "@/api/axios.jsx";
@@ -19,8 +20,23 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
     const queryClient = useQueryClient()
     const [createSpaceForm, setCreateSpaceForm] = useState(false)
     const [deleteModal, setDeleteModal] = useState({ isOpen: false, note: null })
+    const [searchModalOpen, setSearchModalOpen] = useState(false)
+    
+    // Keyboard shortcut for search (Cmd/Ctrl + K)
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                setSearchModalOpen(prev => !prev);
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, []);
+
     const mainMenuItems = [
-        { icon: GoSearch, label: "Search", id: "search", active: false, onClick: () => {} },
+        { icon: GoSearch, label: "Search", id: "search", active: false, onClick: () => setSearchModalOpen(true) },
         { icon: LiaHomeSolid , label: "Home", id: "home", active: true, onClick: () => {} },
         { image: "/alfia-ai.png", label: "Alfia AI", id: "alfia-ai", active: false, onClick: () => navigate("/alfia-ai") },
         { icon: FaRegCalendarCheck , label: "Calendar", id: "calendar", active: false, onClick: () => navigate("/calendar") },
@@ -33,10 +49,23 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
         },
     });
 
+    // Query to get trashed notes count
+    const { data: trashCounts = 0 } = useQuery({
+        queryKey: ["notes-trash-counts"],
+        queryFn: async () => {
+            const res = await axiosClient.get('/notes/trash-counts');
+            return res.data.count || 0;
+        },
+    });
 
-
-    const trashItem = { icon: IoTrashOutline , label: "Trash", id: "trash", active: false };
-
+    // Query to get trashed notes count
+    const { data: spaceTrashCounts = 0 } = useQuery({
+        queryKey: ["space-trash-counts"],
+        queryFn: async () => {
+            const res = await axiosClient.get('/space/inactive/counts');
+            return res.data.count || 0;
+        },
+    });
     // Delete note handlers
     const handleDeleteNote = (note) => {
         setDeleteModal({ isOpen: true, note });
@@ -50,6 +79,8 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
             axiosClient.delete(`/notes/${note._id}`)
                 .then(() => {
                     queryClient.invalidateQueries({ queryKey: ["notes"] });
+                    queryClient.invalidateQueries({ queryKey: ["trashed-notes"] });
+                    queryClient.invalidateQueries({ queryKey: ["notes-trash-counts"] });
                     // If we're currently viewing this note, navigate away
                     if (isActive) {
                         navigate('/');
@@ -185,7 +216,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                                 }
                                             }}
                                         >
-                                            <span className={`text-sm font-bold pt-1 transition-all duration-300 ease-in-out ${
+                                            <span className={`text-sm font-bold pt-1 transition-all duration-300 truncate ease-in-out ${
                                                 isActive ? 'text-white' : 'text-dark-text2'
                                             }`}>{note?.title}</span>
                                             <button
@@ -252,7 +283,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                                 }
                                             }}
                                         >
-                                            <span className={`text-sm font-bold pt-1 transition-all duration-300 ease-in-out ${
+                                            <span className={`text-sm font-bold pt-1 transition-all truncate duration-300 ease-in-out ${
                                                 isActive ? 'text-white' : 'text-dark-text2'
                                             }`}>{note?.title}</span>
                                             <button
@@ -301,11 +332,34 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
 
                     {/* Trash - positioned at bottom */}
                     <div className="mt-auto pt-4 ">
-                        <MenuItem
-                            icon={trashItem.icon}
-                            label={trashItem.label}
-                            onClick={() => console.log(`Clicked ${trashItem.id}`)}
-                        />
+                        <div
+                            className={`flex items-center justify-between gap-2 p-1 px-4 rounded-button hover:bg-[#1f1f1f] text-dark-text2 hover:text-white cursor-pointer transition-all duration-300 ease-in-out ${
+                                location.pathname === "/trashed-notes" ? "bg-dark-active text-white" : "text-dark-text2"
+                            }`}
+                            onClick={() => navigate("/trashed-notes")}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault();
+                                    navigate("/trashed-notes");
+                                }
+                            }}
+                        >
+                            <div className='flex items-center gap-2'>
+                                <IoTrashOutline className="text-xl text-dark-text2 transition-all duration-300 ease-in-out" />
+                                <span className={`text-sm font-bold pt-1 transition-all duration-300 ease-in-out ${
+                                    location.pathname === "/trashed-notes" ? "text-white" : "text-dark-text2"
+                                }`}>
+                                    Trash
+                                </span>
+                            </div>
+                            {trashCounts > 0 && (
+                                <span className="ml-2 border border-dark-stroke bg-[#444444] text-white text-xs font-bold px-2 pt-1 rounded-full">
+                                    {trashCounts}
+                                </span>
+                            )}
+                        </div>
                     </div>
                 </nav>
 
@@ -328,11 +382,15 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                             <span className={`text-sm  font-bold pt-1  transition-all duration-300 ease-in-out `}>All my spaces</span>
                         </div>
                         <div
-                            className={`flex items-center gap-2 p-1 px-4 rounded-button bg-dark-active text-dark-text2 hover:bg-[#444444] hover:text-white  cursor-pointer transition-all duration-300 ease-in-out `}
+                            className={`flex justify-between items-center gap-2 p-1 px-4 rounded-button bg-dark-active text-dark-text2 hover:bg-[#444444] hover:text-white  cursor-pointer transition-all duration-300 ease-in-out `}
                             role="button"
                             tabIndex={0}
+                            onClick={() => navigate("/archived-spaces")}
                         >
                             <span className={`text-sm  font-bold pt-1  transition-all duration-300 ease-in-out `}>Archived spaces</span>
+                            {spaceTrashCounts > 0 && (
+                                <span className={`border border-dark-stroke bg-[#444444] text-white text-xs font-bold px-2 pt-1 rounded-full `}>{spaceTrashCounts}</span>
+                            )}
                         </div>
 
 
@@ -352,10 +410,15 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
             {createSpaceForm && <SpaceForm open={createSpaceForm} onClose={() => setCreateSpaceForm(!createSpaceForm)} mode={"create"} /> }
             <DeleteModal
                 isOpen={deleteModal.isOpen}
-                title="Delete Note"
-                message={`Are you sure you want to delete "${deleteModal.note?.title}"? This action cannot be undone.`}
+                title="Trash Note"
+                message={`Are you sure you want to trash "${deleteModal.note?.title}"?.`}
                 onClick={confirmDeleteNote}
                 onClose={cancelDeleteNote}
+                buttonMessage="Trash"
+            />
+            <SearchModal 
+                isOpen={searchModalOpen} 
+                onClose={() => setSearchModalOpen(false)} 
             />
         </>
     );

@@ -59,7 +59,7 @@ const TaskCard = ({
                             handleTaskComplete(task._id);
                         }}
                         className="
-                task-action-button absolute left-3.5 top-3.5 pb-1 -translate-y-1/2
+                task-action-button absolute left-3.5 top-3 pb-1 -translate-y-1/2
                 opacity-100 md:opacity-0 md:group-hover:opacity-100
                 transform md:-translate-x-2 md:group-hover:translate-x-0
                 transition-all duration-300 text-dark-text2 hover:text-white z-10 cursor-pointer

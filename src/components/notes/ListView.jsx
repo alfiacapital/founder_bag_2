@@ -115,7 +115,7 @@ export default function ListView({ notes, setNotes, setDeleteModal, setShareModa
                                         items={[
                                             { label: "Share", onClick: () => setShareModal({ isOpen: true, note }) },
                                             { label: "Manage", onClick: () => setManageUsersModal({ isOpen: true, note }) },
-                                            { label: "Delete", onClick: () => setDeleteModal({ isOpen: true, note }) },
+                                            { label: "Trash", onClick: () => setDeleteModal({ isOpen: true, note }) },
                                         ]}
                                     />
                                 </td>

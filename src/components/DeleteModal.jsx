@@ -2,7 +2,7 @@ import React from "react";
 import Modal from "./Modal.jsx";
 import { FiAlertTriangle } from "react-icons/fi";
 
-function DeleteModal({ isOpen, title, message, onClick, onClose }) {
+function DeleteModal({ isOpen, title, message, onClick, onClose, buttonMessage = "Delete" }) {
     return (
         <Modal isOpen={isOpen} onClose={onClose} size="sm">
             <div className="flex flex-col items-center text-center space-y-4">
@@ -33,7 +33,7 @@ function DeleteModal({ isOpen, title, message, onClick, onClose }) {
                         onClick={onClick}
                         className="flex-1 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-medium transition"
                     >
-                        Delete
+                        {buttonMessage}
                     </button>
                 </div>
             </div>

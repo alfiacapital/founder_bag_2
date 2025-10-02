@@ -121,7 +121,7 @@ function Home() {
                                             }
                                             items={[
                                                 { label: "Edit", onClick: () => setEditSpaceForm(space) },
-                                                { label: "Delete", danger: true, onClick: () => setDeleteSpaceForm(space) },
+                                                { label: "Archive", onClick: () => setDeleteSpaceForm(space) },
                                             ]}
                                         />
                                     </div>
@@ -190,10 +190,11 @@ function Home() {
             {createSpaceForm && <SpaceForm open={createSpaceForm} onClose={() => setCreateSpaceForm(!createSpaceForm)} mode={"create"} /> }
             {editSpaceForm && <SpaceForm open={!!editSpaceForm} onClose={() => setEditSpaceForm(null)} initialData={editSpaceForm} mode={"edit"} /> }
             {deleteSpaceForm &&  <DeleteModal
-                isOpen={!!deleteSpaceForm} title="Delete Space"
-                message="Are you sure you want to delete this Space? This action cannot be undone."
+                isOpen={!!deleteSpaceForm} title="Archive Space"
+                message="Are you sure you want to archive this Space? Archived spaces will be hidden from your workspace but can be restored later. This action will not delete any data."
                 onClick={() => deleteSpace(deleteSpaceForm)}
                 onClose={() => setDeleteSpaceForm(null)}
+                buttonMessage="Archive"
             />}
         </>
     );

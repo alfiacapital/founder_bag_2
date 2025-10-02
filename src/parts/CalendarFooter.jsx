@@ -7,7 +7,7 @@ function CalendarFooter() {
     return (
         <>
             {/* Responsive Footer */}
-            <footer className={"flex flex-col sm:flex-row justify-between items-start sm:items-center p-2 sm:p-6 sm:py-[15px] px-4 sm:px-8 md:px-10  border-dark-stroke bg-dark-bg border-l border-r-2 gap-4 sm:gap-0"}>
+            <footer className={"flex flex-col sm:flex-row justify-between items-start sm:items-center py-3 px-4  border-dark-stroke bg-dark-bg border-l border-r-2 "}>
                 {/* Left Section - Navigation */}
                 <div className="flex flex-wrap gap-2 sm:gap-2">
                     <button onClick={() => navigate("/")}

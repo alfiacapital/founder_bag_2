@@ -6,9 +6,11 @@ import ReportsLayout from "../layout/ReportsLayout.jsx";
 import Reports from "../pages/Reports.jsx";
 import AuthenticatedLayout from "../layout/AuthenticatedLayout.jsx";
 import TaskBoard from "../pages/space/TaskBoard.jsx";
+import ArchivedSpaces from "../pages/space/ArchivedSpaces.jsx";
 import Test from "../pages/Test.jsx";
 import Note from "../pages/note/Note.jsx";
 import Notes from "@/pages/note/Notes.jsx";
+import TrashedNotes from "../pages/note/TrashedNotes.jsx";
 import Calendar from "@/pages/calendar/Calendar.jsx";
 import AlfiaAI from "@/pages/alfia-ai/AlfiaAI.jsx";
 
@@ -35,6 +37,14 @@ export const router = createBrowserRouter([
                     {
                         path: "/note/:id",
                         element: <Note />
+                    },
+                    {
+                        path: "/archived-spaces",
+                        element: <ArchivedSpaces />
+                    },
+                    {
+                        path: "/trashed-notes",
+                        element: <TrashedNotes />
                     },
 
                 ]
