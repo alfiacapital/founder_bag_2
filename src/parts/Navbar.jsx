@@ -1,6 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { IoIosArrowDown } from "react-icons/io";
 import { FaBars } from "react-icons/fa";
+import { useUserContext } from '@/context/UserProvider';
+import Menu from '@/components/Menu';
+import { getUserImage } from '@/utils/getUserImage';
+import { axiosClient } from '@/api/axios';
+import { useNavigate } from 'react-router-dom';
 
 function generateFakeKey(length = 256) {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -24,6 +29,7 @@ function Navbar({ setSidebarOpen }) {
     const [open, setOpen] = useState(false);
     const dropdownRef = useRef(null);
     const darkMode = true;
+    const { user, logout } = useUserContext()
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -103,6 +109,20 @@ function Navbar({ setSidebarOpen }) {
                 >
                     Docs
                 </span>
+                <Menu
+                    button={
+                        <img src={getUserImage(user.image)} alt="Avatar" className="h-10 w-10 rounded-full border border-dark-stroke hover:border-dark-stroke hover:bg-dark-hover hover:text-white" />
+                    }
+                    items={[
+                        {
+                            label: "Logout",
+                            onClick: async () => {
+                                logout()
+                                window.location.href = import.meta.env.VITE_MAIN_APP_URL
+                            },
+                        },
+                    ]}
+                />
             </nav>
 
             <button 
