@@ -148,6 +148,12 @@ export default function AlfiaAI() {
 
     const activeConversation = conversations.find(c => c._id === activeConversationId);
 
+    // Detect if text is Arabic/RTL
+    const isArabic = (text) => {
+        const arabicPattern = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
+        return arabicPattern.test(text);
+    };
+
     return (
         <div className="flex flex-col h-screen bg-dark-bg2 text-white overflow-hidden">
             {/* Navbar */}
@@ -256,6 +262,7 @@ export default function AlfiaAI() {
                                                 ? 'bg-blue-600 text-white'
                                                 : 'bg-[#1a1a1a] border border-[#1f1f1f]'
                                         }`}
+                                        dir={isArabic(message.content) ? 'rtl' : 'ltr'}
                                     >
                                         <div className="flex items-start gap-3">
                                             {message.role === 'assistant' && (
@@ -274,24 +281,24 @@ export default function AlfiaAI() {
                                                     <div className="text-sm leading-relaxed prose prose-invert prose-sm max-w-none">
                                                         <ReactMarkdown
                                                             components={{
-                                                                // Customize markdown elements
+                                                                // Customize markdown elements with RTL support
                                                                 h1: ({...props}) => <h1 className="text-xl font-bold mb-2 mt-4" {...props} />,
                                                                 h2: ({...props}) => <h2 className="text-lg font-bold mb-2 mt-3" {...props} />,
                                                                 h3: ({...props}) => <h3 className="text-base font-bold mb-1 mt-2" {...props} />,
                                                                 p: ({...props}) => <p className="mb-2" {...props} />,
-                                                                ul: ({...props}) => <ul className="list-disc list-inside mb-2 space-y-1" {...props} />,
-                                                                ol: ({...props}) => <ol className="list-decimal list-inside mb-2 space-y-1" {...props} />,
-                                                                li: ({...props}) => <li className="ml-2" {...props} />,
+                                                                ul: ({...props}) => <ul className={`list-disc mb-2 space-y-1 ${isArabic(message.content) ? 'list-inside mr-4' : 'list-inside'}`} {...props} />,
+                                                                ol: ({...props}) => <ol className={`list-decimal mb-2 space-y-1 ${isArabic(message.content) ? 'list-inside mr-4' : 'list-inside'}`} {...props} />,
+                                                                li: ({...props}) => <li className={isArabic(message.content) ? 'mr-2' : 'ml-2'} {...props} />,
                                                                 code: ({inline, ...props}) => 
                                                                     inline ? (
-                                                                        <code className="bg-gray-800 px-1 py-0.5 rounded text-sm" {...props} />
+                                                                        <code className="bg-gray-800 px-1 py-0.5 rounded text-sm" dir="ltr" {...props} />
                                                                     ) : (
-                                                                        <code className="block bg-gray-800 p-2 rounded my-2 overflow-x-auto" {...props} />
+                                                                        <code className="block bg-gray-800 p-2 rounded my-2 overflow-x-auto" dir="ltr" {...props} />
                                                                     ),
                                                                 strong: ({...props}) => <strong className="font-bold text-white" {...props} />,
                                                                 em: ({...props}) => <em className="italic" {...props} />,
                                                                 a: ({...props}) => <a className="text-blue-400 hover:underline" {...props} />,
-                                                                blockquote: ({...props}) => <blockquote className="border-l-4 border-gray-600 pl-4 italic my-2" {...props} />,
+                                                                blockquote: ({...props}) => <blockquote className={`border-gray-600 pl-4 italic my-2 ${isArabic(message.content) ? 'border-r-4 pr-4' : 'border-l-4'}`} {...props} />,
                                                             }}
                                                         >
                                                             {message.content}

@@ -1,15 +1,17 @@
 import React from 'react';
 import Footer from "../parts/Footer.jsx";
 import {IoIosArrowBack} from "react-icons/io";
-import {Outlet} from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
 
 function ReportsLayout() {
+    const navigate = useNavigate();
     return (
         <div className={"flex flex-col h-screen bg-black text-white overflow-hidden"}>
             {/* TOP BAR */}
             <div className={"flex items-center justify-between px-4 md:px-6 py-5   bg-dark-bg2 border-b border-dark-stroke"}>
                 <div className={"flex items-center space-x-4"}>
-                    <div className={"flex items-center font-medium text-dark-text2 cursor-pointer hover:text-white transition duration-300 ease-in-out"}>
+                    <div onClick={() => navigate("/")}
+                        className={"flex items-center font-medium text-dark-text2 cursor-pointer hover:text-white transition duration-300 ease-in-out hover:border-[#444444]"}>
                         <IoIosArrowBack className={"text-md"} />
                         <span className={"mt-1 text-sm"}>BACK</span>
                     </div>

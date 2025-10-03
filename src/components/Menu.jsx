@@ -23,7 +23,15 @@ function Menu({ button, items = [] }) {
 
             {/* Dropdown menu */}
             {open && (
-                <div className="absolute right-0 mt-1 w-40 origin-top-right rounded-lg bg-dark-bg2 border border-dark-stroke shadow-lg z-50">
+                <div 
+                    className={`absolute right-0 mt-1 w-40 origin-top-right rounded-lg bg-dark-bg2 border border-dark-stroke shadow-lg z-50 ${
+                        items.length > 4 ? 'max-h-[240px] overflow-y-auto menu-scroll' : ''
+                    }`}
+                    style={{
+                        scrollbarWidth: 'thin',
+                        scrollbarColor: '#444444 #1a1a1a'
+                    }}
+                >
                     {items.map((item, idx) => (
                         <button
                             key={idx}

@@ -88,7 +88,7 @@ function ArchivedSpaces() {
                             const tasks = Array.isArray(space.tasks) ? space.tasks : [];
                             const tasksCount = space.tasksCount || tasks.length;
 
-                            return (
+    return (
                                 <div
                                     key={space._id}
                                     className="group bg-dark-bg border border-dark-stroke rounded-2xl p-6 hover:border-[#444444] transition-all duration-300 flex flex-col h-[280px] relative"
