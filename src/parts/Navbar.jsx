@@ -115,6 +115,10 @@ function Navbar({ setSidebarOpen }) {
                     }
                     items={[
                         {
+                            label: "Profile",
+                            onClick: () => window.location.href = import.meta.env.VITE_MAIN_APP_URL+"/user/profile?tab=information",
+                        },
+                        {
                             label: "Logout",
                             onClick: async () => {
                                 logout()
