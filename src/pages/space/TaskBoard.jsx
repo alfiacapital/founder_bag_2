@@ -107,54 +107,54 @@ function TaskBoard() {
     }
 
     return (
-        <div className="bg-dark- h-full  md:max-h-screen overflow-hidden">
+        <div className="bg-dark-bg min-h-screen overflow-hidden">
             <div className="h-full flex flex-col">
-            
-
-                {/* Task Board */}
-                <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-0 pr-4 md:p-6">
-                    {statuses.slice(0, 4).map((status) => (
-                        <StatusColumn
-                            key={status._id}
-                            status={status}
-                            tasksByStatus={tasksByStatus}
-                            draggedTask={taskOperations.draggedTask}
-                            draggedOverStatus={taskOperations.draggedOverStatus}
-                            creatingTaskFor={taskCreation.creatingTaskFor}
-                            setCreatingTaskFor={taskCreation.setCreatingTaskFor}
-                            newTask={taskCreation.newTask}
-                            setNewTask={taskCreation.setNewTask}
-                            createCardRef={taskCreation.createCardRef}
-                            editingTask={taskOperations.editingTask}
-                            editingField={taskOperations.editingField}
-                            editValue={taskOperations.editValue}
-                            setEditValue={taskOperations.setEditValue}
-                            currentEditValueRef={taskOperations.currentEditValueRef}
-                            handleDragOver={taskOperations.handleDragOver}
-                            handleDragLeave={taskOperations.handleDragLeave}
-                            handleDrop={taskOperations.handleDrop}
-                            handleDragStart={taskOperations.handleDragStart}
-                            handleTaskComplete={taskOperations.handleTaskComplete}
-                            handleTaskDelete={taskOperations.handleTaskDelete}
-                            handleTaskCopy={taskOperations.handleTaskCopy}
-                            handleEditStart={taskOperations.handleEditStart}
-                            handleEditSave={taskOperations.handleEditSave}
-                            handleEditCancel={taskOperations.handleEditCancel}
-                            handleEditKeyDown={taskOperations.handleEditKeyDown}
-                            visibleSubtasks={subtaskOperations.visibleSubtasks}
-                            toggleSubtasks={subtaskOperations.toggleSubtasks}
-                            addingSubtaskFor={subtaskOperations.addingSubtaskFor}
-                            newSubtaskTitle={subtaskOperations.newSubtaskTitle}
-                            setNewSubtaskTitle={subtaskOperations.setNewSubtaskTitle}
-                            setAddingSubtaskFor={subtaskOperations.setAddingSubtaskFor}
-                            handleAddSubtask={subtaskOperations.handleAddSubtask}
-                            editingSubtaskId={subtaskOperations.editingSubtaskId}
-                            editSubtaskValue={subtaskOperations.editSubtaskValue}
-                            setEditingSubtaskId={subtaskOperations.setEditingSubtaskId}
-                            setEditSubtaskValue={subtaskOperations.setEditSubtaskValue}
-                            onEnterFocusMode={handleEnterFocusMode}
-                        />
-                    ))}
+                {/* Task Board - Responsive Grid */}
+                <div className="flex-1 overflow-x-auto overflow-y-hidden px-4 md:px-6 py-4 md:py-6">
+                    <div className="h-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4 lg:gap-6 min-w-min">
+                        {statuses.slice(0, 4).map((status) => (
+                            <StatusColumn
+                                key={status._id}
+                                status={status}
+                                tasksByStatus={tasksByStatus}
+                                draggedTask={taskOperations.draggedTask}
+                                draggedOverStatus={taskOperations.draggedOverStatus}
+                                creatingTaskFor={taskCreation.creatingTaskFor}
+                                setCreatingTaskFor={taskCreation.setCreatingTaskFor}
+                                newTask={taskCreation.newTask}
+                                setNewTask={taskCreation.setNewTask}
+                                createCardRef={taskCreation.createCardRef}
+                                editingTask={taskOperations.editingTask}
+                                editingField={taskOperations.editingField}
+                                editValue={taskOperations.editValue}
+                                setEditValue={taskOperations.setEditValue}
+                                currentEditValueRef={taskOperations.currentEditValueRef}
+                                handleDragOver={taskOperations.handleDragOver}
+                                handleDragLeave={taskOperations.handleDragLeave}
+                                handleDrop={taskOperations.handleDrop}
+                                handleDragStart={taskOperations.handleDragStart}
+                                handleTaskComplete={taskOperations.handleTaskComplete}
+                                handleTaskDelete={taskOperations.handleTaskDelete}
+                                handleTaskCopy={taskOperations.handleTaskCopy}
+                                handleEditStart={taskOperations.handleEditStart}
+                                handleEditSave={taskOperations.handleEditSave}
+                                handleEditCancel={taskOperations.handleEditCancel}
+                                handleEditKeyDown={taskOperations.handleEditKeyDown}
+                                visibleSubtasks={subtaskOperations.visibleSubtasks}
+                                toggleSubtasks={subtaskOperations.toggleSubtasks}
+                                addingSubtaskFor={subtaskOperations.addingSubtaskFor}
+                                newSubtaskTitle={subtaskOperations.newSubtaskTitle}
+                                setNewSubtaskTitle={subtaskOperations.setNewSubtaskTitle}
+                                setAddingSubtaskFor={subtaskOperations.setAddingSubtaskFor}
+                                handleAddSubtask={subtaskOperations.handleAddSubtask}
+                                editingSubtaskId={subtaskOperations.editingSubtaskId}
+                                editSubtaskValue={subtaskOperations.editSubtaskValue}
+                                setEditingSubtaskId={subtaskOperations.setEditingSubtaskId}
+                                setEditSubtaskValue={subtaskOperations.setEditSubtaskValue}
+                                onEnterFocusMode={handleEnterFocusMode}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

@@ -117,17 +117,18 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
 
     return (
         <>
-            {/* Sidebar */}
+            {/* Sidebar - Hidden completely on large screens when closed */}
             <aside
                 className={`
                     fixed xl:static inset-y-0 left-0 z-40 
-                    w-72 sm:w-80 md:w-72 xl:w-[330px]
                     bg-black xl:py-6 px-6 xl:px-8
-                    transform transition-all duration-300 ease-in-out <<
-                    ${sidebarOpen ? "translate-x-0 py-6" : "-translate-x-full"} 
-                    xl:translate-x-0
+                    transform transition-all duration-300 ease-in-out
                     flex flex-col h-screen xl:h-full xl:my-0
                     shadow-xl xl:shadow-none xl:ml-0 
+                    ${sidebarOpen 
+                        ? "w-72 sm:w-80 md:w-72 xl:w-[330px] translate-x-0 py-6" 
+                        : "w-72 sm:w-80 md:w-72 -translate-x-full xl:hidden xl:w-0"
+                    }
                 `}
             >
 

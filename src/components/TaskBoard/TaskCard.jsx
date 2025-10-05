@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import DatePicker from "react-datepicker";
 import { FaRegSquareCheck, FaRegCopy } from "react-icons/fa6";
 import { FaTasks } from "react-icons/fa";
@@ -7,6 +7,9 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { MdOutlineCenterFocusStrong } from "react-icons/md";
 import { CustomTimeInput, CustomDateInput } from './CustomInputs';
 import SubtaskList from './SubtaskList';
+import { NoteEditor } from '@/components/novel-editor';
+import { axiosClient } from '@/api/axios';
+import { useQueryClient } from '@tanstack/react-query';
 
 const TaskCard = ({
                       task,
@@ -38,11 +41,58 @@ const TaskCard = ({
                       setEditSubtaskValue,
                       onEnterFocusMode
                   }) => {
+    const queryClient = useQueryClient();
     const editInputRef = useRef(null);
     const estimatedDatePickerRef = useRef(null);
     const dueDatePickerRef = useRef(null);
+    const [showNoteEditor, setShowNoteEditor] = useState(false);
+    const [noteContent, setNoteContent] = useState(null);
+
+    // Initialize note content when editor is shown
+    React.useEffect(() => {
+        if (showNoteEditor && task.description) {
+            try {
+                const parsedContent = JSON.parse(task.description);
+                setNoteContent(parsedContent);
+            } catch {
+                setNoteContent({
+                    type: "doc",
+                    content: [{
+                        type: "paragraph",
+                        content: [{
+                            type: "text",
+                            text: task.description
+                        }]
+                    }]
+                });
+            }
+        } else if (showNoteEditor) {
+            setNoteContent({
+                type: "doc",
+                content: []
+            });
+        }
+    }, [showNoteEditor, task.description]);
+
+    const handleSaveNote = async (data) => {
+        if (data && data.content) {
+            try {
+                // Direct API call to update task description using the correct endpoint
+                await axiosClient.put(`/edit-task/${task._id}`, {
+                    title: task.title,
+                    status: task.status._id,
+                    description: JSON.stringify(data.content)
+                });
+                // Invalidate tasks query to refresh data
+                queryClient.invalidateQueries('tasks');
+            } catch (error) {
+                console.error('Error saving note:', error);
+            }
+        }
+    };
 
     return (
+        <>
         <div
             key={task._id}
             draggable
@@ -145,8 +195,11 @@ const TaskCard = ({
                             title="note"
                             onClick={(e) => {
                                 e.stopPropagation();
+                                setShowNoteEditor(!showNoteEditor);
                             }}
-                            className="task-action-button text-dark-text2 hover:text-white cursor-pointer pr-1.5"
+                            className={`task-action-button cursor-pointer pr-1.5 transition-colors ${
+                                showNoteEditor ? 'text-blue-500' : 'text-dark-text2 hover:text-white'
+                            }`}
                         >
                             <BiNote className="h-5 w-5" />
                         </button>
@@ -305,7 +358,23 @@ const TaskCard = ({
                 setEditingSubtaskId={setEditingSubtaskId}
                 setEditSubtaskValue={setEditSubtaskValue}
             />
+
+            {/* Inline Note Editor */}
+            {showNoteEditor && noteContent && (
+                <div className="mt-3 border-t border-dark-stroke pt-3">
+                    <div className="bg-dark-bg rounded-lg border border-dark-stroke overflow-hidden" style={{ height: '200px' }}>
+                        <NoteEditor
+                            key={`note-${task._id}`}
+                            onUpdate={handleSaveNote}
+                            placeholder="Add notes for this task..."
+                            autoSave={true}
+                            initialContent={noteContent}
+                        />
+                    </div>
+                </div>
+            )}
         </div>
+        </>
     );
 };
 
