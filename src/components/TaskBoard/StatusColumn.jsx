@@ -40,7 +40,8 @@ const StatusColumn = ({
     editingSubtaskId,
     editSubtaskValue,
     setEditingSubtaskId,
-    setEditSubtaskValue
+    setEditSubtaskValue,
+    onEnterFocusMode
 }) => {
     return (
         <div
@@ -108,6 +109,7 @@ const StatusColumn = ({
                             editSubtaskValue={editSubtaskValue}
                             setEditingSubtaskId={setEditingSubtaskId}
                             setEditSubtaskValue={setEditSubtaskValue}
+                            onEnterFocusMode={onEnterFocusMode}
                         />
                     ))}
 

@@ -6,6 +6,7 @@ import ReportsLayout from "../layout/ReportsLayout.jsx";
 import Reports from "../pages/Reports.jsx";
 import AuthenticatedLayout from "../layout/AuthenticatedLayout.jsx";
 import TaskBoard from "../pages/space/TaskBoard.jsx";
+import FocusModePage from "../pages/space/FocusModePage.jsx";
 import ArchivedSpaces from "../pages/space/ArchivedSpaces.jsx";
 import Test from "../pages/Test.jsx";
 import Note from "../pages/note/Note.jsx";
@@ -13,6 +14,8 @@ import Notes from "@/pages/note/Notes.jsx";
 import TrashedNotes from "../pages/note/TrashedNotes.jsx";
 import Calendar from "@/pages/calendar/Calendar.jsx";
 import AlfiaAI from "@/pages/alfia-ai/AlfiaAI.jsx";
+import AlfiaAiLayout from "@/layout/AlfiaAiLayout.jsx";
+import SecondHome from "@/pages/SecondHome.jsx";
 
 
 export const router = createBrowserRouter([
@@ -46,7 +49,10 @@ export const router = createBrowserRouter([
                         path: "/trashed-notes",
                         element: <TrashedNotes />
                     },
-
+                    {
+                        path: "/v2",
+                        element: <SecondHome />
+                    }
                 ]
             },
             {
@@ -59,12 +65,21 @@ export const router = createBrowserRouter([
                 ]
             },
             {
+                element: <AlfiaAiLayout />,
+                children: [
+                    {
+                        path: "/alfia-ai",
+                        element: <AlfiaAI />
+                    }
+                ]
+            },
+            {
                 path: "/calendar",
                 element: <Calendar />
             },
             {
-                path: "/alfia-ai",
-                element: <AlfiaAI />
+                path: "/space/:id/focus",
+                element: <FocusModePage />
             }
 
         ],

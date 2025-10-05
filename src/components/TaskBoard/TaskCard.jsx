@@ -4,6 +4,7 @@ import { FaRegSquareCheck, FaRegCopy } from "react-icons/fa6";
 import { FaTasks } from "react-icons/fa";
 import { BiNote } from "react-icons/bi";
 import { AiOutlineDelete } from "react-icons/ai";
+import { MdOutlineCenterFocusStrong } from "react-icons/md";
 import { CustomTimeInput, CustomDateInput } from './CustomInputs';
 import SubtaskList from './SubtaskList';
 
@@ -34,7 +35,8 @@ const TaskCard = ({
                       editingSubtaskId,
                       editSubtaskValue,
                       setEditingSubtaskId,
-                      setEditSubtaskValue
+                      setEditSubtaskValue,
+                      onEnterFocusMode
                   }) => {
     const editInputRef = useRef(null);
     const estimatedDatePickerRef = useRef(null);
@@ -116,6 +118,18 @@ const TaskCard = ({
                 transition-all duration-300 z-20
             "
                     >
+                        {onEnterFocusMode && (
+                            <button
+                                title="focus"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onEnterFocusMode(task._id);
+                                }}
+                                className="task-action-button text-dark-text2 hover:text-blue-500 cursor-pointer pr-1.5"
+                            >
+                                <MdOutlineCenterFocusStrong className="h-5 w-5" />
+                            </button>
+                        )}
                         <button
                             title="subtasks"
                             onClick={(e) => {

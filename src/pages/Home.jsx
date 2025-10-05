@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { FiPlus } from "react-icons/fi";
+import { FiPlus, FiTrendingUp, FiTrendingDown, FiClock, FiCheckCircle, FiTarget } from "react-icons/fi";
 import SpaceForm from "../components/space/SpaceForm.jsx";
 import {useUserContext} from "../context/UserProvider.jsx";
 import {axiosClient} from "../api/axios.jsx";
@@ -10,6 +10,7 @@ import {MdDone, MdOpenInFull} from "react-icons/md";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import DeleteModal from "../components/DeleteModal.jsx";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 function Home() {
     const {user} = useUserContext()
@@ -19,6 +20,15 @@ function Home() {
         select: res => res.data,
 
     });
+
+    // Dashboard stats query
+    const { data: dashboardStats, isLoading: isLoadingStats, isError: isStatsError } = useQuery({
+        queryKey: ["dashboard-stats"],
+        queryFn: async () => await axiosClient.get("/dashboard/stats"),
+        select: res => res.data,
+        enabled: !!user?._id, // Only fetch when user is available
+    });
+
     const navigate = useNavigate()
     const hasSpaces = spaces.length > 0;
     const [createSpaceForm, setCreateSpaceForm] = useState(false)
@@ -30,7 +40,10 @@ function Home() {
         if (isError) {
             toast.error("Server Error!");
         }
-    }, [isError]);
+        if (isStatsError) {
+            toast.error("Failed to load dashboard statistics!");
+        }
+    }, [isError, isStatsError]);
 
     const deleteSpace = async (space) => {
         try {
@@ -45,13 +58,21 @@ function Home() {
         }
     }
 
+
+    const weeklyTrendData = [
+        { name: 'Week 1', productivity: 65 },
+        { name: 'Week 2', productivity: 72 },
+        { name: 'Week 3', productivity: 68 },
+        { name: 'Week 4', productivity: 85 }
+    ];
+
     return (
         <>
             {/* Greeting + Toolbar */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                 <div>
-                    <h2 className="text-2xl font-semibold">
-                        Good Afternoon, STARTUP FOUNDER
+                    <h2 className="text-2xl font-semibold capitalize">
+                        Good Afternoon, {user?.full_name}
                     </h2>
                     <p className="text-dark-text2 text-sm">
                         Ready to Alfia System through your afternoon?
@@ -59,7 +80,150 @@ function Home() {
                 </div>
             </div>
 
-            <h1 className="text-md font-medium mb-4 mt-6">Your Spaces</h1>
+            {/* Dashboard Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+                {/* Total Tasks Card */}
+                <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <p className="text-dark-text2 text-sm font-medium">Total Tasks</p>
+                            <p className="text-2xl font-bold text-white mt-1">
+                                {isLoadingStats ? "..." : dashboardStats?.totalTasks?.total || 0}
+                            </p>
+                        </div>
+                        <div className="p-3 bg-blue-600/20 rounded-button">
+                            <FiTarget className="text-blue-500 text-xl" />
+                        </div>
+                    </div>
+                    <div className="flex items-center mt-3">
+                        {dashboardStats?.totalTasks?.trend === 'up' ? (
+                            <FiTrendingUp className="text-green-500 text-sm mr-1" />
+                        ) : (
+                            <FiTrendingDown className="text-red-500 text-sm mr-1" />
+                        )}
+                        <span className={`text-sm font-medium ${
+                            dashboardStats?.totalTasks?.trend === 'up' ? 'text-green-500' : 'text-red-500'
+                        }`}>
+                            {dashboardStats?.totalTasks?.change > 0 ? '+' : ''}{dashboardStats?.totalTasks?.change || 0}%
+                        </span>
+                        <span className="text-dark-text2 text-sm ml-1">from last week</span>
+                    </div>
+                </div>
+
+                {/* Completed Tasks Card */}
+                <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <p className="text-dark-text2 text-sm font-medium">Completed</p>
+                            <p className="text-2xl font-bold text-white mt-1">
+                                {isLoadingStats ? "..." : dashboardStats?.completedTasks?.total || 0}
+                            </p>
+                        </div>
+                        <div className="p-3 bg-green-600/20 rounded-button">
+                            <FiCheckCircle className="text-green-500 text-xl" />
+                        </div>
+                    </div>
+                    <div className="flex items-center mt-3">
+                        {dashboardStats?.completedTasks?.trend === 'up' ? (
+                            <FiTrendingUp className="text-green-500 text-sm mr-1" />
+                        ) : (
+                            <FiTrendingDown className="text-red-500 text-sm mr-1" />
+                        )}
+                        <span className={`text-sm font-medium ${
+                            dashboardStats?.completedTasks?.trend === 'up' ? 'text-green-500' : 'text-red-500'
+                        }`}>
+                            {dashboardStats?.completedTasks?.change > 0 ? '+' : ''}{dashboardStats?.completedTasks?.change || 0}%
+                        </span>
+                        <span className="text-dark-text2 text-sm ml-1">from last week</span>
+                    </div>
+                </div>
+
+                {/* In Progress Tasks Card */}
+                <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <p className="text-dark-text2 text-sm font-medium">In Progress</p>
+                            <p className="text-2xl font-bold text-white mt-1">
+                                {isLoadingStats ? "..." : dashboardStats?.inProgressTasks?.total || 0}
+                            </p>
+                        </div>
+                        <div className="p-3 bg-yellow-600/20 rounded-button">
+                            <FiClock className="text-yellow-500 text-xl" />
+                        </div>
+                    </div>
+                    <div className="flex items-center mt-3">
+                        {dashboardStats?.inProgressTasks?.trend === 'up' ? (
+                            <FiTrendingUp className="text-yellow-500 text-sm mr-1" />
+                        ) : (
+                            <FiTrendingDown className="text-red-500 text-sm mr-1" />
+                        )}
+                        <span className={`text-sm font-medium ${
+                            dashboardStats?.inProgressTasks?.trend === 'up' ? 'text-yellow-500' : 'text-red-500'
+                        }`}>
+                            {dashboardStats?.inProgressTasks?.change > 0 ? '+' : ''}{dashboardStats?.inProgressTasks?.change || 0}%
+                        </span>
+                        <span className="text-dark-text2 text-sm ml-1">from last week</span>
+                    </div>
+                </div>
+
+                {/* Productivity Card */}
+                <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <p className="text-dark-text2 text-sm font-medium">Productivity</p>
+                            <p className="text-2xl font-bold text-white mt-1">
+                                {isLoadingStats ? "..." : `${dashboardStats?.productivity?.productivity || 0}%`}
+                            </p>
+                        </div>
+                        <div className="p-3 bg-purple-600/20 rounded-button">
+                            <FiTrendingUp className="text-purple-500 text-xl" />
+                        </div>
+                    </div>
+                    <div className="flex items-center mt-3">
+                        {dashboardStats?.productivity?.trend === 'up' ? (
+                            <FiTrendingUp className="text-purple-500 text-sm mr-1" />
+                        ) : (
+                            <FiTrendingDown className="text-red-500 text-sm mr-1" />
+                        )}
+                        <span className={`text-sm font-medium ${
+                            dashboardStats?.productivity?.trend === 'up' ? 'text-purple-500' : 'text-red-500'
+                        }`}>
+                            {dashboardStats?.productivity?.change > 0 ? '+' : ''}{dashboardStats?.productivity?.change || 0}%
+                        </span>
+                        <span className="text-dark-text2 text-sm ml-1">from last week</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Weekly Trend */}
+            {/* <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 mb-8">
+                <h3 className="text-lg font-semibold text-white mb-4">Productivity Trend</h3>
+                <ResponsiveContainer width="100%" height={250}>
+                    <LineChart data={weeklyTrendData}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                        <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#9CA3AF'}} />
+                        <YAxis axisLine={false} tickLine={false} tick={{fill: '#9CA3AF'}} />
+                        <Tooltip 
+                            contentStyle={{
+                                backgroundColor: '#1F2937',
+                                border: '1px solid #374151',
+                                borderRadius: '8px',
+                                color: '#F9FAFB'
+                            }}
+                        />
+                        <Line 
+                            type="monotone" 
+                            dataKey="productivity" 
+                            stroke="#8B5CF6" 
+                            strokeWidth={3}
+                            dot={{ fill: '#8B5CF6', strokeWidth: 2, r: 6 }}
+                            activeDot={{ r: 8, stroke: '#8B5CF6', strokeWidth: 2 }}
+                        />
+                    </LineChart>
+                </ResponsiveContainer>
+            </div> */}
+
+            <h1 className="text-md font-medium mb-4 mt-8">Your Spaces</h1>
 
             {!hasSpaces || isLoadingSpaces ? (
                 // Empty state

@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { axiosClient } from "../../api/axios.jsx";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
+import { MdOutlineCenterFocusStrong } from "react-icons/md";
 import StatusColumn from "../../components/TaskBoard/StatusColumn";
 import { useTaskOperations } from "../../hooks/useTaskOperations";
 import { useSubtaskOperations } from "../../hooks/useSubtaskOperations";
@@ -50,6 +51,48 @@ function TaskBoard() {
         return acc;
     }, {});
 
+    // Get all incomplete tasks for focus mode
+    const incompleteTasks = tasks.filter(task => task.status?.title !== 'done' && task.status?.title !== 'completed');
+
+    // Focus mode handler - opens in new window on the right
+    const handleEnterFocusMode = (taskId = null) => {
+        const targetTaskId = taskId || incompleteTasks[0]?._id;
+        if (targetTaskId) {
+            // Calculate window dimensions and position (20% width, right side)
+            const screenWidth = window.screen.availWidth;
+            const screenHeight = window.screen.availHeight;
+            const focusWindowWidth = Math.floor(screenWidth * 0.2); // 20% for focus mode
+            const leftPosition = screenWidth - focusWindowWidth; // Position on the right
+            
+            // Open focus mode window on the right (20%)
+            const focusUrl = `/space/${id}/focus?taskId=${targetTaskId}`;
+            const windowFeatures = `width=${focusWindowWidth},height=${screenHeight},left=${leftPosition},top=0,resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,status=no`;
+            
+            const newWindow = window.open(focusUrl, 'FocusMode', windowFeatures);
+            
+            if (newWindow) {
+                newWindow.focus();
+                
+                // Show helpful tip about window arrangement
+                toast.info(
+                    <div>
+                        <div className="font-semibold mb-1">Focus Mode Opened! 🎯</div>
+                        <div className="text-xs">
+                            Windows Key + ← to snap this window left
+                            <br />
+                            (Or drag this window to the left edge)
+                        </div>
+                    </div>,
+                    { autoClose: 5000 }
+                );
+            } else {
+                toast.error("Please allow pop-ups for Focus Mode");
+            }
+        } else {
+            toast.info("No tasks available for focus mode");
+        }
+    };
+
     // Loading and error states
     if (isLoading) {
         return (
@@ -66,6 +109,8 @@ function TaskBoard() {
     return (
         <div className="bg-dark- h-full  md:max-h-screen overflow-hidden">
             <div className="h-full flex flex-col">
+            
+
                 {/* Task Board */}
                 <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-0 pr-4 md:p-6">
                     {statuses.slice(0, 4).map((status) => (
@@ -107,6 +152,7 @@ function TaskBoard() {
                             editSubtaskValue={subtaskOperations.editSubtaskValue}
                             setEditingSubtaskId={subtaskOperations.setEditingSubtaskId}
                             setEditSubtaskValue={subtaskOperations.setEditSubtaskValue}
+                            onEnterFocusMode={handleEnterFocusMode}
                         />
                     ))}
                 </div>

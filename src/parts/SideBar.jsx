@@ -36,8 +36,6 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
     }, []);
 
     const mainMenuItems = [
-        { icon: GoSearch, label: "Search", id: "search", active: false, onClick: () => setSearchModalOpen(true) },
-        { icon: LiaHomeSolid , label: "Home", id: "home", active: true, onClick: () => {} },
         { image: "/alfia-ai.png", label: "Alfia AI", id: "alfia-ai", active: false, onClick: () => navigate("/alfia-ai") },
         { icon: FaRegCalendarCheck , label: "Calendar", id: "calendar", active: false, onClick: () => navigate("/calendar") },
     ];
@@ -129,7 +127,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                     ${sidebarOpen ? "translate-x-0 py-6" : "-translate-x-full"} 
                     xl:translate-x-0
                     flex flex-col h-screen xl:h-full xl:my-0
-                    shadow-xl xl:shadow-none xl:ml-0
+                    shadow-xl xl:shadow-none xl:ml-0 
                 `}
             >
 
@@ -150,6 +148,18 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                 <nav className="flex-1 bg-dark-bg2 p-4 rounded-default mb-4 xl:mb-5 border border-[#444444] overflow-y-auto sidebar-nav-scroll flex flex-col">
                     <div className="space-y-[1px] flex-1">
                         {/* Main menu items */}
+                        <MenuItem
+                            icon={GoSearch}
+                            label={"Search"}
+                            active={false}
+                            onClick={() => setSearchModalOpen(true)}
+                        />
+                        <MenuItem
+                            icon={LiaHomeSolid}
+                            label={"Home"}
+                            active={location.pathname === "/v2"}
+                            onClick={() => navigate("/v2")}
+                        />
                         {mainMenuItems.map((item) => (
                             <MenuItem
                                 key={item.id}

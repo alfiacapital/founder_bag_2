@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import { FiPlus, FiSend, FiTrash2, FiEdit2, FiMenu } from "react-icons/fi";
+import { FiPlus, FiSend, FiTrash2, FiMenu, FiX, FiMessageSquare } from "react-icons/fi";
 import { axiosClient } from "@/api/axios.jsx";
 import { format } from "date-fns";
-import Footer from "@/parts/Footer";
-import Navbar from "@/parts/Navbar";
 import ReactMarkdown from 'react-markdown';
 
 export default function AlfiaAI() {
@@ -12,8 +10,9 @@ export default function AlfiaAI() {
     const [messages, setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [showSidebar, setShowSidebar] = useState(true);
+    const [showSidebar, setShowSidebar] = useState(false);
     const messagesEndRef = useRef(null);
+    const sidebarRef = useRef(null);
 
     // Load conversations on mount
     useEffect(() => {
@@ -32,6 +31,21 @@ export default function AlfiaAI() {
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
+
+    // Close sidebar when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (showSidebar && sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+                const menuButton = document.getElementById('menu-button');
+                if (menuButton && !menuButton.contains(event.target)) {
+                    setShowSidebar(false);
+                }
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [showSidebar]);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -147,7 +161,6 @@ export default function AlfiaAI() {
     };
 
     const activeConversation = conversations.find(c => c._id === activeConversationId);
-
     // Detect if text is Arabic/RTL
     const isArabic = (text) => {
         const arabicPattern = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
@@ -155,130 +168,180 @@ export default function AlfiaAI() {
     };
 
     return (
-        <div className="flex flex-col h-screen bg-dark-bg2 text-white overflow-hidden">
-            {/* Navbar */}
-            <Navbar setSidebarOpen={() => {}} />
-
-            {/* Main Content */}
-            <div className="flex flex-1 overflow-hidden">
-                {/* Sidebar - Conversations List */}
-                {showSidebar && (
-                    <div className="w-80 bg-[#070707] border-r border-[#1f1f1f] flex flex-col">
-                    {/* Header */}
-                    <div className="p-4  border-[#1f1f1f]">
-                        <button
-                            onClick={createNewConversation}
-                            className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
-                        >
-                            <FiPlus size={20} />
-                            <span className="font-medium">New Conversation</span>
-                        </button>
-                    </div>
-
-                    {/* Conversations List */}
-                    <div className="flex-1 overflow-y-auto">
-                        {conversations.length === 0 ? (
-                            <div className="p-4 text-center text-dark-text2">
-                                No conversations yet. Create one to get started!
-                            </div>
-                        ) : (
-                            conversations.map((conv) => (
-                                <div
-                                    key={conv._id}
-                                    onClick={() => setActiveConversationId(conv._id)}
-                                    className={`group p-4 border-b border-[#1f1f1f] cursor-pointer transition-colors hover:bg-[#1a1a1a] ${
-                                        activeConversationId === conv._id ? 'bg-[#1a1a1a]' : ''
-                                    }`}
-                                >
-                                    <div className="flex items-start justify-between gap-2">
-                                        <div className="flex-1 min-w-0">
-                                            <h3 className="text-sm font-medium text-white truncate">
-                                                {conv.title || "New Conversation"}
-                                            </h3>
-                                            <p className="text-xs text-dark-text2 mt-1">
-                                                {conv.updatedAt ? format(new Date(conv.updatedAt), 'MMM d, h:mm a') : ''}
-                                            </p>
-                                        </div>
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                deleteConversation(conv._id);
-                                            }}
-                                            className="opacity-0 group-hover:opacity-100 text-dark-text2 hover:text-red-500 transition-all"
-                                        >
-                                            <FiTrash2 size={16} />
-                                        </button>
-                                    </div>
-                                </div>
-                            ))
-                        )}
-                    </div>
-                </div>
+        <div className="flex h-full w-full bg-dark-bg text-white overflow-hidden relative">
+            {/* Backdrop overlay */}
+            {showSidebar && (
+                <div 
+                    className="absolute inset-0 bg-black/60 backdrop-blur-sm z-40"
+                    onClick={() => setShowSidebar(false)}
+                />
             )}
 
-            {/* Main Chat Area */}
-            <div className="flex-1 flex flex-col">
-                {/* Header */}
-                <div className="h-16 border-b border-[#1f1f1f] flex items-center justify-between px-6">
-                    <div className="flex items-center gap-4">
+            {/* Sidebar - Conversations List */}
+            <div 
+                ref={sidebarRef}
+                className={`
+                    absolute inset-y-0 left-0 z-50
+                    w-80 bg-dark-bg2 border-r border-dark-stroke
+                    flex flex-col
+                    transform transition-transform duration-300 ease-in-out
+                    ${showSidebar ? 'translate-x-0' : '-translate-x-full'}
+                `}
+            >
+                    {/* Sidebar Header */}
+                    <div className="p-4 border-b border-dark-stroke flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <FiMessageSquare className="text-blue-500" size={20} />
+                            <span className="font-semibold">Conversations</span>
+                        </div>
                         <button
-                            onClick={() => setShowSidebar(!showSidebar)}
-                            className="text-dark-text2 hover:text-white transition-colors"
+                            onClick={() => setShowSidebar(false)}
+                            className="text-dark-text2 hover:text-white transition-colors p-1 hover:bg-dark-bg rounded"
                         >
-                            <FiMenu size={24} />
+                            <FiX size={20} />
                         </button>
-                        <h1 className="text-xl font-semibold">
-                            {activeConversation?.title || "ALFIA AI"}
-                        </h1>
+                    </div>
+
+                {/* New Conversation Button */}
+                <div className="p-4">
+                    <button
+                        onClick={() => {
+                            createNewConversation();
+                            setShowSidebar(false);
+                        }}
+                        className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 rounded-button transition-all hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                        <FiPlus size={20} />
+                        <span className="font-medium">New Chat</span>
+                    </button>
+                </div>
+
+                    {/* Conversations List */}
+                    <div className="flex-1 overflow-y-auto px-2">
+                        {conversations.length === 0 ? (
+                            <div className="p-6 text-center text-dark-text2">
+                                <FiMessageSquare className="mx-auto mb-3 opacity-30" size={48} />
+                                <p className="text-sm">No conversations yet</p>
+                                <p className="text-xs mt-1 opacity-70">Create one to get started!</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-1">
+                                {conversations.map((conv) => (
+                                    <div
+                                        key={conv._id}
+                                        onClick={() => {
+                                            setActiveConversationId(conv._id);
+                                            setShowSidebar(false);
+                                        }}
+                                        className={`
+                                            group relative px-3 py-3 rounded-button cursor-pointer 
+                                            transition-all duration-200
+                                            ${activeConversationId === conv._id 
+                                                ? 'bg-blue-600/20 border border-blue-600/30' 
+                                                : 'hover:bg-dark-bg border border-transparent'
+                                            }
+                                        `}
+                                    >
+                                        <div className="flex items-start justify-between gap-2">
+                                            <div className="flex-1 min-w-0">
+                                                <h3 className="text-sm font-medium text-white truncate mb-1">
+                                                    {conv.title || "New Conversation"}
+                                                </h3>
+                                                <p className="text-xs text-dark-text2">
+                                                    {conv.updatedAt ? format(new Date(conv.updatedAt), 'MMM d, h:mm a') : ''}
+                                                </p>
+                                            </div>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    deleteConversation(conv._id);
+                                                }}
+                                                className="opacity-0 group-hover:opacity-100 text-dark-text2 hover:text-red-500 transition-all p-1 hover:bg-red-500/10 rounded"
+                                            >
+                                                <FiTrash2 size={16} />
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+            </div>
+
+            {/* Main Chat Area */}
+            <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+                {/* Header */}
+                <div className="h-16 border-b border-dark-stroke flex items-center justify-between px-4 lg:px-6 bg-dark-bg2/50 backdrop-blur-sm flex-shrink-0">
+                    <div className="flex items-center gap-3">
+                        <button
+                            id="menu-button"
+                            onClick={() => setShowSidebar(!showSidebar)}
+                            className="text-dark-text2 hover:text-white transition-colors p-2 hover:bg-dark-bg rounded-button"
+                        >
+                            <FiMenu size={22} />
+                        </button>
+                        <div className="flex items-center gap-3">
+                            <img 
+                                src="/alfia-ai.png" 
+                                alt="ALFIA AI" 
+                                className="w-8 h-8 rounded-full"
+                            />
+                            <h1 className="text-lg lg:text-xl font-semibold truncate">
+                                {activeConversation?.title || "ALFIA AI"}
+                            </h1>
+                        </div>
                     </div>
                 </div>
 
                 {/* Messages Area */}
-                <div className="flex-1 overflow-y-auto p-6 space-y-6">
+                <div className="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6">
                     {messages.length === 0 && !isLoading ? (
                         <div className="flex items-center justify-center h-full">
-                            <div className="text-center max-w-md">
-                                <img 
-                                    src="/alfia-ai.png" 
-                                    alt="ALFIA AI" 
-                                    className="w-24 h-24 mx-auto mb-4 opacity-50"
-                                />
-                                <h2 className="text-2xl font-bold mb-2">Welcome to ALFIA AI</h2>
-                                <p className="text-dark-text2">
+                            <div className="text-center max-w-md px-4">
+                                <div className="relative mb-6">
+                                    <div className="absolute inset-0 blur-3xl bg-blue-600/20 rounded-full"></div>
+                                    <img 
+                                        src="/alfia-ai.png" 
+                                        alt="ALFIA AI" 
+                                        className="relative w-20 h-20 lg:w-24 lg:h-24 mx-auto"
+                                    />
+                                </div>
+                                <h2 className="text-xl lg:text-2xl font-bold mb-3">Welcome to ALFIA AI</h2>
+                                <p className="text-dark-text2 text-sm lg:text-base">
                                     Start a conversation by typing a message below. I'm here to help!
                                 </p>
                             </div>
                         </div>
                     ) : (
-                        <>
+                        <div className="max-w-4xl mx-auto space-y-3 sm:space-y-4 lg:space-y-6">
                             {messages.map((message, index) => (
                                 <div
                                     key={index}
                                     className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                                 >
                                     <div
-                                        className={`max-w-3xl px-6 py-4 rounded-2xl ${
+                                        className={`max-w-[90%] sm:max-w-[85%] lg:max-w-3xl px-3 py-2 sm:px-4 sm:py-3 lg:px-6 lg:py-4 rounded-2xl shadow-lg ${
                                             message.role === 'user'
-                                                ? 'bg-blue-600 text-white'
-                                                : 'bg-[#1a1a1a] border border-[#1f1f1f]'
+                                                ? 'bg-gradient-to-br from-blue-600 to-blue-700 text-white'
+                                                : 'bg-dark-bg2 border border-dark-stroke'
                                         }`}
                                         dir={isArabic(message.content) ? 'rtl' : 'ltr'}
                                     >
-                                        <div className="flex items-start gap-3">
+                                        <div className="flex items-start gap-2 sm:gap-3">
                                             {message.role === 'assistant' && (
                                                 <img 
                                                     src="/alfia-ai.png" 
                                                     alt="AI" 
-                                                    className="w-6 h-6 rounded-full"
+                                                    className="w-5 h-5 sm:w-6 sm:h-6 rounded-full flex-shrink-0 mt-1"
                                                 />
                                             )}
-                                             <div className="flex-1">
+                                            <div className="flex-1 min-w-0">
                                                 {message.role === 'user' ? (
-                                                    <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                                                    <p className="text-sm sm:text-base leading-relaxed whitespace-pre-wrap break-words">
                                                         {message.content}
                                                     </p>
                                                 ) : (
-                                                    <div className="text-sm leading-relaxed prose prose-invert prose-sm max-w-none">
+                                                    <div className="text-sm sm:text-base leading-relaxed prose prose-invert prose-sm max-w-none break-words">
                                                         <ReactMarkdown
                                                             components={{
                                                                 // Customize markdown elements with RTL support
@@ -315,38 +378,38 @@ export default function AlfiaAI() {
                             ))}
                             {isLoading && (
                                 <div className="flex justify-start">
-                                    <div className="max-w-3xl px-6 py-4 rounded-2xl bg-[#1a1a1a] border border-[#1f1f1f]">
-                                        <div className="flex items-center gap-3">
+                                    <div className="max-w-[90%] sm:max-w-[85%] lg:max-w-3xl px-3 py-2 sm:px-4 sm:py-3 lg:px-6 lg:py-4 rounded-2xl bg-dark-bg2 border border-dark-stroke shadow-lg">
+                                        <div className="flex items-center gap-2 sm:gap-3">
                                             <img 
                                                 src="/alfia-ai.png" 
                                                 alt="AI" 
-                                                className="w-6 h-6 rounded-full"
+                                                className="w-5 h-5 sm:w-6 sm:h-6 rounded-full flex-shrink-0"
                                             />
                                             <div className="flex gap-1">
-                                                <span className="w-2 h-2 bg-dark-text2 rounded-full animate-bounce"></span>
-                                                <span className="w-2 h-2 bg-dark-text2 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></span>
-                                                <span className="w-2 h-2 bg-dark-text2 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></span>
+                                                <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></span>
+                                                <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></span>
+                                                <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             )}
                             <div ref={messagesEndRef} />
-                        </>
+                        </div>
                     )}
                 </div>
 
                 {/* Input Area */}
-                <div className=" border-[#1f1f1f] p-6">
+                <div className="border-t border-dark-stroke p-3 sm:p-4 lg:p-6 bg-dark-bg2/50 backdrop-blur-sm flex-shrink-0">
                     <div className="max-w-4xl mx-auto">
-                        <div className="flex items-end gap-4 bg-[#1a1a1a] border border-[#1f1f1f] rounded-2xl p-3">
+                        <div className="flex items-end gap-2 sm:gap-3 bg-dark-bg border border-dark-stroke rounded-2xl p-3 sm:p-4 focus-within:border-blue-600/50 transition-colors">
                             <textarea
                                 value={inputMessage}
                                 onChange={(e) => setInputMessage(e.target.value)}
                                 onKeyPress={handleKeyPress}
                                 placeholder="Type your message..."
                                 disabled={isLoading}
-                                className="flex-1 bg-transparent text-white placeholder-dark-text2 resize-none focus:outline-none max-h-32 min-h-[24px]"
+                                className="flex-1 bg-transparent text-white placeholder-dark-text2 resize-none focus:outline-none max-h-32 min-h-[24px] text-sm lg:text-base"
                                 rows={1}
                                 style={{ 
                                     height: 'auto',
@@ -360,19 +423,15 @@ export default function AlfiaAI() {
                             <button
                                 onClick={sendMessage}
                                 disabled={!inputMessage.trim() || isLoading}
-                                className="flex items-center justify-center w-10 h-10 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed rounded-xl transition-colors"
+                                className="flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed rounded-xl transition-all hover:scale-105 active:scale-95 shadow-lg"
                             >
                                 <FiSend size={18} />
                             </button>
                         </div>
-                        <p className="text-xs text-dark-text2 text-center mt-3">
-                            Press Enter to send, Shift + Enter for new line
+                        <p className="text-xs text-dark-text2 text-center mt-2 sm:mt-3">
+                            Press <span className="text-white font-medium">Enter</span> to send, <span className="text-white font-medium">Shift + Enter</span> for new line
                         </p>
                     </div>
-                </div>
-
-                {/* Footer */}
-                <Footer />
                 </div>
             </div>
         </div>
