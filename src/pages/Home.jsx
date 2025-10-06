@@ -216,7 +216,7 @@ function Home() {
                 </ResponsiveContainer>
             </div> */}
 
-            <h1 className="text-md font-medium mb-4 mt-8">Your Spaces</h1>
+            <h1 className="text-md text-dark-text1 font-medium mb-4 mt-8">Your Spaces</h1>
 
             {!hasSpaces || isLoadingSpaces ? (
                 // Empty state

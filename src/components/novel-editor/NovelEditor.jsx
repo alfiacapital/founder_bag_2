@@ -22,7 +22,6 @@ import { ColorSelector } from './selectors/color-selector.jsx';
 import { MathSelector } from './selectors/math-selector.jsx';
 import { Separator } from './selectors/separator.jsx';
 import GenerativeMenuSwitch from './selectors/generative-menu-switch.jsx';
-import EmojiPicker from './EmojiPicker.jsx';
 // Combine extensions with slash command
 const extensions = [...defaultExtensions, slashCommand];
 import './novel-editor.css';
@@ -55,11 +54,6 @@ const NovelEditor = ({
   
   // Title state (separate from editor)
   const [titleText, setTitleText] = useState('');
-  const [titleEmoji, setTitleEmoji] = useState('📝');
-  
-  // Emoji picker state
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [emojiPickerPosition, setEmojiPickerPosition] = useState({ top: 0, left: 0 });
   
   // Bubble menu state
   const [openNode, setOpenNode] = useState(false);
@@ -82,28 +76,9 @@ const NovelEditor = ({
   // Initialize title from prop
   useEffect(() => {
     if (initialTitle) {
-      const emojiMatch = initialTitle.match(/^(\p{Emoji})\s*(.*)/u);
-      if (emojiMatch) {
-        setTitleEmoji(emojiMatch[1]);
-        setTitleText(emojiMatch[2] || '');
-      } else {
-        setTitleEmoji('📝');
-        setTitleText(initialTitle);
-      }
+      setTitleText(initialTitle);
     }
   }, [initialTitle]);
-
-  // Handle emoji selection
-  const handleEmojiSelect = (emoji) => {
-    setTitleEmoji(emoji);
-    setShowEmojiPicker(false);
-    
-    // Trigger auto-save
-    const fullTitle = emoji + (titleText ? ' ' + titleText : '');
-    if (onUpdate) {
-      onUpdate({ title: fullTitle, content: editorRef.current?.getJSON() });
-    }
-  };
 
   // Handle title text change
   const handleTitleChange = (e) => {
@@ -111,9 +86,8 @@ const NovelEditor = ({
     setTitleText(newText);
     
     // Trigger auto-save
-    const fullTitle = titleEmoji + (newText ? ' ' + newText : '');
     if (onUpdate) {
-      onUpdate({ title: fullTitle, content: editorRef.current?.getJSON() });
+      onUpdate({ title: newText, content: editorRef.current?.getJSON() });
     }
   };
 
@@ -128,33 +102,6 @@ const NovelEditor = ({
       }
     }
   };
-
-  // Handle emoji click
-  const handleEmojiClick = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    
-    const rect = event.target.getBoundingClientRect();
-    setEmojiPickerPosition({
-      top: rect.bottom + 5,
-      left: rect.left
-    });
-    setShowEmojiPicker(true);
-  };
-
-  // Close emoji picker when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (showEmojiPicker && !event.target.closest('.emoji-picker-container')) {
-        setShowEmojiPicker(false);
-      }
-    };
-
-    if (showEmojiPicker) {
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
-    }
-  }, [showEmojiPicker]);
 
   // Ensure first line is always H1 and can't be deleted
   const ensureFirstLineIsH1 = (editor) => {
@@ -175,8 +122,7 @@ const NovelEditor = ({
 
     // Call the onUpdate prop if provided
     if (onUpdate) {
-      const fullTitle = titleEmoji + (titleText ? ' ' + titleText : '');
-      onUpdate({ title: fullTitle, content: json });
+      onUpdate({ title: titleText, content: json });
     }
   }, saveDelay);
 
@@ -219,20 +165,13 @@ const NovelEditor = ({
       {/* Separate Title Input */}
       <div className="w-full ">
         <div className="title-input-container flex items-center ">
-          <button
-            onClick={handleEmojiClick}
-            className="emoji-button "
-            type="button"
-          >
-            {titleEmoji}
-          </button>
           <input
             type="text"
             value={titleText}
             onChange={handleTitleChange}
             onKeyDown={handleTitleKeyDown}
             placeholder="Untitled" 
-            className="title-input focus:outline-none text-[4rem] font-bold"
+            className="title-input focus:outline-none text-[2rem] font-bold w-full ml-3"
             autoFocus
           />
         </div>
@@ -277,8 +216,7 @@ const NovelEditor = ({
             // Call onUpdate immediately for real-time updates
             if (onUpdate) {
               const data = editor.getJSON();
-              const fullTitle = titleEmoji + (titleText ? ' ' + titleText : '');
-              onUpdate({ title: fullTitle, content: data });
+              onUpdate({ title: titleText, content: data });
             }
 
             debouncedUpdates(editor);
@@ -325,15 +263,6 @@ const NovelEditor = ({
 
         </EditorContent>
       </EditorRoot>
-      
-      {/* Emoji Picker */}
-      {showEmojiPicker && (
-        <EmojiPicker
-          onSelect={handleEmojiSelect}
-          onClose={() => setShowEmojiPicker(false)}
-          position={emojiPickerPosition}
-        />
-      )}
     </div>
   );
 };

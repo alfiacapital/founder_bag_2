@@ -226,7 +226,7 @@ const FocusModePage = () => {
 
     return (
         <div className="min-h-screen bg-dark-bg flex flex-col">
-            <audio ref={audioRef} src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIGGS56+qmY" preload="auto"></audio>
+            <audio ref={audioRef} src="/alarm-clock-90867.mp3" preload="auto"></audio>
 
             {/* Header */}
             <div className="bg-dark-bg2 border-b border-dark-stroke px-3 py-3">
@@ -234,7 +234,7 @@ const FocusModePage = () => {
                     <div className="flex items-center justify-between">
                         <button
                             onClick={() => window.close()}
-                            className="p-1.5 text-dark-text2 hover:text-white hover:bg-dark-active rounded-button transition-all"
+                            className="p-1.5 text-dark-text2 hover:text-dark-text1 hover:bg-dark-active rounded-button transition-all"
                             title="Close (ESC)"
                         >
                             <IoClose className="w-5 h-5" />
@@ -242,13 +242,13 @@ const FocusModePage = () => {
                         <div className={`w-2 h-2 rounded-full ${isRunning ? 'bg-green-500 animate-pulse' : 'bg-dark-text2'}`}></div>
                         <button
                             onClick={() => setSoundEnabled(!soundEnabled)}
-                            className={`p-1.5 rounded-button transition-all ${soundEnabled ? 'text-white' : 'text-dark-text2'}`}
+                            className={`p-1.5 rounded-button transition-all ${soundEnabled ? 'text-dark-text1' : 'text-dark-text2'}`}
                         >
                             {soundEnabled ? <BiVolumeFull className="w-4 h-4" /> : <BiVolumeMute className="w-4 h-4" />}
                         </button>
                     </div>
                     <div className="text-center">
-                        <span className="text-white font-semibold text-sm">Focus</span>
+                        <span className="text-dark-text1 font-semibold text-sm">Focus</span>
                         <div className="text-dark-text2 text-xs">{completedSessions} sessions</div>
                     </div>
                 </div>
@@ -269,7 +269,7 @@ const FocusModePage = () => {
                                         cx="100"
                                         cy="100"
                                         r="85"
-                                        stroke="#1f1f1f"
+                                        stroke="var(--color-stroke)"
                                         strokeWidth="6"
                                         fill="none"
                                     />
@@ -277,7 +277,7 @@ const FocusModePage = () => {
                                         cx="100"
                                         cy="100"
                                         r="85"
-                                        stroke="#ffffff"
+                                        stroke="var(--color-text1)"
                                         strokeWidth="6"
                                         fill="none"
                                         strokeDasharray={`${2 * Math.PI * 85}`}
@@ -289,7 +289,7 @@ const FocusModePage = () => {
                                 </svg>
 
                                 <div className="absolute inset-0 flex items-center justify-center">
-                                    <div className="text-4xl font-bold text-white">
+                                    <div className="text-4xl font-bold text-dark-text1">
                                         {formatTime(timeLeft)}
                                     </div>
                                 </div>
@@ -316,7 +316,7 @@ const FocusModePage = () => {
                                 </button>
                                 <button
                                     onClick={resetTimer}
-                                    className="w-full py-2 bg-dark-active hover:bg-dark-hover text-dark-text2 hover:text-white rounded-button transition-all border border-dark-stroke text-sm"
+                                    className="w-full py-2 bg-dark-active hover:bg-dark-hover text-dark-text2 hover:text-dark-text1 rounded-button transition-all border border-dark-stroke text-sm"
                                     title="Reset"
                                 >
                                     <div className="flex items-center justify-center gap-2">
@@ -339,18 +339,18 @@ const FocusModePage = () => {
                                         value={tempDuration}
                                         onChange={(e) => setTempDuration(e.target.value)}
                                         onBlur={saveDuration}
-                                        className="flex-1 bg-dark-active border border-dark-stroke rounded-button px-2 py-1.5 text-white text-center font-bold focus:outline-none focus:border-white text-sm"
+                                        className="flex-1 bg-dark-active border border-dark-stroke rounded-button px-2 py-1.5 text-dark-text1 text-center font-bold focus:outline-none focus:border-dark-text1 text-sm"
                                         min="1"
                                         max="120"
                                         autoFocus
                                     />
-                                    <span className="text-white text-xs">min</span>
+                                    <span className="text-dark-text1 text-xs">min</span>
                                 </div>
                             ) : (
                                 <div className="flex items-center justify-center gap-1">
                                     <button
                                         onClick={() => adjustDuration(-5)}
-                                        className="p-1.5 bg-dark-active hover:bg-dark-hover rounded-button text-white transition-all border border-dark-stroke"
+                                        className="p-1.5 bg-dark-active hover:bg-dark-hover rounded-button text-dark-text1 transition-all border border-dark-stroke"
                                         disabled={duration <= 5}
                                     >
                                         <IoRemove className="w-4 h-4" />
@@ -359,12 +359,12 @@ const FocusModePage = () => {
                                         onClick={startEditing}
                                         className="flex-1 py-1.5 hover:bg-dark-active rounded-button transition-all border border-dark-stroke"
                                     >
-                                        <span className="text-2xl font-bold text-white">{duration}</span>
+                                        <span className="text-2xl font-bold text-dark-text1">{duration}</span>
                                         <span className="text-dark-text2 text-xs ml-1">min</span>
                                     </button>
                                     <button
                                         onClick={() => adjustDuration(5)}
-                                        className="p-1.5 bg-dark-active hover:bg-dark-hover rounded-button text-white transition-all border border-dark-stroke"
+                                        className="p-1.5 bg-dark-active hover:bg-dark-hover rounded-button text-dark-text1 transition-all border border-dark-stroke"
                                         disabled={duration >= 120}
                                     >
                                         <IoAdd className="w-4 h-4" />
@@ -388,7 +388,7 @@ const FocusModePage = () => {
                                 </span>
                             </div>
                             
-                            <h2 className="text-lg font-bold text-white leading-tight text-center">{currentTask.title}</h2>
+                            <h2 className="text-lg font-bold text-dark-text1 leading-tight text-center">{currentTask.title}</h2>
                             
                             {/* Task Meta */}
                             {(currentTask.estimatedDate || currentTask.dueDate) && (
@@ -396,13 +396,13 @@ const FocusModePage = () => {
                                     {currentTask.estimatedDate && (
                                         <div className="flex items-center justify-between px-2 py-1 bg-dark-active rounded-button border border-dark-stroke">
                                             <span className="text-dark-text2 text-xs">Est:</span>
-                                            <span className="text-white text-xs font-medium">{currentTask.estimatedDate}</span>
+                                            <span className="text-dark-text1 text-xs font-medium">{currentTask.estimatedDate}</span>
                                         </div>
                                     )}
                                     {currentTask.dueDate && (
                                         <div className="flex items-center justify-between px-2 py-1 bg-dark-active rounded-button border border-dark-stroke">
                                             <span className="text-dark-text2 text-xs">Due:</span>
-                                            <span className="text-white text-xs font-medium">
+                                            <span className="text-dark-text1 text-xs font-medium">
                                                 {new Date(currentTask.dueDate).toLocaleDateString()}
                                             </span>
                                         </div>
@@ -414,14 +414,14 @@ const FocusModePage = () => {
                             <div className="flex gap-2">
                                 <button
                                     onClick={() => handleTaskComplete(currentTask._id)}
-                                    className="flex-1 p-2 bg-dark-active hover:bg-dark-hover text-dark-text2 hover:text-white rounded-button transition-all border border-dark-stroke"
+                                    className="flex-1 p-2 bg-dark-active hover:bg-dark-hover text-dark-text2 hover:text-dark-text1 rounded-button transition-all border border-dark-stroke"
                                     title="Complete"
                                 >
                                     <FaRegSquareCheck className="w-4 h-4 mx-auto" />
                                 </button>
                                 <button
                                     onClick={() => handleTaskDelete(currentTask._id)}
-                                    className="flex-1 p-2 bg-dark-active hover:bg-dark-hover text-dark-text2 hover:text-white rounded-button transition-all border border-dark-stroke"
+                                    className="flex-1 p-2 bg-dark-active hover:bg-dark-hover text-dark-text2 hover:text-dark-text1 rounded-button transition-all border border-dark-stroke"
                                     title="Delete"
                                 >
                                     <AiOutlineDelete className="w-4 h-4 mx-auto" />
@@ -432,7 +432,7 @@ const FocusModePage = () => {
                         {/* Subtasks */}
                         {currentTask.subtasks && currentTask.subtasks.length > 0 && (
                             <div className="mt-3 pt-3 border-t border-dark-stroke">
-                                <h3 className="text-white text-xs font-semibold mb-2 flex items-center justify-between">
+                                <h3 className="text-dark-text1 text-xs font-semibold mb-2 flex items-center justify-between">
                                     <span>Subtasks</span>
                                     <span className="text-xs px-1.5 py-0.5 bg-dark-active rounded-button text-dark-text2">
                                         {currentTask.subtasks.filter(s => s.isCompleted).length}/{currentTask.subtasks.length}
@@ -454,7 +454,7 @@ const FocusModePage = () => {
                                             <span className={`flex-1 text-xs ${
                                                 subtask.isCompleted 
                                                     ? 'text-dark-text2 line-through' 
-                                                    : 'text-white'
+                                                    : 'text-dark-text1'
                                             }`}>
                                                 {subtask.title}
                                             </span>
@@ -468,7 +468,7 @@ const FocusModePage = () => {
                     {/* Navigation */}
                     <div className="space-y-2 pb-4">
                         <div className="text-center px-3 py-1 bg-dark-bg2 rounded-button border border-dark-stroke">
-                            <span className="text-white font-semibold text-sm">{currentTaskIndex + 1}</span>
+                            <span className="text-dark-text1 font-semibold text-sm">{currentTaskIndex + 1}</span>
                             <span className="text-dark-text2 text-xs"> / {incompleteTasks.length}</span>
                         </div>
                         <div className="flex gap-2">
@@ -477,7 +477,7 @@ const FocusModePage = () => {
                                 disabled={currentTaskIndex === 0}
                                 className={`flex-1 flex items-center justify-center gap-1 px-3 py-2 rounded-button text-xs font-semibold transition-all border border-dark-stroke ${
                                     currentTaskIndex > 0
-                                        ? 'bg-dark-bg2 text-white hover:bg-dark-active'
+                                        ? 'bg-dark-bg2 text-dark-text1 hover:bg-dark-active'
                                         : 'bg-dark-bg2 text-dark-text2 opacity-50 cursor-not-allowed'
                                 }`}
                             >
@@ -490,7 +490,7 @@ const FocusModePage = () => {
                                 disabled={currentTaskIndex === incompleteTasks.length - 1}
                                 className={`flex-1 flex items-center justify-center gap-1 px-3 py-2 rounded-button text-xs font-semibold transition-all border border-dark-stroke ${
                                     currentTaskIndex < incompleteTasks.length - 1
-                                        ? 'bg-dark-bg2 text-white hover:bg-dark-active'
+                                        ? 'bg-dark-bg2 text-dark-text1 hover:bg-dark-active'
                                         : 'bg-dark-bg2 text-dark-text2 opacity-50 cursor-not-allowed'
                                 }`}
                             >

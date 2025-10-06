@@ -198,7 +198,7 @@ const TaskCard = ({
                                 setShowNoteEditor(!showNoteEditor);
                             }}
                             className={`task-action-button cursor-pointer pr-1.5 transition-colors ${
-                                showNoteEditor ? 'text-' : 'text-dark-text2 '
+                                showNoteEditor ? 'text-dark-text2' : 'text-dark-text2 '
                             }`}
                         >
                             <BiNote className="h-5 w-5" />
@@ -362,7 +362,7 @@ const TaskCard = ({
             {/* Inline Note Editor */}
             {showNoteEditor && noteContent && (
                 <div className="mt-3 border-t border-dark-stroke pt-3">
-                    <div className="bg-dark-bg rounded-lg border border-dark-stroke overflow-hidden" style={{ height: '200px' }}>
+                    <div className="bg-dark-bg text-dark-text1 rounded-lg border border-dark-stroke overflow-hidden" style={{ height: '200px' }}>
                         <NoteEditor
                             key={`note-${task._id}`}
                             onUpdate={handleSaveNote}

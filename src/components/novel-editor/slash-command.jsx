@@ -12,8 +12,11 @@ import {
   TextQuote,
   Twitter,
   Youtube,
+  Smile,
 } from "lucide-react";
 import { Command, createSuggestionItems, renderItems } from "novel";
+import { createRoot } from 'react-dom/client';
+import EmojiPicker from 'emoji-picker-react';
 
 // Simple upload function
 const uploadFn = async (file) => {
@@ -21,15 +24,82 @@ const uploadFn = async (file) => {
 };
 
 export const suggestionItems = createSuggestionItems([
-  // {
-  //   title: "Send Feedback",
-  //   description: "Let us know how we can improve.",
-  //   icon: <MessageSquarePlus size={18} />,
-  //   command: ({ editor, range }) => {
-  //     editor.chain().focus().deleteRange(range).run();
-  //     window.open("/feedback", "_blank");
-  //   },
-  // },
+  {
+    title: "Emoji",
+    description: "Insert an emoji.",
+    searchTerms: ["emoji", "emoticon", "smiley"],
+    icon: <Smile size={18} />,
+    command: ({ editor, range }) => {
+      editor.chain().focus().deleteRange(range).run();
+      
+      // Create emoji picker container
+      const pickerContainer = document.createElement('div');
+      pickerContainer.className = 'emoji-picker-slash-container';
+      pickerContainer.style.cssText = `
+        position: fixed;
+        z-index: 9999;
+      `;
+      
+      // Get editor position
+      const editorEl = editor.view.dom;
+      const rect = editorEl.getBoundingClientRect();
+      pickerContainer.style.top = `${rect.top + 40}px`;
+      pickerContainer.style.left = `${rect.left}px`;
+      
+      document.body.appendChild(pickerContainer);
+      
+      // Create React root and render EmojiPicker
+      const root = createRoot(pickerContainer);
+      
+      const handleEmojiClick = (emojiObject) => {
+        editor.chain().focus().insertContent(emojiObject.emoji).run();
+        root.unmount();
+        pickerContainer.remove();
+        document.removeEventListener('click', closeHandler);
+      };
+      
+      const closeHandler = (e) => {
+        if (!pickerContainer.contains(e.target)) {
+          root.unmount();
+          pickerContainer.remove();
+          document.removeEventListener('click', closeHandler);
+        }
+      };
+      
+      // Render the emoji picker
+      root.render(
+        <div style={{ 
+          background: 'var(--color-bg2)', 
+          borderRadius: '8px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+          overflow: 'hidden'
+        }}>
+          <EmojiPicker
+            onEmojiClick={handleEmojiClick}
+            autoFocusSearch={true}
+            theme="auto"
+            emojiStyle="apple"
+            defaultSkinTone="neutral"
+            lazyLoadEmojis={false}
+            searchPlaceholder="Search emojis..."
+            suggestedEmojisMode="frequent"
+            skinTonesDisabled={false}
+            width={350}
+            height={450}
+            previewConfig={{
+              showPreview: true,
+              defaultCaption: "Choose an emoji"
+            }}
+          />
+        </div>
+      );
+      
+      // Add click outside listener after a short delay
+      setTimeout(() => {
+        document.addEventListener('click', closeHandler);
+      }, 100);
+    },
+  },
   {
     title: "Text",
     description: "Just start typing with plain text.",
@@ -138,7 +208,7 @@ export const suggestionItems = createSuggestionItems([
       const videoLink = prompt("Please enter Youtube Video Link");
       //From https://regexr.com/3dj5t
       const ytregex = new RegExp(
-        /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/,
+        /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/,
       );
 
       if (ytregex.test(videoLink)) {
