@@ -58,8 +58,8 @@ function SecondHome() {
       {/* Quick Actions Section */}
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-4">
-          <FiZap className="text-white w-4 h-4 mb-1" />
-          <h2 className="text-md font-semibold text-white">Quick Actions</h2>
+          <FiZap className="text-dark-text1 w-4 h-4 mb-1" />
+          <h2 className="text-md font-semibold text-dark-text1">Quick Actions</h2>
         </div>
         <QuickActions />
       </div>
@@ -68,8 +68,8 @@ function SecondHome() {
       {/* Recently Visited Section */}
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-4">
-          <FiClock className="text-white w-4 h-4 mb-1" />
-          <h2 className="text-md font-semibold text-white">Last Spaces Created</h2>
+          <FiClock className="text-dark-text1 w-4 h-4 mb-1" />
+          <h2 className="text-md font-semibold text-dark-text1">Last Spaces Created</h2>
         </div>
         <RecentSpacesSlider 
           spaces={recentlyVisitedSpaces} 
@@ -80,8 +80,8 @@ function SecondHome() {
       {/* Upcoming Events Section */}
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-4">
-          <FiCalendar className="text-white w-4 h-4 mb-1" />
-          <h2 className="text-md font-semibold text-white">Upcoming events</h2>
+          <FiCalendar className="text-dark-text1 w-4 h-4 mb-1" />
+          <h2 className="text-md font-semibold text-dark-text1">Upcoming events</h2>
         </div>
         <UpcomingEvents />
       </div>
@@ -89,8 +89,8 @@ function SecondHome() {
       {/* Recent Notes Section */}
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-4">
-          <FiFileText className="text-white w-4 h-4 mb-1.5" />
-          <h2 className="text-md font-semibold text-white">Recent Notes</h2>
+          <FiFileText className="text-dark-text1 w-4 h-4 mb-1.5" />
+          <h2 className="text-md font-semibold text-dark-text1">Recent Notes</h2>
         </div>
         <RecentNotesSlider 
           notes={recentlyVisitedNotes} 

@@ -4,36 +4,36 @@ import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveCo
 const TaskStatusChart = ({ taskStatusData = [] }) => {
     return (
         <div className='rounded-button border border-dark-stroke bg-dark-bg2 p-6'>
-            <h3 className='text-white text-lg font-semibold mb-6'>Task Status Distribution</h3>
+            <h3 className='text-dark-text1 text-lg font-semibold mb-6'>Task Status Distribution</h3>
             
             <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={taskStatusData} layout="vertical" margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#1f1f1f" horizontal={false} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--color-stroke)" horizontal={false} />
                     <XAxis 
                         type="number" 
-                        stroke="#9b9b96"
-                        tick={{ fill: '#9b9b96', fontSize: 12 }}
-                        axisLine={{ stroke: '#1f1f1f' }}
+                        stroke="var(--color-text2)"
+                        tick={{ fill: 'var(--color-text2)', fontSize: 12 }}
+                        axisLine={{ stroke: 'var(--color-stroke)' }}
                     />
                     <YAxis 
                         type="category" 
                         dataKey="name" 
-                        stroke="#9b9b96"
-                        tick={{ fill: '#9b9b96', fontSize: 12 }}
-                        axisLine={{ stroke: '#1f1f1f' }}
+                        stroke="var(--color-text2)"
+                        tick={{ fill: 'var(--color-text2)', fontSize: 12 }}
+                        axisLine={{ stroke: 'var(--color-stroke)' }}
                         width={80}
                     />
                     <Tooltip 
                         contentStyle={{ 
-                            backgroundColor: '#070707', 
-                            border: '1px solid #1f1f1f',
+                            backgroundColor: 'var(--color-bg2)', 
+                            border: '1px solid var(--color-stroke)',
                             borderRadius: '8px',
                             padding: '8px 12px',
-                            color: '#fff',
+                            color: 'var(--color-text1)',
                             boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
                         }}
                         formatter={(value) => [`${value} tasks`, 'Count']}
-                        cursor={{ fill: '#1f1f1f' }}
+                        cursor={{ fill: 'var(--color-stroke)' }}
                     />
                     <Bar 
                         dataKey="value" 
@@ -55,7 +55,7 @@ const TaskStatusChart = ({ taskStatusData = [] }) => {
                 {taskStatusData.map((item, index) => (
                     <div 
                         key={index} 
-                        className='p-4 bg-dark-active rounded-button border border-dark-stroke hover:border-[#444444] transition-all group'
+                        className='p-4 bg-dark-active rounded-button border border-dark-stroke hover:border-dark-stroke-hover transition-all group'
                     >
                         <div className='flex items-center justify-between mb-2'>
                             <div className='flex items-center gap-2'>
@@ -65,7 +65,7 @@ const TaskStatusChart = ({ taskStatusData = [] }) => {
                                 ></div>
                                 <span className='text-sm text-dark-text2'>{item.name}</span>
                             </div>
-                            <span className='text-lg font-bold text-white'>{item.value}</span>
+                            <span className='text-lg font-bold text-dark-text1'>{item.value}</span>
                         </div>
                         {/* Mini progress bar */}
                         <div className='w-full bg-dark-bg rounded-full h-2 overflow-hidden'>
@@ -84,7 +84,7 @@ const TaskStatusChart = ({ taskStatusData = [] }) => {
             
             {/* Total Summary */}
             <div className='mt-4 p-4 bg-dark-active rounded-button border border-dark-stroke text-center'>
-                <p className='text-3xl font-bold text-white'>
+                <p className='text-3xl font-bold text-dark-text1'>
                     {taskStatusData.reduce((sum, item) => sum + item.value, 0)}
                 </p>
                 <p className='text-xs text-dark-text2 mt-2'>Total Tasks</p>

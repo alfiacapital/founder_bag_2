@@ -249,7 +249,7 @@ export default function CalendarPage() {
 
             {/* Sidebar - Desktop */}
             {showSidebar && window.innerWidth >= 768 && (
-                <div className="fixed top-0 left-0 w-70 h-full bg-[#070707] z-20 p-4 px-7 overflow-y-auto">
+                <div className="fixed top-0 left-0 w-70 h-full bg-dark-bg2 z-20 p-4 px-7 overflow-y-auto">
                     <div className="">
                         <SidebarCalendar
                             selectedDate={selectedDate}
@@ -275,12 +275,12 @@ export default function CalendarPage() {
                     />
 
                     {/* Drawer */}
-                    <div className="fixed top-0 left-0 w-70 h-full bg-[#070707] z-50 p-4 px-7 overflow-y-auto transform transition-transform duration-300 ease-in-out">
+                    <div className="fixed top-0 left-0 w-70 h-full bg-dark-bg2 z-50 p-4 px-7 overflow-y-auto transform transition-transform duration-300 ease-in-out">
                         <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-white font-medium text-lg">Calendar</h2>
+                            <h2 className="text-dark-text1 font-medium text-lg">Calendar</h2>
                             <button
                                 onClick={() => setShowSidebar(false)}
-                                className="text-gray-400 hover:text-white text-xl transition-colors"
+                                className="text-dark-text2 hover:text-dark-text1 text-xl transition-colors"
                             >
                                 ×
                             </button>
@@ -343,7 +343,7 @@ export default function CalendarPage() {
                     isLoading={isLoading}
                 />
                 {selectedEvent && (
-                    <div className="mt-4 pt-4 border-t border-[#444444]">
+                    <div className="mt-4 pt-4 border-t border-dark-stroke">
                         <button
                             onClick={() => handleDeleteEvent(selectedEvent.id)}
                             className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"

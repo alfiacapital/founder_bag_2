@@ -12,7 +12,7 @@ const ActivityChart = ({ activityData = [], timeRange, setTimeRange }) => {
         <div className='rounded-button border border-dark-stroke bg-dark-bg2 p-6'>
             {/* Chart Header with Time Range Selector */}
             <div className='flex justify-between items-center mb-6'>
-                <h3 className='text-white text-lg font-semibold'>Activity Overview</h3>
+                <h3 className='text-dark-text1 text-lg font-semibold'>Activity Overview</h3>
                 <div className='flex gap-2'>
                     {timeRangeButtons.map(({ value, label }) => (
                         <button
@@ -20,8 +20,8 @@ const ActivityChart = ({ activityData = [], timeRange, setTimeRange }) => {
                             onClick={() => setTimeRange(value)}
                             className={`px-4 pt-1.5 rounded-button text-sm transition-colors ${
                                 timeRange === value
-                                    ? 'bg-dark-active text-white border border-[#444444]'
-                                    : 'border border-dark-stroke text-dark-text2 hover:text-white hover:bg-dark-hover hover:border-[#444444]'
+                                    ? 'bg-dark-active text-dark-text1 border border-dark-stroke'
+                                    : 'border border-dark-stroke text-dark-text2 hover:text-dark-text1 hover:bg-dark-hover hover:border-dark-stroke-hover'
                             }`}
                         >
                             {label}
@@ -51,33 +51,33 @@ const ActivityChart = ({ activityData = [], timeRange, setTimeRange }) => {
                             <stop offset="95%" stopColor="#f59e0b" stopOpacity={0.05}/>
                         </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#1f1f1f" vertical={false} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--color-stroke)" vertical={false} />
                     <XAxis 
                         dataKey="name" 
-                        stroke="#9b9b96" 
-                        tick={{ fill: '#9b9b96', fontSize: 12 }}
-                        axisLine={{ stroke: '#1f1f1f' }}
+                        stroke="var(--color-text2)" 
+                        tick={{ fill: 'var(--color-text2)', fontSize: 12 }}
+                        axisLine={{ stroke: 'var(--color-stroke)' }}
                     />
                     <YAxis 
-                        stroke="#9b9b96" 
-                        tick={{ fill: '#9b9b96', fontSize: 12 }}
-                        axisLine={{ stroke: '#1f1f1f' }}
+                        stroke="var(--color-text2)" 
+                        tick={{ fill: 'var(--color-text2)', fontSize: 12 }}
+                        axisLine={{ stroke: 'var(--color-stroke)' }}
                     />
                     <Tooltip 
                         contentStyle={{ 
-                            backgroundColor: '#070707', 
-                            border: '1px solid #1f1f1f',
+                            backgroundColor: 'var(--color-bg2)', 
+                            border: '1px solid var(--color-stroke)',
                             borderRadius: '8px',
                             padding: '12px',
-                            color: '#fff',
+                            color: 'var(--color-text1)',
                             boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
                         }}
-                        labelStyle={{ color: '#fff', fontWeight: 'bold', marginBottom: '8px' }}
+                        labelStyle={{ color: 'var(--color-text1)', fontWeight: 'bold', marginBottom: '8px' }}
                     />
                     <Legend 
                         wrapperStyle={{ 
                             paddingTop: '20px',
-                            color: '#9b9b96' 
+                            color: 'var(--color-text2)' 
                         }}
                         iconType="circle"
                     />

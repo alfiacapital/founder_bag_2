@@ -11,7 +11,7 @@ export const UserProvider = ({children}) => {
     const [user, setUser] = useState({})
     const [isLoading, setLoading] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+    
 
     useEffect(() => {
         if (darkMode) {
@@ -20,7 +20,7 @@ export const UserProvider = ({children}) => {
             document.body.classList.remove("dark");
         }
         if (darkMode !== null) {
-            setCookie("darkMode", darkMode, 365);
+            setCookie("darkMode", darkMode, 365); 
         }
     }, [darkMode]);
 

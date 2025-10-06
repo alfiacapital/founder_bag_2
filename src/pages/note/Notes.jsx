@@ -16,6 +16,7 @@ function Notes() {
     const [deleteModal, setDeleteModal] = useState({ isOpen: false, note: null });
     const [manageUsersModal, setManageUsersModal] = useState({ isOpen: false, note: null });
     const [localNotes, setLocalNotes] = useState([]);
+    
     const { data, isLoading } = useQuery({
         queryKey: ["notes", page],
         queryFn: async () => {
@@ -24,6 +25,7 @@ function Notes() {
         },
         keepPreviousData: true,
     });
+
     useEffect(() => {
         if (data || data?.notes) {
             setLocalNotes(data.notes);
@@ -77,7 +79,7 @@ function Notes() {
             {/* Content */}
             <div className="flex-1">
                 <div className="flex justify-between items-center mb-6">
-                    <h1 className="text-2xl font-bold text-white">My Notes</h1>
+                    <h1 className="text-2xl font-bold text-dark-text1">My Notes</h1>
                     <NotesViewToggle notesView={notesView} setNotesView={setNotesView} />
                 </div>
 
@@ -97,7 +99,7 @@ function Notes() {
                     <button
                         disabled={pagination.page === 1}
                         onClick={() => setPage((p) => p - 1)}
-                        className="px-3 py-1 rounded-default border border-dark-stroke text-dark-text2 hover:bg-dark-hover hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
+                        className="px-3 py-1 rounded-default border border-dark-stroke text-dark-text2 hover:bg-dark-hover hover:text-dark-text1 disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                         Prev
                     </button>
@@ -109,7 +111,7 @@ function Notes() {
                     <button
                         disabled={pagination.page === pagination.totalPages}
                         onClick={() => setPage((p) => p + 1)}
-                        className="px-3 py-1 rounded-default border border-dark-stroke text-dark-text2 hover:bg-dark-hover hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
+                        className="px-3 py-1 rounded-default border border-dark-stroke text-dark-text2 hover:bg-dark-hover hover:text-dark-text1 disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                         Next
                     </button>
@@ -164,7 +166,7 @@ function NotesViewToggle({ notesView, setNotesView }) {
         <div className="relative flex items-center p-1 rounded-button overflow-hidden  w-fit min-w-[260px]">
             {/* Sliding background */}
             <div
-                className="absolute top-0 bottom-0 bg-[#181818] rounded-full border border-[#444444] transition-all duration-300 ease-in-out"
+                className="absolute top-0 bottom-0 bg-dark-active rounded-full border border-dark-stroke transition-all duration-300 ease-in-out"
                 style={{
                     width: bgStyle.width,
                     left: bgStyle.left,
@@ -176,7 +178,7 @@ function NotesViewToggle({ notesView, setNotesView }) {
                 ref={listRef}
                 onClick={() => setNotesView("list")}
                 className={`relative flex items-center gap-2 px-4 py-1.5 pt-2 cursor-pointer text-sm font-medium z-10 transition-colors duration-200 ${
-                    notesView === "list" ? "text-white" : "text-dark-text2 hover:text-white"
+                    notesView === "list" ? "text-dark-text1" : "text-dark-text2 hover:text-dark-text1"
                 }`}
             >
                 <PiListBulletsLight className="h-5 w-5 pb-1" />
@@ -187,7 +189,7 @@ function NotesViewToggle({ notesView, setNotesView }) {
                 ref={cardsRef}
                 onClick={() => setNotesView("cards")}
                 className={`relative flex items-center gap-2 px-4 py-1.5 pt-2 cursor-pointer text-sm font-medium z-10 transition-colors duration-200 ${
-                    notesView === "cards" ? "text-white" : "text-dark-text2 hover:text-white"
+                    notesView === "cards" ? "text-dark-text1" : "text-dark-text2 hover:text-dark-text1"
                 }`}
             >
                 <RxDashboard className="h-5 w-5 pb-1" />

@@ -4,11 +4,12 @@ import {IoIosArrowBack, IoIosArrowDown, IoIosArrowForward} from "react-icons/io"
 import {services} from "@/parts/Navbar.jsx";
 import MiniCalendar from "@/components/MiniCalendar.jsx";
 import Menu from "@/components/Menu.jsx";
+import { useUserContext } from "@/context/UserProvider";
 
 export default function CustomToolbar({ label, onNavigate, onView, view, onOpenMiniCalendar, showMiniCalendar, selectedDate, setSelectedDate, setCurrentDate, setShowMiniCalendar, onOpenSidebar }) {
     const [open, setOpen] = useState(false)
     const toolbarRef = useRef(null);
-    let darkMode = true;
+    const {darkMode} = useUserContext();
 
     // Click outside listener
     useEffect(() => {
@@ -24,11 +25,11 @@ export default function CustomToolbar({ label, onNavigate, onView, view, onOpenM
         };
     }, [setOpen]);  return (
         <div>
-            <div ref={toolbarRef} className="fixed top-0 left-0 right-0 z-999   flex justify-between items-center bg-dark-bg2  text-white py-4 px-3  ">
+            <div ref={toolbarRef} className="fixed top-0 left-0 right-0 z-999   flex justify-between items-center bg-dark-bg2  text-dark-text2 py-4 px-3  ">
                 <div className={"flex items-center gap-4"}>
                     {/* Sidebar Toggle Button */}
                     <div
-                        className="p-2 text-dark-text2 hover:text-white hover:bg-dark-hover rounded-full cursor-pointer"
+                        className="p-2 text-dark-text2 hover:text-dark-text1 hover:bg-dark-hover rounded-full cursor-pointer"
                         onClick={onOpenSidebar}
                         title="Open Sidebar"
                     >
@@ -70,7 +71,7 @@ export default function CustomToolbar({ label, onNavigate, onView, view, onOpenM
                            rounded-button px-4 py-3 cursor-pointer transition "
                                 >
                                     <div className="flex flex-col">
-                                <span className="text-lg font-semibold text-navy-900 dark:text-white ">
+                                <span className="text-lg font-semibold text-dark-text1">
                                     {service.name}
                                 </span>
                                     </div>
@@ -79,18 +80,18 @@ export default function CustomToolbar({ label, onNavigate, onView, view, onOpenM
                         </div>
                     </div>
                     <div onClick={() => onNavigate("TODAY")}
-                         className={"hidden md:flex border border-dark-stroke text-dark-text2 rounded-button px-4 pb-2 pt-3 hover:text-white hover:bg-dark-hover hover:border-dark-stroke cursor-pointer"}>
+                         className={"hidden md:flex border border-dark-stroke text-dark-text2 rounded-button px-4 pb-2 pt-3 hover:text-dark-text1 hover:bg-dark-hover hover:border-dark-stroke cursor-pointer"}>
                         <span className={"text-md font-medium"}>Today</span>
                     </div>
-                    <div onClick={() => onNavigate("PREV")} className={"hidden md:flex p-2 text-dark-text2 hover:text-white hover:bg-dark-hover rounded-full cursor-pointer"}>
+                    <div onClick={() => onNavigate("PREV")} className={"hidden md:flex p-2 text-dark-text2 hover:text-dark-text1 hover:bg-dark-hover rounded-full cursor-pointer"}>
                         <IoIosArrowBack className={"h-6 w-6"} />
                     </div>
-                    <div onClick={() => onNavigate("NEXT")} className={"hidden md:flex p-2 text-dark-text2 hover:text-white hover:bg-dark-hover rounded-full cursor-pointer"}>
+                    <div onClick={() => onNavigate("NEXT")} className={"hidden md:flex p-2 text-dark-text2 hover:text-dark-text1 hover:bg-dark-hover rounded-full cursor-pointer"}>
                         <IoIosArrowForward className={"h-6 w-6"} />
                     </div>
                     <div className="relative">
                         <div
-                            className={"font-medium text-dark-text2 mt-2 text-xl cursor-pointer hover:text-white transition-colors"}
+                            className={"font-medium text-dark-text2 mt-2 text-xl cursor-pointer hover:text-dark-text1 transition-colors"}
                             onClick={onOpenMiniCalendar}
                             title="Click to select date"
                         >
@@ -111,7 +112,7 @@ export default function CustomToolbar({ label, onNavigate, onView, view, onOpenM
                 <div className={"flex items-center gap-4"}>
                     <Menu
                         button={
-                            <button className="border border-dark-stroke text-dark-text2 rounded-button px-4 pb-2 pt-3 hover:text-white hover:bg-dark-hover hover:border-dark-stroke cursor-pointer capitalize">
+                            <button className="border border-dark-stroke text-dark-text2 rounded-button px-4 pb-2 pt-3 hover:text-dark-text1 hover:bg-dark-hover hover:border-dark-stroke cursor-pointer capitalize">
                                 {view}
                             </button>
                         }

@@ -91,7 +91,7 @@ const SubtaskList = ({
                         value={newSubtaskTitle}
                         onChange={(e) => setNewSubtaskTitle(e.target.value)}
                         placeholder="subtask title *"
-                        className="w-full text-sm border-b border-[#444444] focus:border-white bg-transparent focus:outline-none text-white"
+                        className="w-full text-sm border-b border-[#444444] focus:border-white bg-transparent focus:outline-none text-dark-text1"
                         onKeyDown={(e) => {
                             if (e.key === "Enter") {
                                 e.preventDefault();

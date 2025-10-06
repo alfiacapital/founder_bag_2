@@ -42,8 +42,8 @@ const SummaryCards = ({ summary = {} }) => {
                         <card.icon className="w-6 h-6 text-white" />
                     </div>
                     
-                    <h3 className='text-dark-text2 text-md font-medium'>{card.title}</h3>
-                    <p className='text-white pt-2 text-md'>
+                    <h3 className='text-dark-text1 text-md font-medium'>{card.title}</h3>
+                    <p className='text-dark-text2 pt-2 text-md'>
                         {card.value} {card.label}
                     </p>
                 </div>

@@ -59,7 +59,7 @@ function ShareNote({ isOpen, onClose, noteId }) {
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} size="lg">
-            <h2 className="text-xl font-bold text-white mb-1">Share Note</h2>
+            <h2 className="text-xl font-bold text-dark-text1 mb-1">Share Note</h2>
             <span className="text-sm font-bold text-dark-text2 mb-2 block">
         Or copy link if user does not exist
       </span>
@@ -70,11 +70,11 @@ function ShareNote({ isOpen, onClose, noteId }) {
                     type="text"
                     value={noteLink}
                     readOnly
-                    className="flex-1 px-4 py-2 rounded-lg bg-dark-bg border border-dark-stroke text-white placeholder-dark-text2 focus:outline-none focus:ring-1 focus:ring-primary"
+                    className="flex-1 px-4 py-2 rounded-lg bg-dark-bg border border-dark-stroke text-dark-text1 placeholder-dark-text2 focus:outline-none focus:ring-1 focus:ring-primary"
                 />
                 <button
                     onClick={handleCopyLink}
-                    className="px-3 py-2 bg-primary rounded-lg text-white hover:bg-opacity-80 transition flex items-center gap-2"
+                    className="px-3 py-2 bg-primary rounded-lg text-dark-text1 hover:bg-opacity-80 transition flex items-center gap-2"
                 >
                     <FaCopy /> Copy
                 </button>
@@ -84,7 +84,7 @@ function ShareNote({ isOpen, onClose, noteId }) {
             <input
                 type="text"
                 placeholder="Search by email or full name..."
-                className="w-full px-4 py-2 rounded-lg bg-dark-bg border border-dark-stroke text-white placeholder-dark-text2 focus:outline-none focus:ring-1 focus:ring-primary mb-4"
+                className="w-full px-4 py-2 rounded-lg bg-dark-bg border border-dark-stroke text-dark-text1 placeholder-dark-text2 focus:outline-none focus:ring-1 focus:ring-primary mb-4"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
             />
@@ -106,14 +106,14 @@ function ShareNote({ isOpen, onClose, noteId }) {
                                     className="w-10 h-10 rounded-full object-cover border border-dark-stroke"
                                 />
                                 <div>
-                                    <p className="text-white font-medium">{user.full_name}</p>
+                                    <p className="text-dark-text1 font-medium">{user.full_name}</p>
                                     <p className="text-dark-text2 text-sm">{user.email}</p>
                                 </div>
                             </div>
 
                             <button
                                 onClick={() => handleShare(user._id)}
-                                className="flex items-center gap-2 px-3 py-1.5 text-sm text-dark-text2 rounded-button border border-dark-stroke hover:bg-dark-hover hover:border-dark-stroke hover:text-white transition cursor-pointer"
+                                className="flex items-center gap-2 px-3 py-1.5 text-sm text-dark-text2 rounded-button border border-dark-stroke hover:bg-dark-hover hover:border-dark-stroke hover:text-dark-text1 transition cursor-pointer"
                             >
                                 <FaUserPlus /> Share
                             </button>

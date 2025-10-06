@@ -28,7 +28,7 @@ function UpcomingEvents() {
         {/* Left Section: Description */}
         <div className="flex flex-col justify-between">
           <div>
-            <h3 className="text-white font-semibold text-base sm:text-lg mb-2 sm:mb-3">
+            <h3 className="text-dark-text1 font-semibold text-base sm:text-lg mb-2 sm:mb-3">
               Never Miss What Matters
             </h3>
             <p className="text-dark-text2 text-sm sm:text-base leading-relaxed">
@@ -45,7 +45,7 @@ function UpcomingEvents() {
                 {/* Date */}
                 <div className="flex flex-col items-center min-w-[50px] sm:min-w-[60px]">
                   <span className="text-dark-text2 text-xs">{event.date}</span>
-                  <span className="text-white text-sm font-medium">{event.dateDetail}</span>
+                  <span className="text-dark-text2 text-sm font-medium">{event.dateDetail}</span>
                 </div>
 
                 {/* Vertical Line */}
@@ -58,7 +58,7 @@ function UpcomingEvents() {
 
                 {/* Event Details */}
                 <div className="flex-1 pb-4 sm:pb-5">
-                  <h4 className="text-white font-medium text-sm sm:text-base mb-1">
+                  <h4 className="text-dark-text1 font-medium text-sm sm:text-base mb-1">
                     {event.title}
                   </h4>
                   <p className="text-dark-text2 text-xs sm:text-sm">

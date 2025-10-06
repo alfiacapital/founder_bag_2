@@ -54,7 +54,7 @@ export default function ListView({ notes, setNotes, setDeleteModal, setShareModa
                             {dragOverIndex === idx && draggingIndex !== idx && (
                                 <tr>
                                     <td colSpan={3}>
-                                        <div className="h-1 bg-[#444444] rounded-full my-1 transition-all"></div>
+                                        <div className="h-1 bg-dark-stroke rounded-full my-1 transition-all"></div>
                                     </td>
                                 </tr>
                             )}
@@ -73,7 +73,7 @@ export default function ListView({ notes, setNotes, setDeleteModal, setShareModa
                                     <PiDotsSixVertical className="text-dark-text2 cursor-move h-6 w-6" />
                                     <span
                                         onClick={() => navigate(`/note/${note._id}`)}
-                                        className="text-white font-medium"
+                                        className="text-dark-text1 font-medium"
                                     >
                                       {note.title}
                                     </span>
@@ -83,7 +83,7 @@ export default function ListView({ notes, setNotes, setDeleteModal, setShareModa
                                 <td className="px-4 py-2">
                                     <div className="flex items-center -space-x-3">
                                         <img
-                                            className="border-2 border-[#444444] bg-dark-bg rounded-full h-7 w-7 object-cover"
+                                            className="border-2 border-dark-stroke bg-dark-bg rounded-full h-7 w-7 object-cover"
                                             src={getUserImage(user?.image)}
                                             alt={user?.full_name || "Owner"}
                                         />
@@ -91,13 +91,13 @@ export default function ListView({ notes, setNotes, setDeleteModal, setShareModa
                                             note.sharedWith.slice(0, 4).map((sharedUser, key) => (
                                                 <img
                                                     key={key}
-                                                    className="border-2 border-[#444444] bg-dark-bg rounded-full h-7 w-7 object-cover"
+                                                    className="border-2 border-dark-stroke bg-dark-bg rounded-full h-7 w-7 object-cover"
                                                     src={getUserImage(sharedUser.image)}
                                                     alt={sharedUser.full_name}
                                                 />
                                             ))}
                                         {note.sharedWith && note.sharedWith.length > 4 && (
-                                            <span className="flex items-center justify-center bg-dark-bg2 text-xs text-white font-semibold border-2 border-[#444444] rounded-full h-8 w-8 pt-1">
+                                            <span className="flex items-center justify-center bg-dark-bg2 text-xs text-dark-text1 font-semibold border-2 border-dark-stroke rounded-full h-8 w-8 pt-1">
                                               +{note.sharedWith.length - 4}
                                             </span>
                                         )}
@@ -108,7 +108,7 @@ export default function ListView({ notes, setNotes, setDeleteModal, setShareModa
                                 <td className="px-4 py-2">
                                     <Menu
                                         button={
-                                            <button className="p-1.5 rounded-button border border-dark-stroke hover:bg-dark-hover cursor-pointer text-dark-text2 hover:text-white">
+                                            <button className="p-1.5 rounded-button border border-dark-stroke hover:bg-dark-hover cursor-pointer text-dark-text2 hover:text-dark-text1">
                                                 <FaEllipsisVertical />
                                             </button>
                                         }
@@ -127,7 +127,7 @@ export default function ListView({ notes, setNotes, setDeleteModal, setShareModa
                     {dragOverIndex === notes.length && draggingIndex !== notes.length && (
                         <tr>
                             <td colSpan={3}>
-                                <div className="h-1 bg-[#444444] rounded-full my-1 transition-all"></div>
+                                <div className="h-1 bg-dark-stroke rounded-full my-1 transition-all"></div>
                             </td>
                         </tr>
                     )}

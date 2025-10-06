@@ -13,16 +13,16 @@ function Footer() {
                     <button onClick={() => navigate("/")}
                         className={`text-sm transition-all duration-300 border rounded-button pt-3 pb-2 px-6 cursor-pointer font-bold 
                         ${pathname === "/" 
-                            ? "bg-dark-active text-white  border border-[#444444]" 
-                            : "text-dark-text2 border-dark-stroke hover:text-white hover:border-dark-stroke hover:bg-dark-active"
+                            ? "bg-dark-active text-dark-text1 border border-dark-stroke" 
+                            : "text-dark-text2 border-dark-stroke hover:text-dark-text1 hover:border-dark-stroke hover:bg-dark-active"
                         }`}>
                         Home
                     </button>
                     <button  onClick={() => navigate("/reports")}
                         className={`text-sm transition-all duration-300 border rounded-button pt-3 pb-2 px-6 cursor-pointer font-bold 
                         ${pathname === "/reports" 
-                            ? "bg-dark-active text-white  border border-[#444444]" 
-                            : "text-dark-text2 border-dark-stroke hover:text-white hover:border-dark-stroke hover:bg-dark-hover"
+                            ? "bg-dark-active text-dark-text1 border border-dark-stroke" 
+                            : "text-dark-text2 border-dark-stroke hover:text-dark-text1 hover:border-dark-stroke hover:bg-dark-hover"
                         }`}>
                         Reports
                     </button>

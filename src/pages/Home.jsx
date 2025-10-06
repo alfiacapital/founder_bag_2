@@ -59,19 +59,12 @@ function Home() {
     }
 
 
-    const weeklyTrendData = [
-        { name: 'Week 1', productivity: 65 },
-        { name: 'Week 2', productivity: 72 },
-        { name: 'Week 3', productivity: 68 },
-        { name: 'Week 4', productivity: 85 }
-    ];
-
     return (
         <>
             {/* Greeting + Toolbar */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                 <div>
-                    <h2 className="text-2xl font-semibold capitalize">
+                    <h2 className="text-2xl text-dark-text1 font-semibold capitalize">
                         Good Afternoon, {user?.full_name}
                     </h2>
                     <p className="text-dark-text2 text-sm">
@@ -87,7 +80,7 @@ function Home() {
                     <div className="flex items-center justify-between">
                         <div>
                             <p className="text-dark-text2 text-sm font-medium">Total Tasks</p>
-                            <p className="text-2xl font-bold text-white mt-1">
+                            <p className="text-2xl font-bold text-dark-text1 mt-1">
                                 {isLoadingStats ? "..." : dashboardStats?.totalTasks?.total || 0}
                             </p>
                         </div>
@@ -115,7 +108,7 @@ function Home() {
                     <div className="flex items-center justify-between">
                         <div>
                             <p className="text-dark-text2 text-sm font-medium">Completed</p>
-                            <p className="text-2xl font-bold text-white mt-1">
+                            <p className="text-2xl font-bold text-dark-text1 mt-1">
                                 {isLoadingStats ? "..." : dashboardStats?.completedTasks?.total || 0}
                             </p>
                         </div>
@@ -143,7 +136,7 @@ function Home() {
                     <div className="flex items-center justify-between">
                         <div>
                             <p className="text-dark-text2 text-sm font-medium">In Progress</p>
-                            <p className="text-2xl font-bold text-white mt-1">
+                            <p className="text-2xl font-bold text-dark-text1 mt-1">
                                 {isLoadingStats ? "..." : dashboardStats?.inProgressTasks?.total || 0}
                             </p>
                         </div>
@@ -171,7 +164,7 @@ function Home() {
                     <div className="flex items-center justify-between">
                         <div>
                             <p className="text-dark-text2 text-sm font-medium">Productivity</p>
-                            <p className="text-2xl font-bold text-white mt-1">
+                            <p className="text-2xl font-bold text-dark-text1 mt-1">
                                 {isLoadingStats ? "..." : `${dashboardStats?.productivity?.productivity || 0}%`}
                             </p>
                         </div>
@@ -236,14 +229,19 @@ function Home() {
                     </div>
 
                     {/* Top shadow gradient */}
-                    <div className="absolute bottom-20 left-0 right-0 h-[100px] bg-gradient-to-t from-black to-transparent pointer-events-none" />
+                    <div 
+                        className="absolute bottom-20 left-0 right-0 h-[100px] pointer-events-none" 
+                        style={{
+                            background: 'linear-gradient(to top, var(--color-bg) 0%, transparent 100%)'
+                        }}
+                    />
 
                     {/* Text + Button */}
                     <div className="absolute bottom-14 flex flex-col items-center justify-center px-4 text-center">
                         <p className="text-base sm:text-lg font-medium text-dark-text2">
                             Create your first space to get started 🚀
                         </p>
-                        <button onClick={() => setCreateSpaceForm(!createSpaceForm)} className="flex items-center space-x-2 mt-4 px-6 py-2 border text-white border-[#444444] hover:bg-dark-hover rounded-full font-medium cursor-pointer">
+                        <button onClick={() => setCreateSpaceForm(!createSpaceForm)} className="flex items-center space-x-2 mt-4 px-6 py-2 border text-dark-text1 border-dark-stroke hover:bg-dark-hover rounded-full font-medium cursor-pointer">
                             <FiPlus className="text-xl" />
                             <span className="mt-1">CREATE SPACE</span>
                         </button>
@@ -263,7 +261,7 @@ function Home() {
                                 <div
                                     key={key}
                                     className="group bg-dark-bg2 border border-dark-stroke rounded-default py-6 px-5 h-[280px]
-                   hover:text-white hover:border-dark-stroke hover:bg-dark-hover
+                   hover:text-dark-text1 hover:border-dark-stroke hover:bg-dark-hover
                    transition-all duration-300 flex flex-col relative overflow-hidden"
                                 >
                                     {/* Card header */}
@@ -271,15 +269,15 @@ function Home() {
                                         <div className="flex items-center gap-2 min-w-0">
                                             <img
                                                 src={space?.image || "/icon.png"}
-                                                className="h-8 w-8 rounded-button border border-[#444444] object-cover"
+                                                className="h-8 w-8 rounded-button border border-dark-stroke object-cover"
                                                 alt={space?.name}
                                             />
-                                            <span className="text-lg font-medium truncate pr-1">{space?.name}</span>
+                                            <span className="text-lg text-dark-text1 font-medium truncate pr-1">{space?.name}</span>
                                         </div>
 
                                         <Menu
                                             button={
-                                                <button className="p-2 rounded-button border border-dark-stroke hover:bg-dark-hover cursor-pointer text-dark-text2 hover:text-white">
+                                                <button className="p-2 rounded-button border border-dark-stroke hover:bg-dark-hover cursor-pointer text-dark-text2 hover:text-dark-text1">
                                                     <FaEllipsisVertical />
                                                 </button>
                                             }
@@ -306,13 +304,18 @@ function Home() {
 
                                             {/* Bottom shadow only if more than 3 tasks */}
                                             {tasks.length > 3 && (
-                                                <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black/80 to-transparent pointer-events-none" />
+                                                <div 
+                                                    className="absolute bottom-0 left-0 w-full h-16 pointer-events-none" 
+                                                    style={{
+                                                        background: 'linear-gradient(to top, var(--color-bg2) 0%, transparent 100%)'
+                                                    }}
+                                                />
                                             )}
                                         </div>
                                     ) : (
                                         // Empty state
                                         <div className="flex flex-col items-center justify-center flex-1 text-center space-y-3">
-                                            <div className="border border-[#444444] p-2 rounded-full">
+                                            <div className="border border-dark-stroke p-2 rounded-full">
                                                 <MdDone className="text-dark-text2 text-md" />
                                             </div>
                                             <p className="text-dark-text2 font-medium text-sm">ALL CLEAR</p>
@@ -327,7 +330,7 @@ function Home() {
                                         border border-dark-stroke text-dark-text2 bg-dark-bg2 cursor-pointer
                                         opacity-100 md:opacity-0 translate-y-6
                                         group-hover:opacity-100 group-hover:translate-y-0
-                                        transition-all duration-300 hover:border-dark-stroke hover:bg-dark-hover hover:text-white
+                                        transition-all duration-300 hover:border-dark-stroke hover:bg-dark-hover hover:text-dark-text1
                                       "
                                     >
                                         <MdOpenInFull />
@@ -342,7 +345,7 @@ function Home() {
                         {/* "Create Space" Card */}
                         <div
                             onClick={() => setCreateSpaceForm(!createSpaceForm)}
-                            className="border-2 border-dashed border-dark-stroke rounded-default hover:border-dark-stroke text-dark-text2 hover:text-white flex flex-col items-center justify-center h-[280px] cursor-pointer transition-all duration-300"
+                            className="border-2 border-dashed border-dark-stroke rounded-default hover:border-dark-stroke text-dark-text2 hover:text-dark-text1 flex flex-col items-center justify-center h-[280px] cursor-pointer transition-all duration-300"
                         >
                             <span className="text-2xl mb-2">+</span>
                             <p className="font-medium text-gradient">CREATE SPACE</p>

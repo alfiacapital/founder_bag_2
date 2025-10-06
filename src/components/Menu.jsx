@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
-function Menu({ button, items = [] }) {
+function Menu({ button, items = [], footer }) {
     const [open, setOpen] = useState(false);
     const menuRef = useRef(null);
 
@@ -24,7 +24,7 @@ function Menu({ button, items = [] }) {
             {/* Dropdown menu */}
             {open && (
                 <div 
-                    className={`absolute right-0 mt-1 w-40 origin-top-right rounded-lg bg-dark-bg2 border border-dark-stroke shadow-lg z-50 ${
+                    className={`absolute right-0 mt-1 w-48 origin-top-right rounded-lg bg-dark-bg2 border border-dark-stroke shadow-lg z-50 ${
                         items.length > 4 ? 'max-h-[240px] overflow-y-auto menu-scroll' : ''
                     }`}
                     style={{
@@ -42,12 +42,15 @@ function Menu({ button, items = [] }) {
                             className={`w-full px-4 py-2 pt-3 text-left text-sm  ${
                                 item.danger
                                     ? "text-red-500 hover:bg-red-600 hover:text-white"
-                                    : "text-white hover:bg-dark-hover"
+                                    : "text-dark-text1 hover:bg-dark-hover"
                             }`}
                         >
                             {item.label}
                         </button>
                     ))}
+                    
+                    {/* Optional footer content */}
+                    {footer && footer}
                 </div>
             )}
         </div>

@@ -59,10 +59,10 @@ function ArchivedSpaces() {
     }
 
     return (
-        <div className="min-h-screen bg-dark-bg2 p-6 md:p-8">
+        <div className="min-h-screen">
             {/* Header */}
             <div className="max-w-7xl mx-auto mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2">Archived Spaces</h1>
+                <h1 className="text-3xl font-bold text-dark-text1 mb-2">Archived Spaces</h1>
                 <p className="text-dark-text2">
                     Manage your archived spaces. Restore them or delete permanently.
                 </p>
@@ -76,7 +76,7 @@ function ArchivedSpaces() {
                         <div className="w-20 h-20 bg-dark-active rounded-full flex items-center justify-center mb-4">
                             <FiTrash2 className="text-4xl text-dark-text2" />
                         </div>
-                        <h2 className="text-xl font-semibold text-white mb-2">No Archived Spaces</h2>
+                        <h2 className="text-xl font-semibold text-dark-text1 mb-2">No Archived Spaces</h2>
                         <p className="text-dark-text2 max-w-md">
                             You haven't archived any spaces yet. Archived spaces will appear here.
                         </p>
@@ -88,21 +88,21 @@ function ArchivedSpaces() {
                             const tasks = Array.isArray(space.tasks) ? space.tasks : [];
                             const tasksCount = space.tasksCount || tasks.length;
 
-    return (
+                        return (
                                 <div
                                     key={space._id}
-                                    className="group bg-dark-bg border border-dark-stroke rounded-2xl p-6 hover:border-[#444444] transition-all duration-300 flex flex-col h-[280px] relative"
+                                    className="group bg-dark-bg border border-dark-stroke rounded-2xl p-6 hover:border-dark-stroke-hover transition-all duration-300 flex flex-col h-[280px] relative"
                                 >
 
                                     {/* Space Info */}
                                     <div className="flex items-center gap-3 mb-4">
                                         <img
                                             src={space?.image || "/icon.png"}
-                                            className="h-12 w-12 rounded-xl border border-[#444444] object-cover"
+                                            className="h-12 w-12 rounded-xl border border-dark-stroke object-cover"
                                             alt={space?.name}
                                         />
                                         <div className="flex-1 min-w-0">
-                                            <h3 className="text-lg font-semibold text-white truncate">
+                                            <h3 className="text-lg font-semibold text-dark-text1 truncate">
                                                 {space?.name}
                                             </h3>
                                             <p className="text-sm text-dark-text2">
@@ -141,7 +141,7 @@ function ArchivedSpaces() {
                                     <div className="flex gap-2 mt-auto">
                                         <button
                                             onClick={() => handleRestore(space)}
-                                            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 border border-dark-stroke hover:border-dark-stroke hover:bg-dark-hover cursor-pointer text-white rounded-lg transition-colors font-medium"
+                                            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 border border-dark-stroke hover:border-dark-stroke hover:bg-dark-hover cursor-pointer text-dark-text1 rounded-lg transition-colors font-medium"
                                         >
                                             <FiRotateCcw size={16} />
                                             <span>Restore</span>

@@ -82,7 +82,7 @@ function Note() {
     if (isLoading) {
         return (
             <div className="flex items-center justify-center h-screen">
-                <div className="text-white">Loading note...</div>
+                <div className="text-dark-text1">Loading note...</div>
             </div>
         );
     }
@@ -90,13 +90,13 @@ function Note() {
     if (!note) {
         return (
             <div className="flex items-center justify-center h-screen">
-                <div className="text-white">Note not found</div>
+                <div className="text-dark-text1">Note not found</div>
             </div>
         );
     }
 
     return (
-        <div className="h-full">
+        <div className="h-full text-dark-text1">
             <NovelEditor
                 key={`${id}-${note.updatedAt}`} // Force re-render when note ID or update time changes
                 onUpdate={handleEditorUpdateWithSave}

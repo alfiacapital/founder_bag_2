@@ -114,7 +114,7 @@ const TaskCard = ({
                 task-action-button absolute left-3.5 top-3 pb-1 -translate-y-1/2
                 opacity-100 md:opacity-0 md:group-hover:opacity-100
                 transform md:-translate-x-2 md:group-hover:translate-x-0
-                transition-all duration-300 text-dark-text2 hover:text-white z-10 cursor-pointer
+                transition-all duration-300 text-dark-text2 hover:text-dark-text1 z-10 cursor-pointer
             "
                     >
                         <FaRegSquareCheck className="w-4 h-4" />
@@ -139,12 +139,12 @@ const TaskCard = ({
                                     }}
                                     onKeyDown={handleEditKeyDown}
                                     onBlur={handleEditSave}
-                                    className="font-medium text-dark-text1 bg-transparent border-b border-[#444444] focus:border-white focus:outline-none leading-tight max-w-20 md:max-w-42 pt-1"
+                                    className="font-medium text-dark-text1 bg-transparent border-b border-dark-stroke-hover focus:border-dark-text1 focus:outline-none leading-tight max-w-20 md:max-w-42 pt-1"
                                     autoFocus
                                 />
                             ) : (
                                 <h4
-                                    className="font-medium text-dark-text1 leading-tight truncate max-w-16 md:max-w-[10rem] pb-0.5 cursor-pointer hover:text-white transition-colors"
+                                    className="font-medium text-dark-text1 leading-tight truncate max-w-16 md:max-w-[10rem] pb-0.5 cursor-pointer hover:text-dark-text1 transition-colors"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         handleEditStart(task._id, "title", task.title);
@@ -175,7 +175,7 @@ const TaskCard = ({
                                     e.stopPropagation();
                                     onEnterFocusMode(task._id);
                                 }}
-                                className="task-action-button text-dark-text2 hover:text-blue-500 cursor-pointer pr-1.5"
+                                className="task-action-button text-dark-text2  cursor-pointer pr-1.5"
                             >
                                 <MdOutlineCenterFocusStrong className="h-5 w-5" />
                             </button>
@@ -187,7 +187,7 @@ const TaskCard = ({
                                 setAddingSubtaskFor(task._id);
                                 setNewSubtaskTitle("");
                             }}
-                            className="task-action-button text-dark-text2 hover:text-white cursor-pointer pr-1.5"
+                            className="task-action-button text-dark-text2 hover:text-dark-text1 cursor-pointer pr-1.5"
                         >
                             <FaTasks className="h-4 w-4" />
                         </button>
@@ -198,7 +198,7 @@ const TaskCard = ({
                                 setShowNoteEditor(!showNoteEditor);
                             }}
                             className={`task-action-button cursor-pointer pr-1.5 transition-colors ${
-                                showNoteEditor ? 'text-blue-500' : 'text-dark-text2 hover:text-white'
+                                showNoteEditor ? 'text-' : 'text-dark-text2 '
                             }`}
                         >
                             <BiNote className="h-5 w-5" />
@@ -209,7 +209,7 @@ const TaskCard = ({
                                 e.stopPropagation();
                                 handleTaskCopy(task._id);
                             }}
-                            className="task-action-button text-dark-text2 hover:text-white cursor-pointer pr-1.5"
+                            className="task-action-button text-dark-text2 hover:text-dark-text1 cursor-pointer pr-1.5"
                         >
                             <FaRegCopy className="h-4 w-4" />
                         </button>
@@ -219,7 +219,7 @@ const TaskCard = ({
                                 e.stopPropagation();
                                 handleTaskDelete(task._id);
                             }}
-                            className="task-action-button text-dark-text2 hover:text-white cursor-pointer"
+                            className="task-action-button text-dark-text2 hover:text-dark-text1 cursor-pointer"
                         >
                             <AiOutlineDelete className="h-5 w-5" />
                         </button>
@@ -230,7 +230,7 @@ const TaskCard = ({
                         src={task?.spaceId?.image || "/icon.png"}
                         alt={task?.title}
                         className="
-                w-6 h-6 rounded-button border border-[#444444] object-cover flex-shrink-0
+                w-6 h-6 rounded-button border border-dark-stroke object-cover flex-shrink-0
                 opacity-0 md:opacity-100 md:group-hover:opacity-0
                 transition-opacity duration-300
             "
@@ -288,7 +288,7 @@ const TaskCard = ({
                         />
                     ) : (
                         <div
-                            className="text-white cursor-pointer hover:text-gray-300 transition-colors"
+                            className="text-dark-text1 cursor-pointer hover:text-dark-text2 transition-colors"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 handleEditStart(task._id, 'estimatedDate', task.estimatedDate);
@@ -327,7 +327,7 @@ const TaskCard = ({
                         />
                     ) : (
                         <div
-                            className="text-dark-text2 cursor-pointer hover:text-white transition-colors"
+                            className="text-dark-text2 cursor-pointer hover:text-dark-text1 transition-colors"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 handleEditStart(task._id, 'dueDate', task.dueDate);

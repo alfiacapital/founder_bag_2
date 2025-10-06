@@ -15,7 +15,7 @@ const TaskForm = ({
             {/* Title */}
             <input
                 placeholder="Title *"
-                className="w-full pb-0.5 focus:outline-none border-b border-[#1f1f1f] focus:border-[#444444]"
+                className="w-full pb-0.5 bg-transparent text-dark-text1 placeholder-dark-text2 focus:outline-none border-b border-dark-stroke focus:border-dark-stroke-hover"
                 value={newTask.title}
                 onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
                 autoFocus

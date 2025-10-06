@@ -18,7 +18,7 @@ const Modal = ({ isOpen, onClose, children, size = "md" }) => {
             onClick={onClose}
         >
             <div
-                className={`bg-dark-bg2 border border-[#444444] rounded-[22px] shadow-lg p-6 w-full ${sizeClasses[size]} relative`}
+                className={`bg-dark-bg2 border border-dark-stroke rounded-[22px] shadow-lg p-6 w-full ${sizeClasses[size]} relative`}
                 onClick={(e) => e.stopPropagation()}
             >
                 <button

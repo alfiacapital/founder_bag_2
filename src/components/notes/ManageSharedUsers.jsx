@@ -30,7 +30,7 @@ function ManageSharedUsers({ isOpen, onClose, noteId }) {
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} size="md">
-            <h2 className="text-xl font-bold text-white mb-4">Manage Shared Users</h2>
+            <h2 className="text-xl font-bold text-dark-text1 mb-4">Manage Shared Users</h2>
 
             {isLoading ? (
                 <p className="text-dark-text2">Loading...</p>
@@ -51,7 +51,7 @@ function ManageSharedUsers({ isOpen, onClose, noteId }) {
                                     className="w-10 h-10 rounded-full object-cover border border-dark-stroke"
                                 />
                                 <div>
-                                    <p className="text-white font-medium ">{user.full_name}</p>
+                                    <p className="text-dark-text1 font-medium ">{user.full_name}</p>
                                     <p className="text-dark-text2 text-sm truncate max-w-50">{user.email}</p>
                                 </div>
                             </div>

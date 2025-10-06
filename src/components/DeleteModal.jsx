@@ -12,7 +12,7 @@ function DeleteModal({ isOpen, title, message, onClick, onClose, buttonMessage =
                 </div>
 
                 {/* Title */}
-                <h2 className="text-lg font-semibold text-white">
+                <h2 className="text-lg font-semibold text-dark-text1">
                     {title || "Delete Item"}
                 </h2>
 
@@ -25,7 +25,7 @@ function DeleteModal({ isOpen, title, message, onClick, onClose, buttonMessage =
                 <div className="flex gap-3 pt-2 w-full">
                     <button
                         onClick={onClose}
-                        className="flex-1 py-2 rounded-xl bg-dark-bg hover:bg-dark-bg3 text-dark-text2 hover:text-white transition"
+                        className="flex-1 py-2 rounded-xl bg-dark-bg hover:bg-dark-bg3 text-dark-text2 hover:text-dark-text1 transition"
                     >
                         Cancel
                     </button>

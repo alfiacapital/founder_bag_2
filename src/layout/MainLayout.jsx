@@ -11,7 +11,7 @@ export default function MainLayout() {
         setSidebarOpen(pathname.startsWith("/space") ? false : true);
     }, [pathname]);
     return (
-        <div className="flex flex-col h-screen bg-black text-white overflow-hidden">
+        <div className="flex flex-col h-screen bg-dark-bg text-white overflow-hidden">
             <Navbar setSidebarOpen={setSidebarOpen} />
 
             <div className="flex flex-1 overflow-hidden mx-0">

@@ -44,13 +44,13 @@ function CardsView({setDeleteModal, setShareModal, setManageUsersModal}) {
                         <div className="flex justify-between items-center mb-2">
                             <h2
                                 onClick={() => navigate(`/note/${note._id}`)}
-                                className="text-lg font-semibold text-white truncate cursor-pointer hover:underline"
+                                className="text-lg font-semibold text-dark-text1 truncate cursor-pointer hover:underline"
                             >
                                 {note.title}
                             </h2>
                             <Menu
                                 button={
-                                    <button className="p-1.5 mb-2 rounded-button border border-dark-stroke hover:bg-dark-hover cursor-pointer text-dark-text2 hover:text-white">
+                                    <button className="p-1.5 mb-2 rounded-button border border-dark-stroke hover:bg-dark-hover cursor-pointer text-dark-text2 hover:text-dark-text1">
                                         <FaEllipsisVertical />
                                     </button>
                                 }
@@ -89,7 +89,7 @@ function CardsView({setDeleteModal, setShareModal, setManageUsersModal}) {
                             <div className="flex items-center -space-x-3">
                                 {/* Owner avatar */}
                                 <img
-                                    className="border-2 border-[#444444] bg-dark-bg rounded-full h-7 w-7 object-cover"
+                                    className="border-2 border-dark-stroke bg-dark-bg rounded-full h-7 w-7 object-cover"
                                     src={getUserImage(user?.image)}
                                     alt={user?.full_name || "Owner"}
                                 />
@@ -99,7 +99,7 @@ function CardsView({setDeleteModal, setShareModal, setManageUsersModal}) {
                                     note.sharedWith.slice(0, 4).map((user, key) => (
                                         <img
                                             key={key}
-                                            className="border-2 border-[#444444] bg-dark-bg rounded-full h-7 w-7 object-cover"
+                                            className="border-2 border-dark-stroke bg-dark-bg rounded-full h-7 w-7 object-cover"
                                             src={getUserImage(user.image)}
                                             alt={user.full_name}
                                         />
@@ -107,7 +107,7 @@ function CardsView({setDeleteModal, setShareModal, setManageUsersModal}) {
 
                                 {/* Extra count if more than 4 shared users */}
                                 {note.sharedWith && note.sharedWith.length > 4 && (
-                                    <span className="flex items-center justify-center bg-dark-bg2 text-xs text-white font-semibold border-2 border-[#444444] rounded-full h-8 w-8 pt-1">
+                                    <span className="flex items-center justify-center bg-dark-bg2 text-xs text-dark-text1 font-semibold border-2 border-dark-stroke rounded-full h-8 w-8 pt-1">
                                                     +{note.sharedWith.length - 4}
                                                   </span>
                                 )}

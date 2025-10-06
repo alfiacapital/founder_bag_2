@@ -51,12 +51,12 @@ function QuickActions() {
             className="group relative bg-dark-bg border border-dark-stroke rounded-lg p-4 hover:border-dark-stroke transition-all duration-300 hover:shadow-lg hover:shadow-black/20 text-left"
           >
             {/* Icon with gradient background */}
-            <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${action.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300`}>
-              <action.icon className="w-6 h-6 text-white" />
+            <div className={`w-12 h-12 rounded-lg  bg-dark-bg2 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300`}>
+              <action.icon className="w-6 h-6 text-dark-text1" />
             </div>
 
             {/* Title */}
-            <h3 className="text-white font-semibold text-sm sm:text-base mb-1">
+            <h3 className="text-dark-text1 font-semibold text-sm sm:text-base mb-1">
               {action.title}
             </h3>
 

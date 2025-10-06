@@ -172,7 +172,7 @@ export default function AlfiaAI() {
             {/* Backdrop overlay */}
             {showSidebar && (
                 <div 
-                    className="absolute inset-0 bg-black/60 backdrop-blur-sm z-40"
+                    className="absolute inset-0 bg-dark-bg/60 backdrop-blur-sm z-40"
                     onClick={() => setShowSidebar(false)}
                 />
             )}
@@ -192,11 +192,11 @@ export default function AlfiaAI() {
                     <div className="p-4 border-b border-dark-stroke flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <FiMessageSquare className="text-blue-500" size={20} />
-                            <span className="font-semibold">Conversations</span>
+                            <span className="font-semibold text-dark-text1">Conversations</span>
                         </div>
                         <button
                             onClick={() => setShowSidebar(false)}
-                            className="text-dark-text2 hover:text-white transition-colors p-1 hover:bg-dark-bg rounded"
+                            className="text-dark-text2 hover:text-dark-text1 transition-colors p-1 hover:bg-dark-bg rounded"
                         >
                             <FiX size={20} />
                         </button>
@@ -221,7 +221,7 @@ export default function AlfiaAI() {
                         {conversations.length === 0 ? (
                             <div className="p-6 text-center text-dark-text2">
                                 <FiMessageSquare className="mx-auto mb-3 opacity-30" size={48} />
-                                <p className="text-sm">No conversations yet</p>
+                                <p className="text-sm text-dark-text1">No conversations yet</p>
                                 <p className="text-xs mt-1 opacity-70">Create one to get started!</p>
                             </div>
                         ) : (
@@ -244,7 +244,7 @@ export default function AlfiaAI() {
                                     >
                                         <div className="flex items-start justify-between gap-2">
                                             <div className="flex-1 min-w-0">
-                                                <h3 className="text-sm font-medium text-white truncate mb-1">
+                                                <h3 className="text-sm font-medium text-dark-text1 truncate mb-1">
                                                     {conv.title || "New Conversation"}
                                                 </h3>
                                                 <p className="text-xs text-dark-text2">
@@ -276,7 +276,7 @@ export default function AlfiaAI() {
                         <button
                             id="menu-button"
                             onClick={() => setShowSidebar(!showSidebar)}
-                            className="text-dark-text2 hover:text-white transition-colors p-2 hover:bg-dark-bg rounded-button"
+                            className="text-dark-text2 hover:text-dark-text1 transition-colors p-2 hover:bg-dark-bg rounded-button"
                         >
                             <FiMenu size={22} />
                         </button>
@@ -286,7 +286,7 @@ export default function AlfiaAI() {
                                 alt="ALFIA AI" 
                                 className="w-8 h-8 rounded-full"
                             />
-                            <h1 className="text-lg lg:text-xl font-semibold truncate">
+                            <h1 className="text-lg text-dark-text1 lg:text-xl font-semibold truncate mt-1.5">
                                 {activeConversation?.title || "ALFIA AI"}
                             </h1>
                         </div>
@@ -341,27 +341,27 @@ export default function AlfiaAI() {
                                                         {message.content}
                                                     </p>
                                                 ) : (
-                                                    <div className="text-sm sm:text-base leading-relaxed prose prose-invert prose-sm max-w-none break-words">
+                                                    <div className="text-sm text-dark-text1 sm:text-base leading-relaxed prose prose-invert prose-sm max-w-none break-words">
                                                         <ReactMarkdown
                                                             components={{
                                                                 // Customize markdown elements with RTL support
-                                                                h1: ({...props}) => <h1 className="text-xl font-bold mb-2 mt-4" {...props} />,
-                                                                h2: ({...props}) => <h2 className="text-lg font-bold mb-2 mt-3" {...props} />,
-                                                                h3: ({...props}) => <h3 className="text-base font-bold mb-1 mt-2" {...props} />,
-                                                                p: ({...props}) => <p className="mb-2" {...props} />,
-                                                                ul: ({...props}) => <ul className={`list-disc mb-2 space-y-1 ${isArabic(message.content) ? 'list-inside mr-4' : 'list-inside'}`} {...props} />,
-                                                                ol: ({...props}) => <ol className={`list-decimal mb-2 space-y-1 ${isArabic(message.content) ? 'list-inside mr-4' : 'list-inside'}`} {...props} />,
-                                                                li: ({...props}) => <li className={isArabic(message.content) ? 'mr-2' : 'ml-2'} {...props} />,
+                                                                h1: ({...props}) => <h1 className="text-xl text-dark-text1 font-bold mb-2 mt-4" {...props} />,
+                                                                h2: ({...props}) => <h2 className="text-lg text-dark-text1 font-bold mb-2 mt-3" {...props} />,
+                                                                h3: ({...props}) => <h3 className="text-base text-dark-text1 font-bold mb-1 mt-2" {...props} />,
+                                                                p: ({...props}) => <p className="mb-2 text-dark-text1" {...props} />,
+                                                                ul: ({...props}) => <ul className={`list-disc text-dark-text1 mb-2 space-y-1 ${isArabic(message.content) ? 'list-inside mr-4' : 'list-inside'}`} {...props} />,
+                                                                ol: ({...props}) => <ol className={`list-decimal text-dark-text1 mb-2 space-y-1 ${isArabic(message.content) ? 'list-inside mr-4' : 'list-inside'}`} {...props} />,
+                                                                li: ({...props}) => <li className={`text-dark-text1 ${isArabic(message.content) ? 'mr-2' : 'ml-2'}`} {...props} />,
                                                                 code: ({inline, ...props}) => 
                                                                     inline ? (
-                                                                        <code className="bg-gray-800 px-1 py-0.5 rounded text-sm" dir="ltr" {...props} />
+                                                                        <code className="bg-dark-active  text-dark-text1 px-1 py-0.5 rounded text-sm" dir="ltr" {...props} />
                                                                     ) : (
-                                                                        <code className="block bg-gray-800 p-2 rounded my-2 overflow-x-auto" dir="ltr" {...props} />
+                                                                        <code className="block bg-dark-active  text-dark-text1 p-2 rounded my-2 overflow-x-auto" dir="ltr" {...props} />
                                                                     ),
-                                                                strong: ({...props}) => <strong className="font-bold text-white" {...props} />,
-                                                                em: ({...props}) => <em className="italic" {...props} />,
-                                                                a: ({...props}) => <a className="text-blue-400 hover:underline" {...props} />,
-                                                                blockquote: ({...props}) => <blockquote className={`border-gray-600 pl-4 italic my-2 ${isArabic(message.content) ? 'border-r-4 pr-4' : 'border-l-4'}`} {...props} />,
+                                                                strong: ({...props}) => <strong className="font-bold text-dark-text1" {...props} />,
+                                                                em: ({...props}) => <em className="italic text-dark-text1" {...props} />,
+                                                                a: ({...props}) => <a className="text-dark-text1 hover:underline" {...props} />,
+                                                                blockquote: ({...props}) => <blockquote className={`border-dark-stroke text-dark-text1 pl-4 italic my-2 ${isArabic(message.content) ? 'border-r-4 pr-4' : 'border-l-4'}`} {...props} />,
                                                             }}
                                                         >
                                                             {message.content}
@@ -409,7 +409,7 @@ export default function AlfiaAI() {
                                 onKeyPress={handleKeyPress}
                                 placeholder="Type your message..."
                                 disabled={isLoading}
-                                className="flex-1 bg-transparent text-white placeholder-dark-text2 resize-none focus:outline-none max-h-32 min-h-[24px] text-sm lg:text-base"
+                                className="flex-1 bg-transparent text-dark-text1 placeholder-dark-text2 resize-none focus:outline-none max-h-32 min-h-[24px] text-sm lg:text-base"
                                 rows={1}
                                 style={{ 
                                     height: 'auto',
@@ -429,7 +429,7 @@ export default function AlfiaAI() {
                             </button>
                         </div>
                         <p className="text-xs text-dark-text2 text-center mt-2 sm:mt-3">
-                            Press <span className="text-white font-medium">Enter</span> to send, <span className="text-white font-medium">Shift + Enter</span> for new line
+                            Press <span className="text-dark-text1 font-medium">Enter</span> to send, <span className="text-dark-text1 font-medium">Shift + Enter</span> for new line
                         </p>
                     </div>
                 </div>

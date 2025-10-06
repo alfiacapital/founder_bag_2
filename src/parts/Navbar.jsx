@@ -5,8 +5,7 @@ import { HiMenuAlt2 } from "react-icons/hi";
 import { useUserContext } from '@/context/UserProvider';
 import Menu from '@/components/Menu';
 import { getUserImage } from '@/utils/getUserImage';
-import { axiosClient } from '@/api/axios';
-import { useNavigate } from 'react-router-dom';
+import { setCookie } from '@/utils/cookieUtils';
 
 function generateFakeKey(length = 256) {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -29,8 +28,7 @@ export const services = [
 function Navbar({ setSidebarOpen }) {
     const [open, setOpen] = useState(false);
     const dropdownRef = useRef(null);
-    const darkMode = true;
-    const { user, logout } = useUserContext()
+    const { user, logout, darkMode, setDarkMode } = useUserContext()
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -51,14 +49,14 @@ function Navbar({ setSidebarOpen }) {
                     className="hidden xl:flex p-2 hover:bg-dark-hover rounded-button transition-all duration-300 border border-transparent hover:border-dark-stroke"
                     aria-label="Toggle sidebar"
                 >
-                    <HiMenuAlt2 className="text-2xl text-dark-text2 hover:text-white" />
+                    <HiMenuAlt2 className="text-2xl text-dark-text2 hover:text-dark-text1" />
                 </button>
 
                 <div ref={dropdownRef} className="relative inline-block">
                     {/* Logo button */}
                     <button
                         onClick={() => setOpen(!open)}
-                        className="flex items-center space-x-2 border border-dark-stroke m-2
+                        className="flex items-center space-x-2 hover:bg-dark-hover border border-dark-stroke m-2
                          rounded-lg px-3 py-2 hover:border-dark-stroke
                          transition"
                     >
@@ -67,7 +65,7 @@ function Navbar({ setSidebarOpen }) {
                         ) : (
                             <img src={"/ALFIA_SYSTEM_DARK.png"} alt="Logo" className="h-6" />
                         )}
-                        <IoIosArrowDown className="w-4 h-4 text-gray-400" />
+                        <IoIosArrowDown className="w-4 h-4 text-dark-text1" />
                     </button>
 
                     {/* Dropdown Cards with transition */}
@@ -89,7 +87,7 @@ function Navbar({ setSidebarOpen }) {
                                rounded-button px-4 py-3 cursor-pointer transition "
                             >
                                 <div className="flex flex-col">
-                                    <span className="text-lg font-semibold text-navy-900 dark:text-white ">
+                                    <span className="text-lg font-semibold text-dark-text1">
                                         {service.name}
                                     </span>
                                 </div>
@@ -102,28 +100,28 @@ function Navbar({ setSidebarOpen }) {
             <nav className="hidden md:flex items-center space-x-3  ">
                 <span
                     
-                    className="text-navy-900 cursor-pointer dark:text-white text-sm border border-dark-stroke rounded-button px-4 py-2 hover:border-dark-stroke  text-white border-dark-stroke hover:text-white hover:border-dark-stroke hover:bg-dark-hover font-bold
+                    className="text-dark-text1 cursor-pointer text-sm border border-dark-stroke rounded-button px-4 py-2 hover:border-dark-stroke hover:text-dark-text1 hover:border-dark-stroke hover:bg-dark-hover font-bold
                      transition-all duration-300"
                 >
                     Support Portal
                 </span>
                 <span
                     
-                    className="text-navy-900 cursor-pointer dark:text-white text-sm border border-dark-stroke rounded-button px-4 py-2 hover:border-dark-stroke text-white border-dark-stroke hover:text-white hover:border-dark-stroke hover:bg-dark-hover font-bold
+                    className="text-dark-text1 cursor-pointer text-sm border border-dark-stroke rounded-button px-4 py-2 hover:border-dark-stroke hover:text-dark-text1 hover:border-dark-stroke hover:bg-dark-hover font-bold
                      transition-all duration-300"
                 >
                     Manage Funds
                 </span>
                 <span
                     
-                    className="text-navy-900 cursor-pointer dark:text-white text-sm border border-dark-stroke rounded-button px-4 py-2 hover:border-dark-stroke text-dark-text2 border-dark-stroke hover:text-white hover:border-dark-stroke hover:bg-dark-hover font-bold
+                    className="text-dark-text2 cursor-pointer text-sm border border-dark-stroke rounded-button px-4 py-2 hover:border-dark-stroke hover:text-dark-text1 hover:border-dark-stroke hover:bg-dark-hover font-bold
                      transition-all duration-300"
                 >
                     Docs
                 </span>
                 <Menu
                     button={
-                        <img src={getUserImage(user.image)} alt="Avatar" className="h-10 w-10 rounded-full border border-dark-stroke hover:border-dark-stroke hover:bg-dark-hover hover:text-white" />
+                        <img src={getUserImage(user.image)} alt="Avatar" className="h-10 w-10 rounded-full border border-dark-stroke hover:border-dark-stroke hover:bg-dark-hover" />
                     }
                     items={[
                         {
@@ -138,6 +136,41 @@ function Navbar({ setSidebarOpen }) {
                             },
                         },
                     ]}
+                    footer={
+                        <div className="px-3 py-2 border-t border-dark-stroke">
+                            <p className="text-xs text-dark-text1 mb-2 pt-2">
+                                Theme
+                            </p>
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => {
+                                        setDarkMode(false)
+                                        setCookie("darkMode", false, 365);
+                                    }}
+                                    className={`flex-1 px-2 py-1.5 rounded-button text-xs font-medium transition-all duration-200 ${
+                                        !darkMode
+                                            ? "bg-dark-active text-dark-text1 border border-dark-stroke"
+                                            : "hover:bg-dark-hover text-dark-text2 border border-transparent"
+                                    }`}
+                                >
+                                    Light
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setDarkMode(true)
+                                        setCookie("darkMode", true, 365);
+                                    }}
+                                    className={`flex-1 px-2 py-1.5 rounded-button text-xs font-medium transition-all duration-200 ${
+                                        darkMode
+                                            ? "bg-dark-active text-dark-text1 border border-dark-stroke"
+                                            : "hover:bg-dark-hover text-dark-text2 border border-transparent"
+                                    }`}
+                                >
+                                    Dark
+                                </button>
+                            </div>
+                        </div>
+                    }
                 />
             </nav>
 
@@ -146,10 +179,10 @@ function Navbar({ setSidebarOpen }) {
                     console.log("open sidebar")
                     setSidebarOpen(true)
                 }}
-                className="xl:hidden p-2 hover:bg-gray-800 rounded transition-all duration-300"
+                className="xl:hidden p-2 hover:bg-dark-hover hover:border hover:border-dark-stroke rounded transition-all duration-300"
                 aria-label="Open sidebar"
             >
-                <FaBars className="text-2xl" />
+                <FaBars className="text-2xl text-dark-text1" />
             </button>
         </header>
     );

@@ -93,25 +93,52 @@
   }
 }
 
+/* ==================== CSS VARIABLES FOR THEMING ==================== */
+:root {
+  /* Light Mode Variables (default) */
+  --color-bg: #ffffff;
+  --color-bg2: #f7f7f7;
+  --color-active: #fff;
+  --color-text1: black;
+  --color-text2: gray;
+  --color-stroke: #ebebeb;
+  --color-stroke-hover: #d1d1d1;
+  --color-hover: #fff;
+  --color-blue-border: #0000cd;
+}
+
+.dark {
+  /* Dark Mode Variables */
+  --color-bg: #000;
+  --color-bg2: #070707;
+  --color-active: #181818;
+  --color-text1: #ffffff;
+  --color-text2: #9b9b96;
+  --color-stroke: #1f1f1f;
+  --color-stroke-hover: #444444;
+  --color-hover: #181818;
+  --color-blue-border: #0000cd;
+}
+
 @layer utilities {
-  /* Custom color utilities */
-  .bg-dark-bg { background-color: #000; }
-  .bg-dark-bg2 { background-color: #070707; }
-  .bg-dark-active { background-color: #181818; }
+  /* ==================== THEME-AWARE UTILITY CLASSES ==================== */
+  
+  /* Background colors - automatically switch based on theme */
+  .bg-dark-bg { background-color: var(--color-bg); }
+  .bg-dark-bg2 { background-color: var(--color-bg2); }
+  .bg-dark-active { background-color: var(--color-active); }
 
-  .text-dark-text1 { color: #ffffff; }
-  .text-dark-text2 { color: #9b9b96; }
+  /* Text colors - automatically switch based on theme */
+  .text-dark-text1 { color: var(--color-text1); }
+  .text-dark-text2 { color: var(--color-text2); }
 
-  /* Custom border color classes */
-  .border-dark-stroke { border-color: #1f1f1f; }
-  .border-dark-blue-border { border-color: #0000cd; }
+  /* Border colors - automatically switch based on theme */
+  .border-dark-stroke { border-color: var(--color-stroke); }
+  .border-dark-blue-border { border-color: var(--color-blue-border); }
 
-  /* Hover border classes */
-  .hover\:border-dark-stroke:hover { border-color: #444444; }
-
-  /* Hover background classes */
-  .hover\:bg-dark-hover:hover { background-color: #181818; }
-
+  /* Hover states - automatically switch based on theme */
+  .hover\:border-dark-stroke:hover { border-color: var(--color-stroke-hover); }
+  .hover\:bg-dark-hover:hover { background-color: var(--color-hover); }
 
   /* Custom rounded class */
   .rounded-default { border-radius: 22px; }
@@ -139,6 +166,7 @@
   }
 }
 
+/* ==================== SCROLLBAR STYLES (Theme-aware) ==================== */
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 13px;
@@ -147,16 +175,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #000;
+  background: var(--color-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #070707;
+  background: var(--color-bg2);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #212222;
+  background: var(--color-active);
 }
 
 /* Sidebar navigation scrollbar only */
@@ -165,16 +193,16 @@
 }
 
 .sidebar-nav-scroll::-webkit-scrollbar-track {
-  background: #000;
+  background: var(--color-bg);
 }
 
 .sidebar-nav-scroll::-webkit-scrollbar-thumb {
-  background: #333333;
+  background: var(--color-stroke);
   border-radius: 3px;
 }
 
 .sidebar-nav-scroll::-webkit-scrollbar-thumb:hover {
-  background: #555555;
+  background: var(--color-stroke-hover);
 }
 
 /* Custom scrollbar for Menu dropdown */
@@ -183,17 +211,17 @@
 }
 
 .menu-scroll::-webkit-scrollbar-track {
-  background: #1a1a1a;
+  background: var(--color-bg2);
   border-radius: 3px;
 }
 
 .menu-scroll::-webkit-scrollbar-thumb {
-  background: #444444;
+  background: var(--color-stroke-hover);
   border-radius: 3px;
 }
 
 .menu-scroll::-webkit-scrollbar-thumb:hover {
-  background: #555555;
+  background: var(--color-stroke-hover);
 }
 
 /* Mobile responsive */

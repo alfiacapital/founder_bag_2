@@ -6,13 +6,13 @@ const SpaceActivityChart = ({ spaceActivityData = [] }) => {
 
     return (
         <div className='rounded-button border border-dark-stroke bg-dark-bg2 p-6'>
-            <h3 className='text-white text-lg font-semibold mb-6'>Space Activity & Completion</h3>
+            <h3 className='text-dark-text1 text-lg font-semibold mb-6'>Space Activity & Completion</h3>
             
             <div className='space-y-3'>
                 {spaceActivityData?.slice(0, 5)?.map((space, index) => (
                     <div 
                         key={index} 
-                        className='p-4 bg-dark-active rounded-button border border-dark-stroke hover:border-[#444444] transition-all group'
+                        className='p-4 bg-dark-active rounded-button border border-dark-stroke hover:border-dark-stroke-hover transition-all group'
                     >
                         {/* Space Info Row */}
                         <div className='flex justify-between items-center mb-3'>
@@ -21,11 +21,11 @@ const SpaceActivityChart = ({ spaceActivityData = [] }) => {
                                     className='w-3 h-3 rounded-full'
                                     style={{ backgroundColor: colors[index % 5] }}
                                 ></div>
-                                <span className='text-white font-medium'>{space.name}</span>
+                                <span className='text-dark-text1 font-medium'>{space.name}</span>
                             </div>
                             <div className='flex items-center gap-4'>
                                 <span className='text-sm text-dark-text2'>{space.tasks} tasks</span>
-                                <span className='text-lg font-bold text-white'>{space.completion}%</span>
+                                <span className='text-lg font-bold text-dark-text1'>{space.completion}%</span>
                             </div>
                         </div>
                         
@@ -48,13 +48,13 @@ const SpaceActivityChart = ({ spaceActivityData = [] }) => {
             {spaceActivityData.length > 0 && (
                 <div className='mt-6 pt-6 border-t border-dark-stroke grid grid-cols-2 gap-3'>
                     <div className='p-4 bg-dark-active rounded-button border border-dark-stroke text-center'>
-                        <p className='text-3xl font-bold text-white'>
+                        <p className='text-3xl font-bold text-dark-text1'>
                             {spaceActivityData.reduce((sum, space) => sum + space.tasks, 0)}
                         </p>
                         <p className='text-xs text-dark-text2 mt-2'>Total Tasks</p>
                     </div>
                     <div className='p-4 bg-dark-active rounded-button border border-dark-stroke text-center'>
-                        <p className='text-3xl font-bold text-white'>
+                        <p className='text-3xl font-bold text-dark-text1'>
                             {Math.round(spaceActivityData.reduce((sum, space) => sum + space.completion, 0) / spaceActivityData.length)}%
                         </p>
                         <p className='text-xs text-dark-text2 mt-2'>Avg Completion</p>

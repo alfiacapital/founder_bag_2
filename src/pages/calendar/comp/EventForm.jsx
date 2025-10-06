@@ -68,7 +68,7 @@ export default function EventForm({ event, start, end, onSubmit, onClose, isLoad
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
-            <h2 className="text-xl font-semibold text-white mb-4">
+            <h2 className="text-xl font-semibold text-dark-text1 mb-4">
                 {event ? "Edit Event" : "Create Event"}
             </h2>
 
@@ -83,7 +83,7 @@ export default function EventForm({ event, start, end, onSubmit, onClose, isLoad
                     name="title"
                     value={formData.title}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 bg-dark-bg text-white border border-[#444444] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-dark-bg text-dark-text1 border border-dark-stroke rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter event title"
                     required
                 />
@@ -100,7 +100,7 @@ export default function EventForm({ event, start, end, onSubmit, onClose, isLoad
                     name="start"
                     value={formData.start}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 bg-dark-bg text-white border border-[#444444] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-dark-bg text-dark-text1 border border-dark-stroke rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
                 />
             </div>
@@ -116,7 +116,7 @@ export default function EventForm({ event, start, end, onSubmit, onClose, isLoad
                     name="end"
                     value={formData.end}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 bg-dark-bg text-white border border-[#444444] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-dark-bg text-dark-text1 border border-dark-stroke rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
                 />
             </div>
@@ -149,7 +149,7 @@ export default function EventForm({ event, start, end, onSubmit, onClose, isLoad
                     type="button"
                     onClick={onClose}
                     disabled={isLoading}
-                    className="flex-1 px-4 py-2 bg-dark-bg border border-[#444444] text-dark-text2 rounded-lg hover:bg-[#1a1a1a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex-1 px-4 py-2 bg-dark-bg border border-dark-stroke text-dark-text2 rounded-lg hover:bg-dark-bg2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     Cancel
                 </button>

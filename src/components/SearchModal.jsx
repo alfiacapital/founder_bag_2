@@ -140,7 +140,7 @@ export default function SearchModal({ isOpen, onClose }) {
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="Search notes and spaces..."
-                        className="flex-1 bg-transparent text-white placeholder-dark-text2 focus:outline-none text-base"
+                        className="flex-1 bg-transparent text-dark-text1 placeholder-dark-text2 focus:outline-none text-base"
                     />
                     <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-xs text-dark-text2 bg-dark-bg border border-dark-stroke rounded">
                         <span>ESC</span>
@@ -191,7 +191,7 @@ export default function SearchModal({ isOpen, onClose }) {
                                             >
                                                 <SiGoogledocs className="text-dark-text2 flex-shrink-0" />
                                                 <div className="flex-1 min-w-0">
-                                                    <p className="text-sm text-white truncate">{note.title}</p>
+                                                    <p className="text-sm text-dark-text1 truncate">{note.title}</p>
                                                 </div>
                                             </button>
                                         );
@@ -219,7 +219,7 @@ export default function SearchModal({ isOpen, onClose }) {
                                             >
                                                 <FiFolder className="text-dark-text2 flex-shrink-0" />
                                                 <div className="flex-1 min-w-0">
-                                                    <p className="text-sm text-white truncate">{space.name}</p>
+                                                    <p className="text-sm text-dark-text1 truncate">{space.name}</p>
                                                 </div>
                                             </button>
                                         );

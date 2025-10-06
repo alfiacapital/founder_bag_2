@@ -119,7 +119,7 @@ const SubtaskItem = ({
                     <button
                         title="incomplete"
                         onClick={handleSubtaskIncomplete}
-                        className="text-dark-text2 hover:text-white cursor-pointer transition-all duration-300"
+                        className="text-dark-text2 hover:text-dark-text1 cursor-pointer transition-all duration-300"
                     >
                         <CgCloseR className="w-4 h-4" />
                     </button>
@@ -127,7 +127,7 @@ const SubtaskItem = ({
                     <button
                         title="complete"
                         onClick={handleSubtaskComplete}
-                        className="text-dark-text2 hover:text-white cursor-pointer transition-all duration-300"
+                        className="text-dark-text2 hover:text-dark-text1 cursor-pointer transition-all duration-300"
                     >
                         <FaRegSquareCheck className="w-4 h-4" />
                     </button>
@@ -141,7 +141,7 @@ const SubtaskItem = ({
                         onChange={(e) => setEditSubtaskValue(e.target.value)}
                         onBlur={handleSubtaskEdit}
                         onKeyDown={handleSubtaskKeyDown}
-                        className={`pt-1 w-full bg-transparent text-dark-text2 border-b border-[#444444] focus:outline-none ${
+                        className={`pt-1 w-full bg-transparent text-dark-text2 border-b border-dark-stroke focus:outline-none ${
                             subtask.status === "completed" ? "line-through opacity-50" : ""
                         }`}
                     />
@@ -167,7 +167,7 @@ const SubtaskItem = ({
                     title="move up"
                     disabled={index === 0}
                     onClick={handleMoveUp}
-                    className="opacity-100 md:opacity-0 group-hover/subtask:opacity-100 text-dark-text2 hover:text-white cursor-pointer transition-all duration-300"
+                    className="opacity-100 md:opacity-0 group-hover/subtask:opacity-100 text-dark-text2 hover:text-dark-text1 cursor-pointer transition-all duration-300"
                 >
                     <IoArrowUp className="h-5 w-5" />
                 </button>
@@ -177,7 +177,7 @@ const SubtaskItem = ({
                     title="move down"
                     disabled={index === totalSubtasks - 1}
                     onClick={handleMoveDown}
-                    className="opacity-100 md:opacity-0 group-hover/subtask:opacity-100 text-dark-text2 hover:text-white cursor-pointer transition-all duration-300"
+                    className="opacity-100 md:opacity-0 group-hover/subtask:opacity-100 text-dark-text2 hover:text-dark-text1 cursor-pointer transition-all duration-300"
                 >
                     <IoArrowDown className="h-5 w-5" />
                 </button>
@@ -186,7 +186,7 @@ const SubtaskItem = ({
                 <button
                     title="delete"
                     onClick={handleDelete}
-                    className="opacity-100 md:opacity-0 group-hover/subtask:opacity-100 text-dark-text2 hover:text-white cursor-pointer transition-all duration-300"
+                    className="opacity-100 md:opacity-0 group-hover/subtask:opacity-100 text-dark-text2 hover:text-dark-text1 cursor-pointer transition-all duration-300"
                 >
                     <AiOutlineDelete className="h-4.5 w-4.5" />
                 </button>

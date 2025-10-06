@@ -14,13 +14,13 @@ export default function CustomDateCellWrapper({ value, children, range, currentD
     const showDayName = daysDiff >= 0 && daysDiff < 7;
 
     return (
-        <div className={`w-full border-r flex flex-col items-center justify-center !border-[#1f1f1f] pt-2 ${isToday ? 'bg-dark-bg2' : ''}`}>
+        <div className={`w-full border-r border-dark-stroke flex flex-col items-center justify-center pt-2 ${isToday ? 'bg-dark-bg2' : ''}`}>
             {showDayName && (
                 <div className="text-sm font-bold text-dark-text-2 mb-0">
                     {format(value, "EEE")}
                 </div>
             )}
-            <div className={`text-sm font-bold mb-0 ${isToday ? 'text-white  rounded-full px-2 py-1' : 'text-dark-text-2'}`}>
+            <div className={`text-sm font-bold mb-0 ${isToday ? 'text-dark-text1 bg-dark-active  rounded-full px-2 pt-1 border border-dark-stroke' : 'text-dark-text-2'}`}>
                 {format(value, "d")}
             </div>
 

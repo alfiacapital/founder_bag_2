@@ -101,7 +101,7 @@ function Reports() {
                 <div className='flex justify-between items-center gap-2'>
                     <Menu
                         button={
-                            <button className="pt-1.5 px-3 mb-2 rounded-button border border-dark-stroke hover:bg-dark-hover cursor-pointer text-dark-text2 hover:text-white hover:border-[#444444]">
+                            <button className="pt-1.5 px-3 mb-2 rounded-button border border-dark-stroke hover:bg-dark-hover cursor-pointer text-dark-text2 hover:text-dark-text1 hover:border-dark-stroke-hover">
                                 {selectedSpace 
                                     ? spaces.find(s => s._id === selectedSpace)?.name 
                                     : 'All Spaces'}
@@ -120,7 +120,7 @@ function Reports() {
                     />
                 </div>
                 <div className='text-dark-text2'>
-                    Timezone: <span className='text-white'>{new Date().toLocaleString()}</span>
+                    Timezone: <span className='text-dark-text1'>{new Date().toLocaleString()}</span>
                 </div>
             </div>
             

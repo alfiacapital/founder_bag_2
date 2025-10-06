@@ -118,14 +118,19 @@ function RecentNotesSlider({ notes = [], isLoading = false }) {
           )}
         </Swiper>
 
-        <div className='absolute -right-8 -top-[5px] h-40 w-40 bg-gradient-to-l from-black to-transparent z-5 pointer-events-none' />
+        <div 
+          className='absolute -right-8 -top-[5px] h-40 w-40 z-5 pointer-events-none' 
+          style={{
+            background: 'linear-gradient(to left, var(--color-bg) 0%, transparent 100%)'
+          }}
+        />
 
         {/* Custom Navigation Buttons - Only visible on hover */}
-        <button className="swiper-button-prev-notes absolute -left-6 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-dark-bg2 border border-dark-stroke hover:bg-dark-hover hover:border-dark-stroke text-dark-text2 hover:text-white rounded-full flex items-center justify-center transition-all duration-300 z-10 shadow-lg opacity-0 group-hover:opacity-100">
+        <button className="swiper-button-prev-notes absolute -left-6 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-dark-bg2 border border-dark-stroke hover:bg-dark-hover hover:border-dark-stroke text-dark-text2 hover:text-dark-text1 rounded-full flex items-center justify-center transition-all duration-300 z-10 shadow-lg opacity-0 group-hover:opacity-100">
           <FiChevronRight className="w-4 h-4 sm:w-5 sm:h-5 rotate-180" />
         </button>
         
-        <button className="swiper-button-next-notes absolute -right-6 top-1/2 z-10 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-dark-bg2 border border-dark-stroke hover:bg-dark-hover hover:border-dark-stroke text-dark-text2 hover:text-white rounded-full flex items-center justify-center transition-all duration-300 z-10 shadow-lg opacity-0 group-hover:opacity-100">
+        <button className="swiper-button-next-notes absolute -right-6 top-1/2 z-10 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-dark-bg2 border border-dark-stroke hover:bg-dark-hover hover:border-dark-stroke text-dark-text2 hover:text-dark-text1 rounded-full flex items-center justify-center transition-all duration-300 z-10 shadow-lg opacity-0 group-hover:opacity-100">
           <FiChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
       </div>

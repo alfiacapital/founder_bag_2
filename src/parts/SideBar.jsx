@@ -98,7 +98,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
     // Menu item component for reusability
     const MenuItem = ({ icon: Icon, image, label, onClick, className = "", active  }) => (
         <div
-            className={`flex items-center gap-2 p-1 px-4 rounded-button hover:bg-[#1f1f1f] text-dark-text2 hover:text-white cursor-pointer transition-all duration-300 ease-in-out ${active ? "bg-dark-active text-white" : "text-dark-text2"} ${className}`}
+            className={`flex items-center gap-2 p-1 px-4 rounded-button hover:bg-dark-hover text-dark-text2 hover:text-dark-text2 cursor-pointer transition-all duration-300 ease-in-out ${active ? "bg-dark-active text-dark-text2" : "text-dark-text2"} ${className}`}
             onClick={onClick}
             role="button"
             tabIndex={0}
@@ -111,7 +111,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
         >
             {Icon && <Icon className="text-xl text-dark-text2  transition-all duration-300 ease-in-out" />}
             {image && <img src={image} alt={label} className="h-5 w-5" />}
-            <span className={`text-sm  font-bold pt-1  transition-all duration-300 ease-in-out ${active ? "text-white" : "text-dark-text2"}`}>{label}</span>
+            <span className={`text-sm  font-bold pt-1  transition-all duration-300 ease-in-out ${active ? "text-dark-text2" : "text-dark-text2"}`}>{label}</span>
         </div>
     );
 
@@ -120,8 +120,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
             {/* Sidebar - Hidden completely on large screens when closed */}
             <aside
                 className={`
-                    fixed xl:static inset-y-0 left-0 z-40 
-                    bg-black xl:py-6 px-6 xl:px-8
+                    fixed xl:static inset-y-0 left-0 z-40 bg-dark-bg xl:py-6 px-6 xl:px-8
                     transform transition-all duration-300 ease-in-out
                     flex flex-col h-screen xl:h-full xl:my-0
                     shadow-xl xl:shadow-none xl:ml-0 
@@ -135,18 +134,18 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
 
                 {/* Header - Mobile close button */}
                 <div className="flex justify-between items-center xl:hidden mb-6">
-                    <h1 className="text-lg font-bold text-white">ALFIA SYSTEM</h1>
+                    <h1 className="text-lg font-bold text-dark-text2">ALFIA SYSTEM</h1>
                     <button
                         onClick={() => setSidebarOpen(false)}
-                        className="p-2 hover:bg-gray-800 rounded-button transition-all duration-300 "
+                        className="p-2 hover:bg-dark-hover rounded-button transition-all duration-300 "
                         aria-label="Close sidebar"
                     >
-                        <FaTimes className="text-xl text-white" />
+                        <FaTimes className="text-xl text-dark-text2" />
                     </button>
                 </div>
 
                 {/* Main Navigation */}
-                <nav className="flex-1 bg-dark-bg2 p-4 rounded-default mb-4 xl:mb-5 border border-[#444444] overflow-y-auto sidebar-nav-scroll flex flex-col">
+                <nav className="flex-1 bg-dark-bg2 p-4 rounded-default mb-4 xl:mb-5 border border-dark-stroke overflow-y-auto sidebar-nav-scroll flex flex-col">
                     <div className="space-y-[1px] flex-1">
                         {/* Main menu items */}
                         <MenuItem
@@ -182,7 +181,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                         <div className="mt-6">
                             <div className={"flex items-center justify-between"}>
                                 <p className="text-[13px] font-bold text-dark-text2 px-4 pt-1 ">Private</p>
-                                <GoPlus className={"text-dark-text2 h-5 w-5 hover:text-white transition-all duration-300 ease-in-out cursor-pointer "} onClick={async () => {
+                                <GoPlus className={"text-dark-text2 h-5 w-5 hover:text-dark-text2 transition-all duration-300 ease-in-out cursor-pointer "} onClick={async () => {
                                     await axiosClient.post('/notes', {
                                         title: '📝 New Note',
                                     }).then(response => {
@@ -214,8 +213,8 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                 return (
                                     <div className={"ml-7"} key={key}>
                                         <div
-                                            className={`flex items-center justify-between my-1 p-1 px-4 rounded-button hover:bg-[#1f1f1f] text-dark-text2 hover:text-white cursor-pointer group transition-all duration-300 ease-in-out ${
-                                                isActive ? 'bg-[#181818] text-white' : ''
+                                            className={`flex items-center justify-between my-1 p-1 px-4 rounded-button hover:bg-dark-hover text-dark-text2 hover:text-dark-text2 cursor-pointer group transition-all duration-300 ease-in-out ${
+                                                isActive ? 'bg-dark-active text-dark-text2' : ''
                                             }`}
                                             role="button"
                                             tabIndex={0}
@@ -228,11 +227,11 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                             }}
                                         >
                                             <span className={`text-sm font-bold pt-1 transition-all duration-300 truncate ease-in-out ${
-                                                isActive ? 'text-white' : 'text-dark-text2'
+                                                isActive ? 'text-dark-text2' : 'text-dark-text2'
                                             }`}>{note?.title}</span>
                                             <button
-                                                className={`p-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 text-dark-text2 hover:text-white cursor-pointer transition-all duration-300 ease-in-out ${
-                                                    isActive ? 'text-white hover:text-white' : 'text-dark-text2 hover:text-white'
+                                                className={`p-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 text-dark-text2 hover:text-dark-text2 cursor-pointer transition-all duration-300 ease-in-out ${
+                                                    isActive ? 'text-dark-text2 hover:text-dark-text2' : 'text-dark-text2 hover:text-dark-text2'
                                                 }`}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
@@ -254,9 +253,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                             {notes?.length > 3 && (
                                 <div className={"ml-7"} >
                                     <div
-                                        className={`flex items-center justify-between my-1 p-1 px-4 rounded-button hover:bg-[#1f1f1f]  cursor-pointer group transition-all duration-300 ease-in-out text-white ${
-                                            location.pathname === "/notes" ? 'text-white  bg-dark-active' : 'text-dark-text2 hover:text-white'
-                                        }`}
+                                        className={`flex items-center justify-between my-1 p-1 px-4 rounded-button hover:bg-dark-hover  cursor-pointer group transition-all duration-300 ease-in-out text-dark-text2 `}
                                         role="button"
                                         tabIndex={0}
                                         onClick={() => navigate("/notes")}
@@ -281,8 +278,8 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                 return (
                                     <div className={"ml-7"} key={key}>
                                         <div
-                                            className={`flex items-center justify-between my-1 p-1 px-4 rounded-button hover:bg-[#1f1f1f] text-dark-text2 hover:text-white cursor-pointer group transition-all duration-300 ease-in-out ${
-                                                isActive ? 'bg-[#181818] text-white' : ''
+                                            className={`flex items-center justify-between my-1 p-1 px-4 rounded-button hover:bg-dark-hover text-dark-text2 hover:text-dark-text2 cursor-pointer group transition-all duration-300 ease-in-out ${
+                                                isActive ? 'bg-dark-active text-dark-text2' : ''
                                             }`}
                                             role="button"
                                             tabIndex={0}
@@ -295,11 +292,11 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                             }}
                                         >
                                             <span className={`text-sm font-bold pt-1 transition-all truncate duration-300 ease-in-out ${
-                                                isActive ? 'text-white' : 'text-dark-text2'
+                                                isActive ? 'text-dark-text2' : 'text-dark-text2'
                                             }`}>{note?.title}</span>
                                             <button
-                                                className={`p-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 text-dark-text2 hover:text-white cursor-pointer transition-all duration-300 ease-in-out ${
-                                                    isActive ? 'text-white hover:text-white' : 'text-dark-text2 hover:text-white'
+                                                className={`p-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 text-dark-text2 hover:text-dark-text2 cursor-pointer transition-all duration-300 ease-in-out ${
+                                                    isActive ? 'text-dark-text2 hover:text-dark-text2' : 'text-dark-text2 hover:text-dark-text2'
                                                 }`}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
@@ -321,9 +318,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                             {notes?.length > 3 && (
                                 <div className={"ml-7"} >
                                     <div
-                                        className={`flex items-center justify-between my-1 p-1 px-4 rounded-button hover:bg-[#1f1f1f]  cursor-pointer group transition-all duration-300 ease-in-out text-white ${
-                                            location.pathname === "/notes" ? 'text-white  bg-dark-active' : 'text-dark-text2 hover:text-white'
-                                        }`}
+                                        className={`flex items-center justify-between my-1 p-1 px-4 rounded-button hover:bg-dark-hover  cursor-pointer group transition-all duration-300 ease-in-out text-dark-text2 `}
                                         role="button"
                                         tabIndex={0}
                                         onClick={() => navigate("/notes")}
@@ -344,8 +339,8 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                     {/* Trash - positioned at bottom */}
                     <div className="mt-auto pt-4 ">
                         <div
-                            className={`flex items-center justify-between gap-2 p-1 px-4 rounded-button hover:bg-[#1f1f1f] text-dark-text2 hover:text-white cursor-pointer transition-all duration-300 ease-in-out ${
-                                location.pathname === "/trashed-notes" ? "bg-dark-active text-white" : "text-dark-text2"
+                            className={`flex items-center justify-between gap-2 p-1 px-4 rounded-button hover:bg-dark-hover text-dark-text2 hover:text-dark-text2 cursor-pointer transition-all duration-300 ease-in-out ${
+                                location.pathname === "/trashed-notes" ? "bg-dark-active text-dark-text2" : "text-dark-text2"
                             }`}
                             onClick={() => navigate("/trashed-notes")}
                             role="button"
@@ -360,13 +355,13 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                             <div className='flex items-center gap-2'>
                                 <IoTrashOutline className="text-xl text-dark-text2 transition-all duration-300 ease-in-out" />
                                 <span className={`text-sm font-bold pt-1 transition-all duration-300 ease-in-out ${
-                                    location.pathname === "/trashed-notes" ? "text-white" : "text-dark-text2"
+                                    location.pathname === "/trashed-notes" ? "text-dark-text2" : "text-dark-text2"
                                 }`}>
                                     Trash
                                 </span>
                             </div>
                             {trashCounts > 0 && (
-                                <span className="ml-2 border border-dark-stroke bg-[#444444] text-white text-xs font-bold px-2 pt-1 rounded-full">
+                                <span className="ml-2 border border-dark-stroke bg-dark-hover text-dark-text2 text-xs font-bold px-2 pt-1 rounded-full">
                                     {trashCounts}
                                 </span>
                             )}
@@ -378,7 +373,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                 <div className="bg-dark-active  p-4 rounded-default  border border-dark-stroke ">
                     <div className="space-y-1">
                         <div onClick={() => setCreateSpaceForm(!createSpaceForm)}
-                            className={`flex items-center gap-1 p-1 px-4 rounded-button bg-dark-active text-dark-text2 hover:bg-[#444444] hover:text-white   cursor-pointer transition-all duration-300 ease-in-out `}
+                            className={`flex items-center gap-1 p-1 px-4 rounded-button bg-dark-active text-dark-text2 hover:bg-dark-hover hover:text-dark-text2   cursor-pointer transition-all duration-300 ease-in-out `}
                             role="button"
                             tabIndex={0}
                         >
@@ -386,21 +381,21 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                             <span className={`text-sm  font-bold pt-1  transition-all duration-300 ease-in-out `}>Create new space</span>
                         </div>
                         <div onClick={() => navigate("/")}
-                            className={`flex items-center gap-2 p-1 px-4 rounded-button bg-dark-active text-dark-text2 hover:bg-[#444444] hover:text-white   cursor-pointer transition-all duration-300 ease-in-out `}
+                            className={`flex items-center gap-2 p-1 px-4 rounded-button bg-dark-active text-dark-text2 hover:bg-dark-hover hover:text-dark-text2   cursor-pointer transition-all duration-300 ease-in-out `}
                             role="button"
                             tabIndex={0}
                         >
                             <span className={`text-sm  font-bold pt-1  transition-all duration-300 ease-in-out `}>All my spaces</span>
                         </div>
                         <div
-                            className={`flex justify-between items-center gap-2 p-1 px-4 rounded-button bg-dark-active text-dark-text2 hover:bg-[#444444] hover:text-white  cursor-pointer transition-all duration-300 ease-in-out `}
+                            className={`flex justify-between items-center gap-2 p-1 px-4 rounded-button bg-dark-active text-dark-text2 hover:bg-dark-hover hover:text-dark-text2  cursor-pointer transition-all duration-300 ease-in-out `}
                             role="button"
                             tabIndex={0}
                             onClick={() => navigate("/archived-spaces")}
                         >
                             <span className={`text-sm  font-bold pt-1  transition-all duration-300 ease-in-out `}>Archived spaces</span>
                             {spaceTrashCounts > 0 && (
-                                <span className={`border border-dark-stroke bg-[#444444] text-white text-xs font-bold px-2 pt-1 rounded-full `}>{spaceTrashCounts}</span>
+                                <span className={`border border-dark-stroke bg-dark-hover text-dark-text2 text-xs font-bold px-2 pt-1 rounded-full `}>{spaceTrashCounts}</span>
                             )}
                         </div>
 

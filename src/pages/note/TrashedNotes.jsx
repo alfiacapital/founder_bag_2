@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosClient } from "@/api/axios.jsx";
-import { FiRotateCcw, FiTrash2, FiClock } from "react-icons/fi";
+import { FiRotateCcw, FiTrash2 } from "react-icons/fi";
 import { SiGoogledocs } from "react-icons/si";
 import { toast } from "react-toastify";
 import DeleteModal from "@/components/DeleteModal.jsx";
-import { format } from "date-fns";
 
 function TrashedNotes() {
     const queryClient = useQueryClient();
@@ -58,24 +57,24 @@ function TrashedNotes() {
     }
 
     return (
-        <div className="min-h-screen bg-dark-bg2 p-6 md:p-8">
+        <div className="min-h-screen ">
             {/* Header */}
-            <div className="max-w-6xl mx-auto mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2">Trashed Notes</h1>
+            <div className=" mb-8">
+                <h1 className="text-3xl font-bold text-dark-text1 mb-2">Trashed Notes</h1>
                 <p className="text-dark-text2">
                     Manage your trashed notes. Restore them or delete permanently.
                 </p>
             </div>
 
             {/* Content */}
-            <div className="max-w-6xl mx-auto">
+            <div className="">
                 {trashedNotes.length === 0 ? (
                     // Empty State
                     <div className="flex flex-col items-center justify-center py-20 text-center">
                         <div className="w-20 h-20 bg-dark-active rounded-full flex items-center justify-center mb-4">
                             <FiTrash2 className="text-4xl text-dark-text2" />
                         </div>
-                        <h2 className="text-xl font-semibold text-white mb-2">No Trashed Notes</h2>
+                        <h2 className="text-xl font-semibold text-dark-text1 mb-2">No Trashed Notes</h2>
                         <p className="text-dark-text2 max-w-md">
                             You haven't trashed any notes yet. Deleted notes will appear here.
                         </p>
@@ -86,7 +85,7 @@ function TrashedNotes() {
                         {trashedNotes.map((note) => (
                             <div
                                 key={note._id}
-                                className="group bg-dark-bg border border-dark-stroke rounded-xl p-4 hover:border-[#444444] transition-all duration-300 flex items-center gap-4"
+                                className="group bg-dark-bg border border-dark-stroke rounded-xl p-4 hover:border-dark-stroke-hover transition-all duration-300 flex items-center gap-4"
                             >
                                 {/* Icon */}
                                 <div className="flex-shrink-0 w-10 h-10 bg-dark-active rounded-lg flex items-center justify-center border border-dark-stroke">
@@ -95,7 +94,7 @@ function TrashedNotes() {
 
                                 {/* Note Info */}
                                 <div className="flex-1 min-w-0">
-                                    <h3 className="text-base font-semibold text-white truncate mb-1">
+                                    <h3 className="text-base font-semibold text-dark-text1 truncate mb-1">
                                         {note.title || "Untitled Note"}
                                     </h3>
                                 </div>
@@ -104,7 +103,7 @@ function TrashedNotes() {
                                 <div className="flex items-center gap-2 flex-shrink-0">
                                     <button
                                         onClick={() => handleRestore(note)}
-                                        className="flex items-center gap-2 px-4 py-2 border border-dark-stroke hover:border-dark-stroke hover:bg-dark-hover text-white rounded-lg transition-colors"
+                                        className="flex items-center gap-2 px-4 py-2 border border-dark-stroke hover:border-dark-stroke hover:bg-dark-hover text-dark-text1 rounded-lg transition-colors"
                                         title="Restore note"
                                     >
                                         <FiRotateCcw size={16} />

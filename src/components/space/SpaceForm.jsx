@@ -145,7 +145,7 @@ function SpaceForm({ open, onClose, initialData = null, mode = "create" }) {
                                     className={`w-6 h-6 rounded-full border-2 transition-all flex-shrink-0 cursor-pointer ${
                                         !isCustomColorSelected && watchedColor === color
                                             ? "border-white scale-110"
-                                            : "border-transparent hover:border-[#444444]"
+                                            : "border-transparent hover:border-dark-stroke"
                                     }`}
                                     style={{ backgroundColor: color }}
                                     onClick={() => handlePredefinedColorSelect(color)}
@@ -159,7 +159,7 @@ function SpaceForm({ open, onClose, initialData = null, mode = "create" }) {
                                     className={`w-6 h-6 rounded-full border-2 transition-all ${
                                         isCustomColorSelected
                                             ? "border-white scale-110"
-                                            : "border-transparent hover:border-[#444444]"
+                                            : "border-transparent hover:border-dark-stroke"
                                     }`}
                                     style={{
                                         background: isCustomColorSelected
@@ -186,7 +186,7 @@ function SpaceForm({ open, onClose, initialData = null, mode = "create" }) {
                             placeholder="Enter your list title"
                             className={`w-full px-3 py-2 pt-3 rounded-button border ${
                                 errors.title ? "border-red-500" : "border-dark-stroke"
-                            } bg-dark-bg2 text-white focus:outline-none focus:border-[#444444] text-left`}
+                            } bg-dark-bg2 text-dark-text1 focus:outline-none focus:border-dark-stroke text-left`}
                             {...register("title", { required: "Title is required" })}
                         />
                         {errors.title && (
@@ -203,13 +203,13 @@ function SpaceForm({ open, onClose, initialData = null, mode = "create" }) {
                         <button
                             type="button"
                             onClick={onClose}
-                            className="px-6 py-2 pt-3 border border-dark-stroke rounded-button text-dark-text2 hover:bg-dark-hover hover:text-white hover:border-dark-stroke transition-all duration-300 cursor-pointer"
+                            className="px-6 py-2 pt-3 border border-dark-stroke rounded-button text-dark-text2 hover:bg-dark-hover  hover:border-dark-stroke transition-all duration-300 cursor-pointer"
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
-                            className="px-6 py-2 pt-3 rounded-button border border-[#444444] text-white hover:bg-dark-hover transition-all duration-300 cursor-pointer"
+                            className="px-6 py-2 pt-3 rounded-button border border-dark-stroke text-dark-text2 hover:bg-dark-hover hover:border-dark-stroke transition-all duration-300 cursor-pointer"
                         >
                             {mode === "edit" ? "Update" : "Create"}
                         </button>

@@ -24,26 +24,26 @@ export default function SidebarCalendar({ selectedDate, onDateSelect, setCurrent
 
     return (
         <div className="bg-dark-bg2">
-            <div className="border border-dark-stroke text-dark-text2 rounded-button px-4 pb-2 pt-3 w-fit hover:text-white hover:bg-dark-hover hover:border-dark-stroke cursor-pointer capitalize my-6 mt-4 md:mt-20 flex items-center gap-2">
+            <div className="border border-dark-stroke text-dark-text2 rounded-button px-4 pb-2 pt-3 w-fit hover:text-dark-text1 hover:bg-dark-hover hover:border-dark-stroke cursor-pointer capitalize my-6 mt-4 md:mt-20 flex items-center gap-2">
                 <FaPlus className="w-4 h-4 mb-1" />
                 <span className="text-md font-medium">Create</span>
             </div>
             {/* Custom Header */}
             <div className="flex items-center justify-between mb-4 px-2">
 
-                <h3 className="text-white font-medium text-sm">
+                <h3 className="text-dark-text1 font-medium text-sm">
                     {format(viewDate, "MMMM yyyy")}
                 </h3>
                 <div className="flex items-center gap-2">
                     <button
                         onClick={handlePrevMonth}
-                        className="p-2 text-white hover:bg-dark-hover rounded-full transition-colors cursor-pointer"
+                        className="p-2 text-dark-text1 hover:bg-dark-hover rounded-full transition-colors cursor-pointer"
                     >
                         <IoIosArrowBack className="w-4 h-4" />
                     </button>
                     <button
                         onClick={handleNextMonth}
-                        className="p-2 text-white hover:bg-dark-hover rounded-full transition-colors cursor-pointer"
+                        className="p-2 text-dark-text1 hover:bg-dark-hover rounded-full transition-colors cursor-pointer"
                     >
                         <IoIosArrowForward className="w-4 h-4" />
                     </button>
