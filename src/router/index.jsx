@@ -16,10 +16,13 @@ import Calendar from "@/pages/calendar/Calendar.jsx";
 import AlfiaAI from "@/pages/alfia-ai/AlfiaAI.jsx";
 import AlfiaAiLayout from "@/layout/AlfiaAiLayout.jsx";
 import SecondHome from "@/pages/SecondHome.jsx";
+import TestError from "@/pages/TestError.jsx";
+import RouterErrorPage from "@/pages/RouterErrorPage.jsx";
 
 
 export const router = createBrowserRouter([
     {
+        errorElement: <RouterErrorPage />,
         element: <AuthenticatedLayout />,
         children: [
             {
@@ -57,29 +60,35 @@ export const router = createBrowserRouter([
             },
             {
                 element: <ReportsLayout />,
+                errorElement: <RouterErrorPage />,
                 children: [
                     {
                         path: "/reports",
                         element: <Reports />,
+                        errorElement: <RouterErrorPage />
                     }
                 ]
             },
             {
                 element: <AlfiaAiLayout />,
+                errorElement: <RouterErrorPage />,
                 children: [
                     {
                         path: "/alfia-ai",
-                        element: <AlfiaAI />
+                        element: <AlfiaAI />,
+                        errorElement: <RouterErrorPage />
                     }
                 ]
             },
             {
                 path: "/calendar",
-                element: <Calendar />
+                element: <Calendar />,
+                errorElement: <RouterErrorPage />
             },
             {
                 path: "/space/:id/focus",
-                element: <FocusModePage />
+                element: <FocusModePage />,
+                errorElement: <RouterErrorPage />
             }
 
         ],
@@ -90,6 +99,7 @@ export const router = createBrowserRouter([
     },
     {
         path: "/test",
-        element: <Test />
+        element: <Test />,
+        errorElement: <RouterErrorPage />
     },
 ])

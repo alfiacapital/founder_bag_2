@@ -54,7 +54,7 @@ function SecondHome() {
   })) : []
 
   return (
-    <div className="bg-dark-bg text-white min-h-screen p-4 sm:p-6">
+    <div className="bg-dark-bg text-white min-h-screen ">
       {/* Quick Actions Section */}
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-4">

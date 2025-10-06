@@ -70,9 +70,15 @@ function Navbar({ setSidebarOpen }) {
 
                     {/* Dropdown Cards with transition */}
                     <div
-                        className={`absolute left-0 mt-3 w-[700px] bg-dark-bg 
+                        className={`absolute left-0 mt-3 
+                          w-[calc(100vw-2rem)] sm:w-[500px] md:w-[600px] lg:w-[700px]
+                          max-w-[700px]
+                          max-h-[calc(100vh-100px)]
+                          overflow-y-auto
+                          bg-dark-bg 
                           border border-dark-stroke 
-                          rounded-button shadow-lg p-3 grid grid-cols-2 gap-2 z-50
+                          rounded-button shadow-lg p-3 
+                          grid grid-cols-1 sm:grid-cols-2 gap-2 z-50
                           transform transition-all duration-300 ease-out
                           ${open ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}`}
                     >
@@ -82,12 +88,14 @@ function Navbar({ setSidebarOpen }) {
                                     if (service.url) window.open(service.url, "_blank"), setOpen(false);
                                 }}
                                 key={idx}
-                                className="flex flex-col justify-start h-[120px] bg-dark-bg2
-                               border border-dark-stroke hover:border-dark-stroke
-                               rounded-button px-4 py-3 cursor-pointer transition "
+                                className="flex flex-col justify-start 
+                                  h-[100px] sm:h-[120px]
+                                  bg-dark-bg2
+                                  border border-dark-stroke hover:border-dark-stroke
+                                  rounded-button px-3 sm:px-4 py-2 sm:py-3 cursor-pointer transition "
                             >
                                 <div className="flex flex-col">
-                                    <span className="text-lg font-semibold text-dark-text1">
+                                    <span className="text-base sm:text-lg font-semibold text-dark-text1">
                                         {service.name}
                                     </span>
                                 </div>

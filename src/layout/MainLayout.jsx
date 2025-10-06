@@ -6,10 +6,37 @@ import {Outlet, useLocation} from "react-router-dom";
 
 export default function MainLayout() {
     const {pathname} = useLocation()
-    const [sidebarOpen, setSidebarOpen] = useState(pathname.startsWith("/space") ? false : true); 
+    
+    // Check if mobile on initial render
+    const isMobile = () => window.innerWidth < 1280; // xl breakpoint
+    
+    // Initialize sidebar state based on screen size and pathname
+    const [sidebarOpen, setSidebarOpen] = useState(() => {
+        if (pathname.startsWith("/space")) return false;
+        return !isMobile(); // Close on mobile by default
+    });
+    
+    // Handle pathname changes
     useEffect(() => {
-        setSidebarOpen(pathname.startsWith("/space") ? false : true);
+        if (pathname.startsWith("/space")) {
+            setSidebarOpen(false);
+        } else {
+            setSidebarOpen(!isMobile());
+        }
     }, [pathname]);
+    
+    // Handle window resize
+    useEffect(() => {
+        const handleResize = () => {
+            if (!pathname.startsWith("/space")) {
+                setSidebarOpen(!isMobile());
+            }
+        };
+        
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [pathname]);
+    
     return (
         <div className="flex flex-col h-screen bg-dark-bg text-white overflow-hidden">
             <Navbar setSidebarOpen={setSidebarOpen} />
