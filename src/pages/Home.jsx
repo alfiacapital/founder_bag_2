@@ -84,8 +84,8 @@ function Home() {
                                 {isLoadingStats ? "..." : dashboardStats?.totalTasks?.total || 0}
                             </p>
                         </div>
-                        <div className="p-3 bg-blue-600/20 rounded-button">
-                            <FiTarget className="text-blue-500 text-xl" />
+                        <div className="p-3 bg-dark-active rounded-button">
+                            <FiTarget className="text-dark-text1 text-xl" />
                         </div>
                     </div>
                     <div className="flex items-center mt-3">
@@ -112,8 +112,8 @@ function Home() {
                                 {isLoadingStats ? "..." : dashboardStats?.completedTasks?.total || 0}
                             </p>
                         </div>
-                        <div className="p-3 bg-green-600/20 rounded-button">
-                            <FiCheckCircle className="text-green-500 text-xl" />
+                        <div className="p-3 bg-dark-active rounded-button">
+                            <FiCheckCircle className="text-dark-text1 text-xl" />
                         </div>
                     </div>
                     <div className="flex items-center mt-3">
@@ -140,8 +140,8 @@ function Home() {
                                 {isLoadingStats ? "..." : dashboardStats?.inProgressTasks?.total || 0}
                             </p>
                         </div>
-                        <div className="p-3 bg-yellow-600/20 rounded-button">
-                            <FiClock className="text-yellow-500 text-xl" />
+                        <div className="p-3 bg-dark-active rounded-button">
+                            <FiClock className="text-dark-text1 text-xl" />
                         </div>
                     </div>
                     <div className="flex items-center mt-3">
@@ -168,8 +168,8 @@ function Home() {
                                 {isLoadingStats ? "..." : `${dashboardStats?.productivity?.productivity || 0}%`}
                             </p>
                         </div>
-                        <div className="p-3 bg-purple-600/20 rounded-button">
-                            <FiTrendingUp className="text-purple-500 text-xl" />
+                        <div className="p-3 bg-dark-active rounded-button">
+                            <FiTrendingUp className="text-dark-text1 text-xl" />
                         </div>
                     </div>
                     <div className="flex items-center mt-3">
