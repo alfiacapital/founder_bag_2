@@ -51,7 +51,7 @@ export default function MainLayout() {
                     </div>
                 </main>
                 ) : (
-                <main className="flex-1 py-6 xl:py-7 px-4 md:px-8 xl:px-40 overflow-y-auto">
+                <main className="flex-1 py-6 px-[5%] overflow-y-auto">
                     <div className="main-content-centered">
                         <Outlet />
                     </div>

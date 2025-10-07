@@ -208,13 +208,13 @@
 }
 
 .react-calendar__tile--active {
-    background-color: var(--color-bg) !important;
+    background-color:  var(--color-active) !important;
     border-radius: 50% !important;
     color: var(--color-text1) !important;
 }
 
 .react-calendar__tile--now {
-    background-color: var(--color-bg) !important;
+    background-color: var(--color-active) !important;
     border-radius: 50% !important;
 }
 
@@ -238,7 +238,7 @@
 
 /* Event Styling */
 .rbc-event {
-    background-color: var(--color-bg2) !important;
+    background-color: var(--color-active) !important;
     border: 1px solid var(--color-stroke) !important;
     border-radius: 6px !important;
     padding: 4px 8px !important;
@@ -256,4 +256,8 @@
 
 .rbc-event-content {
     color: var(--color-text1) !important;
+}
+
+.rbc-current-time-indicator {
+    background-color: var(--color-text1) !important;
 }

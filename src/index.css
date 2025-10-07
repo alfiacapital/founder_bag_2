@@ -95,20 +95,20 @@
 
 /* ==================== CSS VARIABLES FOR THEMING ==================== */
 :root {
-  /* Light Mode Variables (default) */
-  --color-bg: #ffffff;
-  --color-bg2: #f7f7f7;
-  --color-active: #fff;
-  --color-text1: black;
-  --color-text2: gray;
-  --color-stroke: #ebebeb;
-  --color-stroke-hover: #d1d1d1;
-  --color-hover: #fff;
-  --color-blue-border: #0000cd;
+  /* 🌤️ Modern Soft Light Mode */
+  --color-bg: #f9fafb;              /* Subtle off-white background */
+  --color-bg2: #ffffff;             /* White for cards or elevated surfaces */
+  --color-active: #e8f0fe;          /* Light blue tint for active/selected states */
+  --color-text1: #111827;           /* Near-black, better contrast than pure black */
+  --color-text2: #6b7280;           /* Neutral gray for secondary text */
+  --color-stroke: #e5e7eb;          /* Light gray border */
+  --color-stroke-hover: #d1d5db;    /* Slightly darker hover border */
+  --color-hover: #f3f4f6;           /* Light hover background */
+  --color-blue-border: #2563eb;     /* Modern accessible blue */
 }
 
+
 .dark {
-  /* Dark Mode Variables */
   --color-bg: #000;
   --color-bg2: #070707;
   --color-active: #181818;

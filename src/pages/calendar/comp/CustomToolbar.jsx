@@ -1,10 +1,11 @@
 import React, {useEffect, useRef, useState} from "react";
 import {TbMenu2} from "react-icons/tb";
 import {IoIosArrowBack, IoIosArrowDown, IoIosArrowForward} from "react-icons/io";
-import {services} from "@/parts/Navbar.jsx";
 import MiniCalendar from "@/components/MiniCalendar.jsx";
 import Menu from "@/components/Menu.jsx";
 import { useUserContext } from "@/context/UserProvider";
+import { services } from "@/utils/servicesConfig";
+import UserMenu from "@/components/UserMenu";
 
 export default function CustomToolbar({ label, onNavigate, onView, view, onOpenMiniCalendar, showMiniCalendar, selectedDate, setSelectedDate, setCurrentDate, setShowMiniCalendar, onOpenSidebar }) {
     const [open, setOpen] = useState(false)
@@ -131,6 +132,7 @@ export default function CustomToolbar({ label, onNavigate, onView, view, onOpenM
                             },
                         ]}
                     />
+                    <UserMenu />
                 </div>
             </div>
         </div>

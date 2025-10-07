@@ -3,27 +3,8 @@ import { IoIosArrowDown } from "react-icons/io";
 import { FaBars } from "react-icons/fa";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { useUserContext } from '@/context/UserProvider';
-import Menu from '@/components/Menu';
-import { getUserImage } from '@/utils/getUserImage';
-import { setCookie } from '@/utils/cookieUtils';
-
-function generateFakeKey(length = 256) {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let key = '';
-    for (let i = 0; i < length; i++) {
-      key += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return key;
-  }
-
-export const services = [
-    { name: 'A-LINK', icon: 'red', available: true, url: `https://alink.alfia.com.sa?alf=${generateFakeKey()}` },
-    { name: 'FOUNDER BAG', icon: 'blue', available: true, url: `https://founder.alfia.com.sa?alf=${generateFakeKey()}` },
-    { name: 'EAAS', icon: 'purple', available: true, url: `https://eaas.alfia.com.sa?alf=${generateFakeKey()}` },
-    { name: 'STARTUP', icon: 'blue', available: true, url: `https://startup.alfia.com.sa?alf=${generateFakeKey()}` },
-    { name: 'A-BRAIN', icon: 'yellow', available: true, url: `https://abrain.alfia.com.sa?alf=${generateFakeKey()}` },
-    { name: 'WORKSPACE', icon: 'yellow', available: true, url: "" },
-];
+import UserMenu from '@/components/UserMenu';
+import { services } from '@/utils/servicesConfig';
 
 function Navbar({ setSidebarOpen }) {
     const [open, setOpen] = useState(false);
@@ -127,59 +108,7 @@ function Navbar({ setSidebarOpen }) {
                 >
                     Docs
                 </span>
-                <Menu
-                    button={
-                        <img src={getUserImage(user.image)} alt="Avatar" className="h-10 w-10 rounded-full border border-dark-stroke hover:border-dark-stroke hover:bg-dark-hover" />
-                    }
-                    items={[
-                        {
-                            label: "Profile",
-                            onClick: () => window.location.href = import.meta.env.VITE_MAIN_APP_URL+"/user/profile?tab=information",
-                        },
-                        {
-                            label: "Logout",
-                            onClick: async () => {
-                                logout()
-                                window.location.href = import.meta.env.VITE_MAIN_APP_URL
-                            },
-                        },
-                    ]}
-                    footer={
-                        <div className="px-3 py-2 border-t border-dark-stroke">
-                            <p className="text-xs text-dark-text1 mb-2 pt-2">
-                                Theme
-                            </p>
-                            <div className="flex gap-2">
-                                <button
-                                    onClick={() => {
-                                        setDarkMode(false)
-                                        setCookie("darkMode", false, 365);
-                                    }}
-                                    className={`flex-1 px-2 py-1.5 rounded-button text-xs font-medium transition-all duration-200 ${
-                                        !darkMode
-                                            ? "bg-dark-active text-dark-text1 border border-dark-stroke"
-                                            : "hover:bg-dark-hover text-dark-text2 border border-transparent"
-                                    }`}
-                                >
-                                    Light
-                                </button>
-                                <button
-                                    onClick={() => {
-                                        setDarkMode(true)
-                                        setCookie("darkMode", true, 365);
-                                    }}
-                                    className={`flex-1 px-2 py-1.5 rounded-button text-xs font-medium transition-all duration-200 ${
-                                        darkMode
-                                            ? "bg-dark-active text-dark-text1 border border-dark-stroke"
-                                            : "hover:bg-dark-hover text-dark-text2 border border-transparent"
-                                    }`}
-                                >
-                                    Dark
-                                </button>
-                            </div>
-                        </div>
-                    }
-                />
+                <UserMenu />
             </nav>
 
             <button 

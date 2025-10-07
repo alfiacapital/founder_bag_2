@@ -5,6 +5,7 @@ import { FaUserPlus, FaCopy } from "react-icons/fa";
 import { getUserImage } from "@/utils/getUserImage.jsx";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import { useUserContext } from "@/context/UserProvider";
 
 function ShareNote({ isOpen, onClose, noteId }) {
     const [search, setSearch] = useState("");
@@ -12,7 +13,8 @@ function ShareNote({ isOpen, onClose, noteId }) {
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
     const noteLink = `https://comming.soon/note/${noteId}`; // link to copy
-
+    const {user} = useUserContext();
+    const connectedUser = user
     useEffect(() => {
         const delay = setTimeout(() => {
             if (!search.trim()) {
@@ -94,7 +96,7 @@ function ShareNote({ isOpen, onClose, noteId }) {
                 {loading ? (
                     <p className="text-dark-text2 text-sm">Searching...</p>
                 ) : results.length > 0 ? (
-                    results.map((user) => (
+                    results?.filter(user => user._id !== connectedUser._id).map((user) => (
                         <div
                             key={user._id}
                             className="flex items-center justify-between p-3 rounded-lg border border-dark-stroke bg-dark-bg hover:bg-dark-hover transition"
