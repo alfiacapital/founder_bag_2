@@ -1,9 +1,11 @@
 import React from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function Footer() {
     const {pathname} = useLocation();
     const navigate = useNavigate();
+    const { t } = useTranslation("global");
     return (
         <>
             {/* Responsive Footer */}
@@ -16,7 +18,7 @@ function Footer() {
                             ? "bg-dark-active text-dark-text1 border border-dark-stroke" 
                             : "text-dark-text2 border-dark-stroke hover:text-dark-text1 hover:border-dark-stroke hover:bg-dark-active"
                         }`}>
-                        Home
+                        {t('home')}
                     </button>
                     <button  onClick={() => navigate("/reports")}
                         className={`text-sm transition-all duration-300 border rounded-button pt-3 pb-2 px-6 cursor-pointer font-bold 
@@ -24,7 +26,7 @@ function Footer() {
                             ? "bg-dark-active text-dark-text1 border border-dark-stroke" 
                             : "text-dark-text2 border-dark-stroke hover:text-dark-text1 hover:border-dark-stroke hover:bg-dark-hover"
                         }`}>
-                        Reports
+                        {t('reports')}
                     </button>
                 </div>
 

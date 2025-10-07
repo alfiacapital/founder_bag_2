@@ -5,8 +5,10 @@ import { useUserContext } from "@/context/UserProvider.jsx";
 import { FiRotateCcw, FiTrash2 } from "react-icons/fi";
 import { toast } from "react-toastify";
 import DeleteModal from "@/components/DeleteModal.jsx";
+import { useTranslation } from "react-i18next";
 
 function ArchivedSpaces() {
+    const { t } = useTranslation("global");
     const { user } = useUserContext();
     const queryClient = useQueryClient();
     const [deleteModal, setDeleteModal] = useState({ isOpen: false, space: null });
@@ -27,10 +29,10 @@ function ArchivedSpaces() {
             await axiosClient.put(`/space/${space._id}/restore`);
             await queryClient.invalidateQueries("archived-spaces");
             await queryClient.invalidateQueries("spaces");
-            toast.success(`"${space.name}" restored successfully!`);
+            toast.success(`"${space.name}" ${t('space-restored-successfully')}`);
         } catch (error) {
             console.error("Error restoring space:", error);
-            toast.error("Failed to restore space");
+            toast.error(t('failed-to-restore-space'));
         }
     };
 
@@ -41,10 +43,10 @@ function ArchivedSpaces() {
         try {
             await axiosClient.delete(`/space/${deleteModal.space._id}/hard`);
             await queryClient.invalidateQueries("archived-spaces");
-            toast.success(`"${deleteModal.space.name}" deleted permanently!`);
+            toast.success(`"${deleteModal.space.name}" ${t('space-deleted-permanently')}`);
         } catch (error) {
             console.error("Error deleting space:", error);
-            toast.error("Failed to delete space permanently");
+            toast.error(t('failed-to-delete-space-permanently'));
         } finally {
             setDeleteModal({ isOpen: false, space: null });
         }
@@ -53,7 +55,7 @@ function ArchivedSpaces() {
     if (isLoading) {
         return (
             <div className="flex items-center justify-center h-screen">
-                <div className="text-dark-text2">Loading archived spaces...</div>
+                <div className="text-dark-text2">{t('loading-archived-spaces')}</div>
             </div>
         );
     }
@@ -62,9 +64,9 @@ function ArchivedSpaces() {
         <div className="min-h-screen">
             {/* Header */}
             <div className="max-w-7xl mx-auto mb-8">
-                <h1 className="text-3xl font-bold text-dark-text1 mb-2">Archived Spaces</h1>
+                <h1 className="text-3xl font-bold text-dark-text1 mb-2">{t('archived-spaces')}</h1>
                 <p className="text-dark-text2">
-                    Manage your archived spaces. Restore them or delete permanently.
+                    {t('manage-archived-spaces')}
                 </p>
             </div>
 
@@ -76,9 +78,9 @@ function ArchivedSpaces() {
                         <div className="w-20 h-20 bg-dark-active rounded-full flex items-center justify-center mb-4">
                             <FiTrash2 className="text-4xl text-dark-text2" />
                         </div>
-                        <h2 className="text-xl font-semibold text-dark-text1 mb-2">No Archived Spaces</h2>
+                        <h2 className="text-xl font-semibold text-dark-text1 mb-2">{t('no-archived-spaces')}</h2>
                         <p className="text-dark-text2 max-w-md">
-                            You haven't archived any spaces yet. Archived spaces will appear here.
+                            {t('no-archived-spaces-desc')}
                         </p>
                     </div>
                 ) : (
@@ -106,7 +108,7 @@ function ArchivedSpaces() {
                                                 {space?.name}
                                             </h3>
                                             <p className="text-sm text-dark-text2">
-                                                {tasksCount} {tasksCount === 1 ? 'task' : 'tasks'}
+                                                {tasksCount} {tasksCount === 1 ? t('task') : t('tasks')}
                                             </p>
                                         </div>
                                     </div>
@@ -121,18 +123,18 @@ function ArchivedSpaces() {
                                                         className="flex items-center gap-2 px-3 py-2 bg-dark-bg2 border border-dark-stroke rounded-lg text-sm text-dark-text2 truncate"
                                                     >
                                                         <div className="w-2 h-2 rounded-full bg-dark-text2 flex-shrink-0"></div>
-                                                        <span className="truncate">{task?.title || "Untitled"}</span>
+                                                        <span className="truncate">{task?.title || t('untitled-note')}</span>
                                                     </div>
                                                 ))}
                                                 {tasks.length > 2 && (
                                                     <p className="text-xs text-dark-text2 text-center">
-                                                        +{tasks.length - 2} more
+                                                        +{tasks.length - 2} {t('more')}
                                                     </p>
                                                 )}
                                             </div>
                                         ) : (
                                             <p className="text-sm text-dark-text2 text-center py-4">
-                                                No tasks
+                                                {t('no-tasks')}
                                             </p>
                                         )}
                                     </div>
@@ -144,10 +146,10 @@ function ArchivedSpaces() {
                                             className="flex-1 flex items-center justify-center gap-2 px-4 py-2 border border-dark-stroke hover:border-dark-stroke hover:bg-dark-hover cursor-pointer text-dark-text1 rounded-lg transition-colors font-medium"
                                         >
                                             <FiRotateCcw size={16} />
-                                            <span>Restore</span>
+                                            <span>{t('restore')}</span>
                                         </button>
                                         <button
-                                            title='Delete Permently'
+                                            title={t('delete-permanently-title')}
                                             onClick={() => setDeleteModal({ isOpen: true, space })}
                                             className="flex items-center justify-center px-4 py-2 bg-red-600/10 hover:bg-red-600/20 cursor-pointer text-red-500 border border-red-500/20 hover:border-red-500/40 rounded-lg transition-colors"
                                         >
@@ -164,8 +166,8 @@ function ArchivedSpaces() {
             {/* Delete Confirmation Modal */}
             <DeleteModal
                 isOpen={deleteModal.isOpen}
-                title="Delete Space Permanently"
-                message={`Are you sure you want to permanently delete "${deleteModal.space?.name}"? This action cannot be undone and all tasks will be lost.`}
+                title={t('delete-space-permanently')}
+                message={`${t('are-you-sure-delete-space-permanently')} "${deleteModal.space?.name}"? ${t('action-cannot-be-undone-tasks-lost')}`}
                 onClick={handleDeletePermanently}
                 onClose={() => setDeleteModal({ isOpen: false, space: null })}
             />

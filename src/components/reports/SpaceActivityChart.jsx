@@ -1,12 +1,14 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const SpaceActivityChart = ({ spaceActivityData = [] }) => {
+    const { t } = useTranslation("global");
     const colors = ['#8b5cf6', '#3b82f6', '#22c55e', '#f59e0b', '#ef4444'];
     const gradientColors = ['#a78bfa', '#60a5fa', '#4ade80', '#fbbf24', '#f87171'];
 
     return (
         <div className='rounded-button border border-dark-stroke bg-dark-bg2 p-6'>
-            <h3 className='text-dark-text1 text-lg font-semibold mb-6'>Space Activity & Completion</h3>
+            <h3 className='text-dark-text1 text-lg font-semibold mb-6'>{t('space-activity-completion')}</h3>
             
             <div className='space-y-3'>
                 {spaceActivityData?.slice(0, 5)?.map((space, index) => (
@@ -24,7 +26,7 @@ const SpaceActivityChart = ({ spaceActivityData = [] }) => {
                                 <span className='text-dark-text1 font-medium'>{space.name}</span>
                             </div>
                             <div className='flex items-center gap-4'>
-                                <span className='text-sm text-dark-text2'>{space.tasks} tasks</span>
+                                <span className='text-sm text-dark-text2'>{space.tasks} {t('tasks-count')}</span>
                                 <span className='text-lg font-bold text-dark-text1'>{space.completion}%</span>
                             </div>
                         </div>
@@ -51,13 +53,13 @@ const SpaceActivityChart = ({ spaceActivityData = [] }) => {
                         <p className='text-3xl font-bold text-dark-text1'>
                             {spaceActivityData.reduce((sum, space) => sum + space.tasks, 0)}
                         </p>
-                        <p className='text-xs text-dark-text2 mt-2'>Total Tasks</p>
+                        <p className='text-xs text-dark-text2 mt-2'>{t('total-tasks')}</p>
                     </div>
                     <div className='p-4 bg-dark-active rounded-button border border-dark-stroke text-center'>
                         <p className='text-3xl font-bold text-dark-text1'>
                             {Math.round(spaceActivityData.reduce((sum, space) => sum + space.completion, 0) / spaceActivityData.length)}%
                         </p>
-                        <p className='text-xs text-dark-text2 mt-2'>Avg Completion</p>
+                        <p className='text-xs text-dark-text2 mt-2'>{t('avg-completion')}</p>
                     </div>
                 </div>
             )}

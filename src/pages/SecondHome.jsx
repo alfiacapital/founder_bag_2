@@ -7,10 +7,10 @@ import RecentNotesSlider from '../components/notes/RecentNotesSlider.jsx'
 import UpcomingEvents from '../components/UpcomingEvents.jsx'
 import QuickActions from '../components/QuickActions.jsx'
 import { FiCalendar, FiClock, FiFileText, FiZap } from 'react-icons/fi'
-
+import { useTranslation } from 'react-i18next'
 function SecondHome() {
   const { user } = useUserContext()
-  
+  const { t } = useTranslation("global")
   // Fetch recent spaces data using the optimized API
   const { data: recentSpaces = [], isLoading: isLoadingSpaces } = useQuery({
     queryKey: ["recent-spaces"],
@@ -59,7 +59,7 @@ function SecondHome() {
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-4">
           <FiZap className="text-dark-text1 w-4 h-4 mb-1" />
-          <h2 className="text-md font-semibold text-dark-text1">Quick Actions</h2>
+          <h2 className="text-md font-semibold text-dark-text1">{t('quick-actions')}</h2>
         </div>
         <QuickActions />
       </div>
@@ -69,7 +69,7 @@ function SecondHome() {
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-4">
           <FiClock className="text-dark-text1 w-4 h-4 mb-1" />
-          <h2 className="text-md font-semibold text-dark-text1">Last Spaces Created</h2>
+          <h2 className="text-md font-semibold text-dark-text1">{t('last-spaces-created')}</h2>
         </div>
         <RecentSpacesSlider 
           spaces={recentlyVisitedSpaces} 
@@ -81,7 +81,7 @@ function SecondHome() {
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-4">
           <FiCalendar className="text-dark-text1 w-4 h-4 mb-1" />
-          <h2 className="text-md font-semibold text-dark-text1">Upcoming events</h2>
+          <h2 className="text-md font-semibold text-dark-text1">{t('upcoming-events')}</h2>
         </div>
         <UpcomingEvents />
       </div>
@@ -90,7 +90,7 @@ function SecondHome() {
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-4">
           <FiFileText className="text-dark-text1 w-4 h-4 mb-1.5" />
-          <h2 className="text-md font-semibold text-dark-text1">Recent Notes</h2>
+          <h2 className="text-md font-semibold text-dark-text1">{t('recent-notes')}</h2>
         </div>
         <RecentNotesSlider 
           notes={recentlyVisitedNotes} 

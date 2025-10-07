@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, FreeMode } from 'swiper/modules'
 import { useNavigate } from 'react-router-dom'
 import { format } from 'date-fns'
-
+import { useTranslation } from 'react-i18next'
 // Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -13,7 +13,9 @@ import 'swiper/css/free-mode'
 function RecentNotesSlider({ notes = [], isLoading = false }) {
   const swiperRef = useRef(null)
   const navigate = useNavigate()
-
+  const { t, i18n } = useTranslation("global")
+  const isRTL = i18n.dir() === 'rtl'
+  
   return (
     <div>
       {/* Swiper Container */}
@@ -24,8 +26,9 @@ function RecentNotesSlider({ notes = [], isLoading = false }) {
           spaceBetween={16}
           slidesPerView="auto"
           freeMode={true}
-          loop={true}
           loopAdditionalSlides={2}
+          dir={isRTL ? 'rtl' : 'ltr'}
+          key={isRTL ? 'rtl' : 'ltr'}
           navigation={{
             nextEl: '.swiper-button-next-notes',
             prevEl: '.swiper-button-prev-notes',
@@ -99,7 +102,7 @@ function RecentNotesSlider({ notes = [], isLoading = false }) {
                     <div className="flex items-center gap-1">
                       <FiClock className="w-3 h-3 text-dark-text2 mb-1" />
                       <span className="text-dark-text2">
-                        Last update: {format(new Date(note.updatedAt), 'MMM d, yyyy')}
+                        {i18n.dir() === "ltr" ? "Last update:" : "آخر تحديث:"} {format(new Date(note.updatedAt), 'MMM d, yyyy')}
                       </span>
                     </div>
                   </div>
@@ -111,27 +114,27 @@ function RecentNotesSlider({ notes = [], isLoading = false }) {
             <SwiperSlide className="!w-auto">
               <div className="w-44 sm:w-48 h-30 bg-dark-bg2 border border-dark-stroke rounded-xl p-3 sm:p-4 flex flex-col items-center justify-center text-center">
                 <FiFileText className="w-8 h-8 text-gray-600 mb-2" />
-                <p className="text-dark-text2 text-sm">No notes yet</p>
-                <p className="text-gray-500 text-xs">Create your first note</p>
+                <p className="text-dark-text2 text-sm">{t('no-notes-yet')}</p>
+                <p className="text-gray-500 text-xs">{t('create-your-first-note')}</p>
               </div>
             </SwiperSlide>
           )}
         </Swiper>
 
         <div 
-          className='absolute -right-8 -top-[5px] h-40 w-40 z-5 pointer-events-none' 
+          className={`absolute ${isRTL ? '-left-8' : '-right-8'} -top-[5px] h-40 w-40 z-5 pointer-events-none`} 
           style={{
-            background: 'linear-gradient(to left, var(--color-bg) 0%, transparent 100%)'
+            background: `linear-gradient(to ${isRTL ? 'right' : 'left'}, var(--color-bg) 0%, transparent 100%)`
           }}
         />
 
         {/* Custom Navigation Buttons - Only visible on hover */}
-        <button className="swiper-button-prev-notes absolute -left-6 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-dark-bg2 border border-dark-stroke hover:bg-dark-hover hover:border-dark-stroke text-dark-text2 hover:text-dark-text1 rounded-full flex items-center justify-center transition-all duration-300 z-10 shadow-lg opacity-0 group-hover:opacity-100">
-          <FiChevronRight className="w-4 h-4 sm:w-5 sm:h-5 rotate-180" />
+        <button className={`swiper-button-prev-notes absolute ${isRTL ? '-right-6' : '-left-6'} top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-dark-bg2 border border-dark-stroke hover:bg-dark-hover hover:border-dark-stroke text-dark-text2 hover:text-dark-text1 rounded-full flex items-center justify-center transition-all duration-300 z-10 shadow-lg opacity-0 group-hover:opacity-100`}>
+          <FiChevronRight className={`w-4 h-4 sm:w-5 sm:h-5 ${isRTL ? '' : 'rotate-180'}`} />
         </button>
         
-        <button className="swiper-button-next-notes absolute -right-6 top-1/2 z-10 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-dark-bg2 border border-dark-stroke hover:bg-dark-hover hover:border-dark-stroke text-dark-text2 hover:text-dark-text1 rounded-full flex items-center justify-center transition-all duration-300 z-10 shadow-lg opacity-0 group-hover:opacity-100">
-          <FiChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+        <button className={`swiper-button-next-notes absolute ${isRTL ? '-left-6' : '-right-6'} top-1/2 z-10 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-dark-bg2 border border-dark-stroke hover:bg-dark-hover hover:border-dark-stroke text-dark-text2 hover:text-dark-text1 rounded-full flex items-center justify-center transition-all duration-300 z-10 shadow-lg opacity-0 group-hover:opacity-100`}>
+          <FiChevronRight className={`w-4 h-4 sm:w-5 sm:h-5 ${isRTL ? 'rotate-180' : ''}`} />
         </button>
       </div>
 

@@ -5,8 +5,10 @@ import { FiRotateCcw, FiTrash2 } from "react-icons/fi";
 import { SiGoogledocs } from "react-icons/si";
 import { toast } from "react-toastify";
 import DeleteModal from "@/components/DeleteModal.jsx";
+import { useTranslation } from "react-i18next";
 
 function TrashedNotes() {
+    const { t } = useTranslation("global");
     const queryClient = useQueryClient();
     const [deleteModal, setDeleteModal] = useState({ isOpen: false, note: null });
 
@@ -25,10 +27,10 @@ function TrashedNotes() {
             await axiosClient.put(`/notes/${note._id}/restore`);
             await queryClient.invalidateQueries("trashed-notes");
             await queryClient.invalidateQueries("notes");
-            toast.success(`"${note.title}" restored successfully!`);
+            toast.success(`"${note.title}" ${t('restored-successfully')}`);
         } catch (error) {
             console.error("Error restoring note:", error);
-            toast.error("Failed to restore note");
+            toast.error(t('failed-to-restore-note'));
         }
     };
 
@@ -39,10 +41,10 @@ function TrashedNotes() {
         try {
             await axiosClient.delete(`/notes/${deleteModal.note._id}/hard`);
             await queryClient.invalidateQueries("trashed-notes");
-            toast.success(`"${deleteModal.note.title}" deleted permanently!`);
+            toast.success(`"${deleteModal.note.title}" ${t('deleted-permanently')}`);
         } catch (error) {
             console.error("Error deleting note:", error);
-            toast.error("Failed to delete note permanently");
+            toast.error(t('failed-to-delete-permanently'));
         } finally {
             setDeleteModal({ isOpen: false, note: null });
         }
@@ -51,7 +53,7 @@ function TrashedNotes() {
     if (isLoading) {
         return (
             <div className="flex items-center justify-center h-screen">
-                <div className="text-dark-text2">Loading trashed notes...</div>
+                <div className="text-dark-text2">{t('loading-trashed-notes')}</div>
             </div>
         );
     }
@@ -60,9 +62,9 @@ function TrashedNotes() {
         <div className="min-h-screen ">
             {/* Header */}
             <div className=" mb-8">
-                <h1 className="text-3xl font-bold text-dark-text1 mb-2">Trashed Notes</h1>
+                <h1 className="text-3xl font-bold text-dark-text1 mb-2">{t('trashed-notes')}</h1>
                 <p className="text-dark-text2">
-                    Manage your trashed notes. Restore them or delete permanently.
+                    {t('manage-trashed-notes')}
                 </p>
             </div>
 
@@ -74,9 +76,9 @@ function TrashedNotes() {
                         <div className="w-20 h-20 bg-dark-active rounded-full flex items-center justify-center mb-4">
                             <FiTrash2 className="text-4xl text-dark-text2" />
                         </div>
-                        <h2 className="text-xl font-semibold text-dark-text1 mb-2">No Trashed Notes</h2>
+                        <h2 className="text-xl font-semibold text-dark-text1 mb-2">{t('no-trashed-notes')}</h2>
                         <p className="text-dark-text2 max-w-md">
-                            You haven't trashed any notes yet. Deleted notes will appear here.
+                            {t('no-trashed-notes-desc')}
                         </p>
                     </div>
                 ) : (
@@ -95,7 +97,7 @@ function TrashedNotes() {
                                 {/* Note Info */}
                                 <div className="flex-1 min-w-0">
                                     <h3 className="text-base font-semibold text-dark-text1 truncate mb-1">
-                                        {note.title || "Untitled Note"}
+                                        {note.title || t('untitled-note')}
                                     </h3>
                                 </div>
 
@@ -104,15 +106,15 @@ function TrashedNotes() {
                                     <button
                                         onClick={() => handleRestore(note)}
                                         className="flex items-center gap-2 px-4 py-2 border border-dark-stroke hover:border-dark-stroke hover:bg-dark-hover text-dark-text1 rounded-lg transition-colors"
-                                        title="Restore note"
+                                        title={t('restore-note')}
                                     >
                                         <FiRotateCcw size={16} />
-                                        <span className="hidden sm:inline">Restore</span>
+                                        <span className="hidden sm:inline">{t('restore')}</span>
                                     </button>
                                     <button
                                         onClick={() => setDeleteModal({ isOpen: true, note })}
                                         className="flex items-center justify-center p-2 bg-red-600/10 hover:bg-red-600/20 text-red-500 border border-red-500/20 hover:border-red-500/40 rounded-lg transition-colors"
-                                        title="Delete permanently"
+                                        title={t('delete-permanently')}
                                     >
                                         <FiTrash2 size={16} />
                                     </button>
@@ -126,8 +128,8 @@ function TrashedNotes() {
             {/* Delete Confirmation Modal */}
             <DeleteModal
                 isOpen={deleteModal.isOpen}
-                title="Delete Note Permanently"
-                message={`Are you sure you want to permanently delete "${deleteModal.note?.title}"? This action cannot be undone.`}
+                title={t('delete-note-permanently')}
+                message={`${t('are-you-sure-delete-permanently')} "${deleteModal.note?.title}"? ${t('cannot-be-undone')}`}
                 onClick={handleDeletePermanently}
                 onClose={() => setDeleteModal({ isOpen: false, note: null })}
             />

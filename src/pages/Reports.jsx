@@ -9,9 +9,11 @@ import ProductivityCards from '@/components/reports/ProductivityCards';
 import TaskStatusChart from '@/components/reports/TaskStatusChart';
 import SpaceActivityChart from '@/components/reports/SpaceActivityChart';
 import ReportsSkeleton from '@/components/reports/ReportsSkeleton';
+import { useTranslation } from 'react-i18next';
 
 function Reports() {
     const { user } = useUserContext();
+    const { t } = useTranslation("global");
     const [timeRange, setTimeRange] = useState('week'); // week, month, year
     const [selectedSpace, setSelectedSpace] = useState(null);
 
@@ -104,12 +106,12 @@ function Reports() {
                             <button className="pt-1.5 px-3 mb-2 rounded-button border border-dark-stroke hover:bg-dark-hover cursor-pointer text-dark-text2 hover:text-dark-text1 hover:border-dark-stroke-hover">
                                 {selectedSpace 
                                     ? spaces.find(s => s._id === selectedSpace)?.name 
-                                    : 'All Spaces'}
+                                    : t('all-spaces')}
                             </button>
                         }
                         items={[
                             {
-                                label: "All Spaces",
+                                label: t('all-spaces'),
                                 onClick: () => setSelectedSpace(null),
                             },
                             ...spaces.map(space => ({
@@ -120,7 +122,7 @@ function Reports() {
                     />
                 </div>
                 <div className='text-dark-text2'>
-                    Timezone: <span className='text-dark-text1'>{new Date().toLocaleString()}</span>
+                    {t('timezone')}: <span className='text-dark-text1'>{new Date().toLocaleString()}</span>
                 </div>
             </div>
             

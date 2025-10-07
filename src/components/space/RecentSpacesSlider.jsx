@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, FreeMode } from 'swiper/modules'
 import { useNavigate } from 'react-router-dom'
 import { format } from 'date-fns'
-
+import { useTranslation } from 'react-i18next'
 // Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -13,7 +13,9 @@ import 'swiper/css/free-mode'
 function RecentSpacesSlider({ spaces = [], isLoading = false }) {
   const swiperRef = useRef(null)
   const navigate = useNavigate()
-
+  const { t, i18n } = useTranslation("global")
+  const isRTL = i18n.dir() === 'rtl'
+  
   return (
     <div>
       {/* Swiper Container */}
@@ -24,8 +26,9 @@ function RecentSpacesSlider({ spaces = [], isLoading = false }) {
           spaceBetween={16}
           slidesPerView="auto"
           freeMode={true}
-          loop={true}
           loopAdditionalSlides={2}
+          dir={isRTL ? 'rtl' : 'ltr'}
+          key={isRTL ? 'rtl' : 'ltr'}
           navigation={{
             nextEl: '.swiper-button-next-custom',
             prevEl: '.swiper-button-prev-custom',
@@ -101,12 +104,12 @@ function RecentSpacesSlider({ spaces = [], isLoading = false }) {
                         <FiUser className="w-2 h-2 text-dark-text2" />
                       </div>
                       <span className="text-dark-text2">
-                        {space.taskCount} tasks
+                        {space.taskCount} {t('tasks')}
                       </span>
                     </div>
                     <div className="flex items-center gap-1">
                       <FiCalendar className="w-3 h-3 text-dark-text2" />
-                      <span className="text-dark-text2">
+                      <span className="text-dark-text2 mt-1">
                         {format(new Date(space.updatedAt), 'MMM d')}
                       </span>
                     </div>
@@ -127,19 +130,19 @@ function RecentSpacesSlider({ spaces = [], isLoading = false }) {
         </Swiper>
 
         <div 
-          className='absolute -right-8 -top-[5px] h-40 w-40 z-5 pointer-events-none' 
+          className={`absolute ${isRTL ? '-left-8' : '-right-8'} -top-[5px] h-40 w-40 z-5 pointer-events-none`} 
           style={{
-            background: 'linear-gradient(to left, var(--color-bg) 0%, transparent 100%)'
+            background: `linear-gradient(to ${isRTL ? 'right' : 'left'}, var(--color-bg) 0%, transparent 100%)`
           }}
         />
 
         {/* Custom Navigation Buttons - Only visible on hover */}
-        <button className="swiper-button-prev-custom absolute -left-6 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-dark-bg2 border border-dark-stroke hover:bg-dark-hover hover:border-dark-stroke text-dark-text2 hover:text-dark-text1 rounded-full flex items-center justify-center transition-all duration-300 z-10 shadow-lg opacity-0 group-hover:opacity-100">
-          <FiChevronRight className="w-4 h-4 sm:w-5 sm:h-5 rotate-180" />
+        <button className={`swiper-button-prev-custom absolute ${isRTL ? '-right-6' : '-left-6'} top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-dark-bg2 border border-dark-stroke hover:bg-dark-hover hover:border-dark-stroke text-dark-text2 hover:text-dark-text1 rounded-full flex items-center justify-center transition-all duration-300 z-10 shadow-lg opacity-0 group-hover:opacity-100`}>
+          <FiChevronRight className={`w-4 h-4 sm:w-5 sm:h-5 ${isRTL ? '' : 'rotate-180'}`} />
         </button>
         
-        <button className="swiper-button-next-custom absolute -right-6 top-1/2 z-10 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-dark-bg2 border border-dark-stroke hover:bg-dark-hover hover:border-dark-stroke text-dark-text2 hover:text-dark-text1 rounded-full flex items-center justify-center transition-all duration-300 z-10 shadow-lg opacity-0 group-hover:opacity-100">
-          <FiChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+        <button className={`swiper-button-next-custom absolute ${isRTL ? '-left-6' : '-right-6'} top-1/2 z-10 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-dark-bg2 border border-dark-stroke hover:bg-dark-hover hover:border-dark-stroke text-dark-text2 hover:text-dark-text1 rounded-full flex items-center justify-center transition-all duration-300 z-10 shadow-lg opacity-0 group-hover:opacity-100`}>
+          <FiChevronRight className={`w-4 h-4 sm:w-5 sm:h-5 ${isRTL ? 'rotate-180' : ''}`} />
         </button>
       </div>
 

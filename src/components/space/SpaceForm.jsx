@@ -4,6 +4,7 @@ import Modal from "../Modal.jsx";
 import {axiosClient} from "../../api/axios.jsx";
 import {useQueryClient} from "@tanstack/react-query";
 import {toast} from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const defaultColors = [
     "#3b82f6", // blue
@@ -16,6 +17,7 @@ const defaultColors = [
 ];
 
 function SpaceForm({ open, onClose, initialData = null, mode = "create" }) {
+    const { t } = useTranslation("global");
     const [customColor, setCustomColor] = useState("#ff7ce5");
     const [isCustomColorSelected, setIsCustomColorSelected] = useState(false);
     const [previewImage, setPreviewImage] = useState(initialData?.image || null);
@@ -77,19 +79,19 @@ function SpaceForm({ open, onClose, initialData = null, mode = "create" }) {
                 await axiosClient.put(`/space/${initialData._id}`, formData, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
-                toast.success("Space updated successfully!");
+                toast.success(t('space-updated-successfully'));
             } else {
                 await axiosClient.post(`/space/create`, formData, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
-                toast.success("Space created successfully!");
+                toast.success(t('space-created-successfully'));
             }
 
             await queryClient.invalidateQueries("spaces");
             onClose();
         } catch (err) {
             console.error(err);
-            toast.error("Something went wrong. Please try again.");
+            toast.error(t('something-went-wrong'));
         }
     };
 
@@ -102,7 +104,7 @@ function SpaceForm({ open, onClose, initialData = null, mode = "create" }) {
                     className="flex flex-col items-center  py-8 px-10 w-full max-w-md mx-auto"
                 >
                     <h1 className="text-xl font-bold text-dark-text1 mb-10">
-                        {mode === "edit" ? "Edit space" : "Create a new space"}
+                        {mode === "edit" ? t('edit-space') : t('create-new-space-title')}
                     </h1>
 
                     {/* Icon upload with preview */}
@@ -126,16 +128,16 @@ function SpaceForm({ open, onClose, initialData = null, mode = "create" }) {
                                 onChange={handleImageChange}
                             />
                         </label>
-                        <span className="text-lg font-bold text-dark-text1 mt-4">UPLOAD AN ICON</span>
+                        <span className="text-lg font-bold text-dark-text1 mt-4">{t('upload-an-icon')}</span>
                         <span className="text-xs text-dark-text2 mt-1 text-center">
-                            Optional (jpg, png, svg)
+                            {t('optional-image-formats')}
                         </span>
                     </div>
 
                     {/* Color picker */}
                     <div className="flex flex-col w-full mb-4">
                         <span className="text-dark-text2 font-normal text-start pb-1">
-                            Pick space color
+                            {t('pick-space-color')}
                         </span>
                         <div className="flex gap-3 justify-start items-center overflow-x-auto pb-1">
                             {defaultColors.map((color) => (
@@ -173,7 +175,7 @@ function SpaceForm({ open, onClose, initialData = null, mode = "create" }) {
                                     value={customColor}
                                     onChange={handleCustomColorChange}
                                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer rounded-full"
-                                    title="Choose custom color"
+                                    title={t('choose-custom-color')}
                                 />
                             </div>
                         </div>
@@ -183,11 +185,11 @@ function SpaceForm({ open, onClose, initialData = null, mode = "create" }) {
                     <div className="w-full mb-4">
                         <input
                             type="text"
-                            placeholder="Enter your list title"
+                            placeholder={t('enter-list-title')}
                             className={`w-full px-3 py-2 pt-3 rounded-button border ${
                                 errors.title ? "border-red-500" : "border-dark-stroke"
                             } bg-dark-bg2 text-dark-text1 focus:outline-none focus:border-dark-stroke text-left`}
-                            {...register("title", { required: "Title is required" })}
+                            {...register("title", { required: t('title-is-required') })}
                         />
                         {errors.title && (
                             <div className="text-left mt-1">
@@ -205,13 +207,13 @@ function SpaceForm({ open, onClose, initialData = null, mode = "create" }) {
                             onClick={onClose}
                             className="px-6 py-2 pt-3 border border-dark-stroke rounded-button text-dark-text2 hover:bg-dark-hover  hover:border-dark-stroke transition-all duration-300 cursor-pointer"
                         >
-                            Cancel
+                            {t('cancel')}
                         </button>
                         <button
                             type="submit"
                             className="px-6 py-2 pt-3 rounded-button border border-dark-stroke text-dark-text2 hover:bg-dark-hover hover:border-dark-stroke transition-all duration-300 cursor-pointer"
                         >
-                            {mode === "edit" ? "Update" : "Create"}
+                            {mode === "edit" ? t('update') : t('create')}
                         </button>
                     </div>
                 </form>

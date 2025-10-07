@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 export default function EventForm({ event, start, end, onSubmit, onClose, isLoading }) {
+    const { t } = useTranslation("global");
     const [formData, setFormData] = useState({
         title: "",
         start: "",
@@ -42,12 +44,12 @@ export default function EventForm({ event, start, end, onSubmit, onClose, isLoad
         
         // Validation
         if (!formData.title.trim()) {
-            alert("Please enter a title");
+            alert(t('please-enter-title'));
             return;
         }
 
         if (!formData.start || !formData.end) {
-            alert("Please select start and end times");
+            alert(t('please-select-start-end'));
             return;
         }
 
@@ -55,7 +57,7 @@ export default function EventForm({ event, start, end, onSubmit, onClose, isLoad
         const endDate = new Date(formData.end);
 
         if (endDate < startDate) {
-            alert("End time cannot be before start time");
+            alert(t('end-time-before-start'));
             return;
         }
 
@@ -69,13 +71,13 @@ export default function EventForm({ event, start, end, onSubmit, onClose, isLoad
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <h2 className="text-xl font-semibold text-dark-text1 mb-4">
-                {event ? "Edit Event" : "Create Event"}
+                {event ? t('edit-event') : t('create-event')}
             </h2>
 
             {/* Title */}
             <div>
                 <label htmlFor="title" className="block text-sm font-medium text-dark-text2 mb-2">
-                    Event Title *
+                    {t('event-title')} *
                 </label>
                 <input
                     type="text"
@@ -84,7 +86,7 @@ export default function EventForm({ event, start, end, onSubmit, onClose, isLoad
                     value={formData.title}
                     onChange={handleChange}
                     className="w-full px-4 py-2 bg-dark-bg text-dark-text1 border border-dark-stroke rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Enter event title"
+                    placeholder={t('enter-event-title')}
                     required
                 />
             </div>
@@ -92,7 +94,7 @@ export default function EventForm({ event, start, end, onSubmit, onClose, isLoad
             {/* Start Date/Time */}
             <div>
                 <label htmlFor="start" className="block text-sm font-medium text-dark-text2 mb-2">
-                    Start Date & Time *
+                    {t('start-date-time')} *
                 </label>
                 <input
                     type="datetime-local"
@@ -108,7 +110,7 @@ export default function EventForm({ event, start, end, onSubmit, onClose, isLoad
             {/* End Date/Time */}
             <div>
                 <label htmlFor="end" className="block text-sm font-medium text-dark-text2 mb-2">
-                    End Date & Time *
+                    {t('end-date-time')} *
                 </label>
                 <input
                     type="datetime-local"
@@ -143,7 +145,7 @@ export default function EventForm({ event, start, end, onSubmit, onClose, isLoad
                     disabled={isLoading}
                     className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    {isLoading ? "Saving..." : event ? "Update Event" : "Create Event"}
+                    {isLoading ? t('saving') : event ? t('update-event') : t('create-event')}
                 </button>
                 <button
                     type="button"
@@ -151,7 +153,7 @@ export default function EventForm({ event, start, end, onSubmit, onClose, isLoad
                     disabled={isLoading}
                     className="flex-1 px-4 py-2 bg-dark-bg border border-dark-stroke text-dark-text2 rounded-lg hover:bg-dark-bg2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    Cancel
+                    {t('cancel')}
                 </button>
             </div>
         </form>

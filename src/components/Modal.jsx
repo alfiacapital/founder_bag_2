@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const Modal = ({ isOpen, onClose, children, size = "md" }) => {
     if (!isOpen) return null;
@@ -10,7 +11,7 @@ const Modal = ({ isOpen, onClose, children, size = "md" }) => {
         xl: "max-w-xl",
         full: "w-full",
     };
-
+    const { i18n } = useTranslation("global");
     return (
         <div
             className="fixed inset-0 flex items-center justify-center
@@ -22,7 +23,7 @@ const Modal = ({ isOpen, onClose, children, size = "md" }) => {
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-                    className="absolute top-5 right-6 text-dark-text2 hover:text-white text-md font-bold cursor-pointer"
+                    className={`absolute top-5 ${i18n.dir() === "rtl" ? "left-6" : "right-6"} text-dark-text2 hover:text-white text-md font-bold cursor-pointer`}
                     onClick={onClose}
                 >
                     &#x2715;

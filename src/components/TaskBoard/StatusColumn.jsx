@@ -3,7 +3,7 @@ import { FiPlus } from "react-icons/fi";
 import { MdDone } from "react-icons/md";
 import TaskForm from './TaskForm';
 import TaskCard from './TaskCard';
-
+import { useTranslation } from 'react-i18next';
 const StatusColumn = ({
     status,
     tasksByStatus,
@@ -43,10 +43,12 @@ const StatusColumn = ({
     setEditSubtaskValue,
     onEnterFocusMode
 }) => {
+    const { i18n } = useTranslation();
+    const isRTL = i18n.dir() === 'rtl';
     return (
         <div
             key={status._id}
-            className="h-full min-w-[280px] max-h-[calc(100vh-20vh)] sm:min-w-0 flex flex-col rounded-default border border-dashed border-dark-stroke bg-dark-bg2 transition-all duration-300"
+            className="h-full min-w-[280px] max-h-[calc(100vh-20vh)] min-h-[600px] sm:min-w-0 flex flex-col rounded-default border border-dashed border-dark-stroke bg-dark-bg2 transition-all duration-300"
             onDragOver={(e) => handleDragOver(e, status._id)}
             onDragLeave={handleDragLeave}
             onDrop={(e) => handleDrop(e, status._id)}
@@ -119,7 +121,9 @@ const StatusColumn = ({
                             <div className="border border-[#444444] p-2 rounded-full">
                                 <MdDone className="text-dark-text2 text-sm md:text-md" />
                             </div>
-                            <p className="text-dark-text2 font-medium text-xs md:text-sm">ALL CLEAR</p>
+                            <p className="text-dark-text2 font-medium text-xs md:text-sm">
+                                {isRTL ? 'لا توجد مهام' : 'ALL CLEAR'}
+                            </p>
                         </div>
                     )}
                 </div>

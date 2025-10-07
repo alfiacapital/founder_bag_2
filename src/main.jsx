@@ -5,6 +5,7 @@ import './App.css'
 import App from './App.jsx'
 import {UserProvider} from "./context/UserProvider.jsx";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
+import "./i18n.jsx";
 
 
 

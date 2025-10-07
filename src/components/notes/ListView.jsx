@@ -6,8 +6,10 @@ import { FaEllipsisVertical } from "react-icons/fa6";
 import { getUserImage } from "@/utils/getUserImage.jsx";
 import { axiosClient } from "@/api/axios.jsx";
 import {PiDotsSixVertical} from "react-icons/pi";
+import { useTranslation } from "react-i18next";
 
 export default function ListView({ notes, setNotes, setDeleteModal, setShareModal, setManageUsersModal }) {
+    const { t } = useTranslation("global");
     const navigate = useNavigate();
     const { user } = useUserContext();
     const [draggingIndex, setDraggingIndex] = useState(null);
@@ -113,9 +115,9 @@ export default function ListView({ notes, setNotes, setDeleteModal, setShareModa
                                             </button>
                                         }
                                         items={[
-                                            { label: "Share", onClick: () => setShareModal({ isOpen: true, note }) },
-                                            { label: "Manage", onClick: () => setManageUsersModal({ isOpen: true, note }) },
-                                            { label: "Trash", onClick: () => setDeleteModal({ isOpen: true, note }) },
+                                            { label: t('share'), onClick: () => setShareModal({ isOpen: true, note }) },
+                                            { label: t('manage'), onClick: () => setManageUsersModal({ isOpen: true, note }) },
+                                            { label: t('trash'), onClick: () => setDeleteModal({ isOpen: true, note }) },
                                         ]}
                                     />
                                 </td>

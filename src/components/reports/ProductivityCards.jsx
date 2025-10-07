@@ -1,22 +1,25 @@
 import React from 'react';
 import { FiClock, FiSun, FiCalendar } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 
 const ProductivityCards = ({ productivity = {} }) => {
+    const { t } = useTranslation("global");
+    
     const cards = [
         {
-            title: 'Most Productive Hour',
+            title: t('most-productive-hour'),
             value: productivity?.mostProductiveHour || '--:--',
             icon: FiClock,
             color: 'from-cyan-500 to-cyan-600'
         },
         {
-            title: 'Most Productive Day',
+            title: t('most-productive-day'),
             value: productivity?.mostProductiveDay || '--',
             icon: FiSun,
             color: 'from-yellow-500 to-yellow-600'
         },
         {
-            title: 'Most Productive Month',
+            title: t('most-productive-month'),
             value: productivity?.mostProductiveMonth || '--',
             icon: FiCalendar,
             color: 'from-pink-500 to-pink-600'
@@ -33,7 +36,7 @@ const ProductivityCards = ({ productivity = {} }) => {
                     </div>
                     
                     <h3 className='text-dark-text2 text-md font-medium'>{card.title}</h3>
-                    <p className='text-white pt-2 text-md'>{card.value}</p>
+                    <p className='text-dark-text1 pt-2 text-md'>{card.value}</p>
                 </div>
             ))}
         </div>

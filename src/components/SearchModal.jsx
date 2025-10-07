@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { axiosClient } from "@/api/axios.jsx";
 import { useUserContext } from '@/context/UserProvider';
+import { useTranslation } from 'react-i18next';
 
 export default function SearchModal({ isOpen, onClose }) {
     const [searchQuery, setSearchQuery] = useState("");
@@ -13,6 +14,7 @@ export default function SearchModal({ isOpen, onClose }) {
     const searchInputRef = useRef(null);
     const navigate = useNavigate();
     const {user} = useUserContext();
+    const { t } = useTranslation("global");
     // Fetch notes
     const { data: notes = [] } = useQuery({
         queryKey: ["notes-search"],
@@ -28,7 +30,7 @@ export default function SearchModal({ isOpen, onClose }) {
         queryKey: ["spaces-search"],
         queryFn: async () => {
             const res = await axiosClient.get(`/space/${user._id}`);
-            return res.data;
+            return res.data.data;
         },
         enabled: isOpen && !!user?._id,
     });
@@ -139,7 +141,7 @@ export default function SearchModal({ isOpen, onClose }) {
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder="Search notes and spaces..."
+                        placeholder={t('search-notes-and-spaces')}
                         className="flex-1 bg-transparent text-dark-text1 placeholder-dark-text2 focus:outline-none text-base"
                     />
                     <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-xs text-dark-text2 bg-dark-bg border border-dark-stroke rounded">
@@ -152,22 +154,22 @@ export default function SearchModal({ isOpen, onClose }) {
                     {searchQuery === "" ? (
                         <div className="p-8 text-center text-dark-text2">
                             <GoSearch className="mx-auto text-4xl mb-3 opacity-50" />
-                            <p className="text-sm">Start typing to search notes and spaces</p>
+                            <p className="text-sm">{t('start-typing-to-search')}</p>
                             <div className="mt-4 flex items-center justify-center gap-4 text-xs">
                                 <div className="flex items-center gap-1">
                                     <kbd className="px-2 py-1 bg-dark-bg border border-dark-stroke rounded">↑</kbd>
                                     <kbd className="px-2 py-1 bg-dark-bg border border-dark-stroke rounded">↓</kbd>
-                                    <span>Navigate</span>
+                                    <span>{t('navigate')}</span>
                                 </div>
                                 <div className="flex items-center gap-1">
                                     <kbd className="px-2 py-1 bg-dark-bg border border-dark-stroke rounded">↵</kbd>
-                                    <span>Select</span>
+                                    <span>{t('select')}</span>
                                 </div>
                             </div>
                         </div>
                     ) : allResults.length === 0 ? (
                         <div className="p-8 text-center text-dark-text2">
-                            <p className="text-sm">No results found for "{searchQuery}"</p>
+                            <p className="text-sm">{t('no-results-found')} "{searchQuery}"</p>
                         </div>
                     ) : (
                         <div className="py-2">
@@ -175,7 +177,7 @@ export default function SearchModal({ isOpen, onClose }) {
                             {filteredNotes.length > 0 && (
                                 <div>
                                     <div className="px-4 py-2 text-xs font-semibold text-dark-text2 uppercase">
-                                        Notes
+                                        {t('notes')}
                                     </div>
                                     {filteredNotes.map((note, index) => {
                                         const globalIndex = index;
@@ -203,7 +205,7 @@ export default function SearchModal({ isOpen, onClose }) {
                             {filteredSpaces.length > 0 && (
                                 <div>
                                     <div className="px-4 py-2 text-xs font-semibold text-dark-text2 uppercase">
-                                        Spaces
+                                        {t('your-spaces')}
                                     </div>
                                     {filteredSpaces.map((space, index) => {
                                         const globalIndex = filteredNotes.length + index;
@@ -233,11 +235,11 @@ export default function SearchModal({ isOpen, onClose }) {
                 {/* Footer */}
                 <div className="px-4 py-3 border-t border-dark-stroke bg-dark-bg flex items-center justify-between text-xs text-dark-text2">
                     <div className="flex items-center gap-3">
-                        <span>Type to search</span>
+                        <span>{t('type-to-search')}</span>
                     </div>
                     <div className="flex items-center gap-2">
                         <kbd className="px-2 py-1 bg-dark-bg2 border border-dark-stroke rounded">⌘K</kbd>
-                        <span>to toggle</span>
+                        <span>{t('to-toggle')}</span>
                     </div>
                 </div>
             </div>

@@ -110,7 +110,7 @@ function TaskBoard() {
         <div className="bg-dark-bg max-h-screen ">
             <div className="h-full flex flex-col">
                 {/* Task Board - Responsive Grid */}
-                <div className="flex-1 overflow-x-auto overflow-y-hidden sm:pr-4">
+                <div className="flex-1 overflow-x-auto overflow-y-hidden sm:pr-4 rtl:pl-4">
                     <div className="h-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4 lg:gap-6 min-w-min">
                         {statuses.slice(0, 4).map((status) => (
                             <StatusColumn

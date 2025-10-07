@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { FiPlus, FiTrendingUp, FiTrendingDown, FiClock, FiCheckCircle, FiTarget } from "react-icons/fi";
+import { FiPlus, FiTrendingUp, FiTrendingDown, FiClock, FiCheckCircle, FiTarget, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import SpaceForm from "../components/space/SpaceForm.jsx";
 import {useUserContext} from "../context/UserProvider.jsx";
 import {axiosClient} from "../api/axios.jsx";
@@ -10,16 +10,30 @@ import {MdDone, MdOpenInFull} from "react-icons/md";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import DeleteModal from "../components/DeleteModal.jsx";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { useTranslation } from "react-i18next";
 
 function Home() {
     const {user} = useUserContext()
-    const { data: spaces = [], isLoading: isLoadingSpaces, isError } = useQuery({
-        queryKey: ["spaces"],
-        queryFn: async () => await axiosClient.get(`/space/${user._id}`),
-        select: res => res.data,
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 7;
+    const { t } = useTranslation("global");
+    
+    const { data: spacesResponse, isLoading: isLoadingSpaces, isError } = useQuery({
+        queryKey: ["spaces", currentPage, itemsPerPage],
+        queryFn: async () => await axiosClient.get(`/space/${user._id}?page=${currentPage}&limit=${itemsPerPage}`),
+        select: res => res,
+        keepPreviousData: true,
     });
+
+    const spaces = spacesResponse?.data?.data || [];
+    const pagination = spacesResponse?.data?.pagination || {
+        currentPage: 1,
+        totalPages: 1,
+        totalItems: 0,
+        itemsPerPage: itemsPerPage,
+        hasNextPage: false,
+        hasPreviousPage: false
+    };
 
     // Dashboard stats query
     const { data: dashboardStats, isLoading: isLoadingStats, isError: isStatsError } = useQuery({
@@ -30,7 +44,7 @@ function Home() {
     });
 
     const navigate = useNavigate()
-    const hasSpaces = spaces.length > 0;
+    const hasSpaces = spaces.length > 0;    
     const [createSpaceForm, setCreateSpaceForm] = useState(false)
     const [deleteSpaceForm, setDeleteSpaceForm] = useState(null)
     const [editSpaceForm, setEditSpaceForm] = useState(null)
@@ -65,10 +79,10 @@ function Home() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                 <div>
                     <h2 className="text-2xl text-dark-text1 font-semibold capitalize">
-                        Good Afternoon, {user?.full_name}
+                        {t('hello')}, {user?.full_name}
                     </h2>
                     <p className="text-dark-text2 text-sm">
-                        Ready to Alfia System through your afternoon?
+                        {t('ready-to-use-alfia-system')}
                     </p>
                 </div>
             </div>
@@ -79,7 +93,7 @@ function Home() {
                 <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-dark-text2 text-sm font-medium">Total Tasks</p>
+                            <p className="text-dark-text2 text-sm font-medium">{t('total-tasks')}</p>
                             <p className="text-2xl font-bold text-dark-text1 mt-1">
                                 {isLoadingStats ? "..." : dashboardStats?.totalTasks?.total || 0}
                             </p>
@@ -99,7 +113,7 @@ function Home() {
                         }`}>
                             {dashboardStats?.totalTasks?.change > 0 ? '+' : ''}{dashboardStats?.totalTasks?.change || 0}%
                         </span>
-                        <span className="text-dark-text2 text-sm ml-1">from last week</span>
+                        <span className="text-dark-text2 text-sm ml-1 rtl:mr-1">{t('from-last-week')}</span>
                     </div>
                 </div>
 
@@ -107,7 +121,7 @@ function Home() {
                 <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-dark-text2 text-sm font-medium">Completed</p>
+                            <p className="text-dark-text2 text-sm font-medium">{t('completed')}</p>
                             <p className="text-2xl font-bold text-dark-text1 mt-1">
                                 {isLoadingStats ? "..." : dashboardStats?.completedTasks?.total || 0}
                             </p>
@@ -127,7 +141,7 @@ function Home() {
                         }`}>
                             {dashboardStats?.completedTasks?.change > 0 ? '+' : ''}{dashboardStats?.completedTasks?.change || 0}%
                         </span>
-                        <span className="text-dark-text2 text-sm ml-1">from last week</span>
+                        <span className="text-dark-text2 text-sm ml-1 rtl:mr-1">{t('from-last-week')}</span>
                     </div>
                 </div>
 
@@ -135,7 +149,7 @@ function Home() {
                 <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-dark-text2 text-sm font-medium">In Progress</p>
+                            <p className="text-dark-text2 text-sm font-medium">{t('in-progress')}</p>
                             <p className="text-2xl font-bold text-dark-text1 mt-1">
                                 {isLoadingStats ? "..." : dashboardStats?.inProgressTasks?.total || 0}
                             </p>
@@ -155,7 +169,7 @@ function Home() {
                         }`}>
                             {dashboardStats?.inProgressTasks?.change > 0 ? '+' : ''}{dashboardStats?.inProgressTasks?.change || 0}%
                         </span>
-                        <span className="text-dark-text2 text-sm ml-1">from last week</span>
+                        <span className="text-dark-text2 text-sm ml-1 rtl:mr-1">{t('from-last-week')}</span>
                     </div>
                 </div>
 
@@ -163,7 +177,7 @@ function Home() {
                 <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-dark-text2 text-sm font-medium">Productivity</p>
+                            <p className="text-dark-text2 text-sm font-medium">{t('productivity')}</p>
                             <p className="text-2xl font-bold text-dark-text1 mt-1">
                                 {isLoadingStats ? "..." : `${dashboardStats?.productivity?.productivity || 0}%`}
                             </p>
@@ -183,7 +197,7 @@ function Home() {
                         }`}>
                             {dashboardStats?.productivity?.change > 0 ? '+' : ''}{dashboardStats?.productivity?.change || 0}%
                         </span>
-                        <span className="text-dark-text2 text-sm ml-1">from last week</span>
+                        <span className="text-dark-text2 text-sm ml-1 rtl:mr-1">{t('from-last-week')}</span>
                     </div>
                 </div>
             </div>
@@ -216,7 +230,7 @@ function Home() {
                 </ResponsiveContainer>
             </div> */}
 
-            <h1 className="text-md text-dark-text1 font-medium mb-4 mt-8">Your Spaces</h1>
+            <h1 className="text-md text-dark-text1 font-medium mb-4 mt-8">{t('your-spaces')}</h1>
 
             {!hasSpaces || isLoadingSpaces ? (
                 // Empty state
@@ -239,11 +253,11 @@ function Home() {
                     {/* Text + Button */}
                     <div className="absolute bottom-14 flex flex-col items-center justify-center px-4 text-center">
                         <p className="text-base sm:text-lg font-medium text-dark-text2">
-                            Create your first space to get started 🚀
+                            {t('create-first-space')}
                         </p>
-                        <button onClick={() => setCreateSpaceForm(!createSpaceForm)} className="flex items-center space-x-2 mt-4 px-6 py-2 border text-dark-text1 border-dark-stroke hover:bg-dark-hover rounded-full font-medium cursor-pointer">
+                        <button onClick={() => setCreateSpaceForm(!createSpaceForm)} className="flex items-center gap-2 mt-4 px-6 py-2 border text-dark-text1 border-dark-stroke hover:bg-dark-hover rounded-full font-medium cursor-pointer">
                             <FiPlus className="text-xl" />
-                            <span className="mt-1">CREATE SPACE</span>
+                            <span className="mt-1">{t('create-new-space')}</span>
                         </button>
                     </div>
                 </div>
@@ -282,8 +296,8 @@ function Home() {
                                                 </button>
                                             }
                                             items={[
-                                                { label: "Edit", onClick: () => setEditSpaceForm(space) },
-                                                { label: "Archive", onClick: () => setDeleteSpaceForm(space) },
+                                                { label: t('edit'), onClick: () => setEditSpaceForm(space) },
+                                                { label: t('archive'), onClick: () => setDeleteSpaceForm(space) },
                                             ]}
                                         />
                                     </div>
@@ -334,9 +348,9 @@ function Home() {
                                       "
                                     >
                                         <MdOpenInFull />
-                                        <span  className="font-medium pt-1">
-                                            OPEN
-                                          </span>
+                                        <span className="font-medium pt-1 uppercase">
+                                            {t('open')}
+                                        </span>
                                     </div>
                                 </div>
                             );
@@ -348,20 +362,111 @@ function Home() {
                             className="border-2 border-dashed border-dark-stroke rounded-default hover:border-dark-stroke text-dark-text2 hover:text-dark-text1 flex flex-col items-center justify-center h-[280px] cursor-pointer transition-all duration-300"
                         >
                             <span className="text-2xl mb-2">+</span>
-                            <p className="font-medium text-gradient">CREATE SPACE</p>
+                            <p className="font-medium text-gradient">{t('create-new-space')}</p>
                         </div>
                     </div>
 
+                    {/* Pagination Controls */}
+                    {pagination.totalPages > 1 && (
+                        <div className="flex flex-col sm:flex-row items-center justify-between mt-8 px-4 gap-4">
+                            {/* Left side: Items info */}
+                            <div className="text-sm text-dark-text2">
+                                {t('showing')} <span className="text-dark-text1 font-medium">{((pagination.currentPage - 1) * pagination.itemsPerPage) + 1}</span> {t('to')}{" "}
+                                <span className="text-dark-text1 font-medium">
+                                    {Math.min(pagination.currentPage * pagination.itemsPerPage, pagination.totalItems)}
+                                </span>{" "}
+                                {t('of')} <span className="text-dark-text1 font-medium">{pagination.totalItems}</span> {t('spaces')}
+                            </div>
+
+                            {/* Right side: Navigation buttons */}
+                            <div className="flex items-center gap-2">
+                                {/* Previous button */}
+                                <button
+                                    onClick={() => setCurrentPage(prev => prev - 1)}
+                                    disabled={!pagination.hasPreviousPage}
+                                    className={`
+                                        flex items-center gap-2 px-4 py-2 rounded-button border
+                                        ${pagination.hasPreviousPage
+                                            ? 'border-dark-stroke text-dark-text1 hover:bg-dark-hover cursor-pointer'
+                                            : 'border-dark-stroke text-dark-text2 cursor-not-allowed opacity-50'
+                                        }
+                                        transition-all duration-200
+                                    `}
+                                >
+                                    <FiChevronLeft className="text-lg rtl:rotate-180" />
+                                    <span className="hidden sm:inline">{t('previous')}</span>
+                                </button>
+
+                                {/* Page numbers */}
+                                <div className="flex items-center gap-1">
+                                    {Array.from({ length: pagination.totalPages }, (_, i) => i + 1).map((pageNum) => {
+                                        // Show first page, last page, current page, and pages around current
+                                        const showPage = 
+                                            pageNum === 1 || 
+                                            pageNum === pagination.totalPages || 
+                                            (pageNum >= pagination.currentPage - 1 && pageNum <= pagination.currentPage + 1);
+                                        
+                                        const showEllipsis = 
+                                            (pageNum === pagination.currentPage - 2 && pagination.currentPage > 3) ||
+                                            (pageNum === pagination.currentPage + 2 && pagination.currentPage < pagination.totalPages - 2);
+
+                                        if (showEllipsis) {
+                                            return (
+                                                <span key={pageNum} className="px-2 text-dark-text2">
+                                                    ...
+                                                </span>
+                                            );
+                                        }
+
+                                        if (!showPage) return null;
+
+                                        return (
+                                            <button
+                                                key={pageNum}
+                                                onClick={() => setCurrentPage(pageNum)}
+                                                className={`
+                                                    w-10 h-10 rounded-button border transition-all duration-200
+                                                    ${pageNum === pagination.currentPage
+                                                        ? 'bg-dark-active border-dark-stroke text-dark-text1 font-semibold'
+                                                        : 'border-dark-stroke text-dark-text2 hover:bg-dark-hover hover:text-dark-text1'
+                                                    }
+                                                `}
+                                            >
+                                                {pageNum}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+
+                                {/* Next button */}
+                                <button
+                                    onClick={() => setCurrentPage(prev => prev + 1)}
+                                    disabled={!pagination.hasNextPage}
+                                    className={`
+                                        flex items-center gap-2 px-4 py-2 rounded-button border
+                                        ${pagination.hasNextPage
+                                            ? 'border-dark-stroke text-dark-text1 hover:bg-dark-hover cursor-pointer'
+                                            : 'border-dark-stroke text-dark-text2 cursor-not-allowed opacity-50'
+                                        }
+                                        transition-all duration-200
+                                    `}
+                                >
+                                    <span className="hidden sm:inline">{t('next')}</span>
+                                    <FiChevronRight className="text-lg rtl:rotate-180" />
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </>
             )}
             {createSpaceForm && <SpaceForm open={createSpaceForm} onClose={() => setCreateSpaceForm(!createSpaceForm)} mode={"create"} /> }
             {editSpaceForm && <SpaceForm open={!!editSpaceForm} onClose={() => setEditSpaceForm(null)} initialData={editSpaceForm} mode={"edit"} /> }
             {deleteSpaceForm &&  <DeleteModal
-                isOpen={!!deleteSpaceForm} title="Archive Space"
-                message="Are you sure you want to archive this Space? Archived spaces will be hidden from your workspace but can be restored later. This action will not delete any data."
+                isOpen={!!deleteSpaceForm} title={t('archive-space')}
+                message={t('are-you-sure-archive-space')}
                 onClick={() => deleteSpace(deleteSpaceForm)}
                 onClose={() => setDeleteSpaceForm(null)}
-                buttonMessage="Archive"
+                buttonMessage={t('archive')}
             />}
         </>
     );

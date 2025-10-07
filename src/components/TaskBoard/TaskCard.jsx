@@ -10,6 +10,7 @@ import SubtaskList from './SubtaskList';
 import { NoteEditor } from '@/components/novel-editor';
 import { axiosClient } from '@/api/axios';
 import { useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 
 const TaskCard = ({
                       task,
@@ -41,6 +42,8 @@ const TaskCard = ({
                       setEditSubtaskValue,
                       onEnterFocusMode
                   }) => {
+    const { i18n } = useTranslation();
+    const isRTL = i18n.dir() === 'rtl';
     const queryClient = useQueryClient();
     const editInputRef = useRef(null);
     const estimatedDatePickerRef = useRef(null);
@@ -110,12 +113,12 @@ const TaskCard = ({
                             e.stopPropagation();
                             handleTaskComplete(task._id);
                         }}
-                        className="
-                task-action-button absolute left-3.5 top-3 pb-1 -translate-y-1/2
+                        className={`
+                task-action-button absolute ${isRTL ? 'right-3.5' : 'left-3.5'} top-3 pb-1 -translate-y-1/2
                 opacity-100 md:opacity-0 md:group-hover:opacity-100
-                transform md:-translate-x-2 md:group-hover:translate-x-0
+                transform ${isRTL ? 'md:translate-x-2 md:group-hover:translate-x-0' : 'md:-translate-x-2 md:group-hover:translate-x-0'}
                 transition-all duration-300 text-dark-text2 hover:text-dark-text1 z-10 cursor-pointer
-            "
+            `}
                     >
                         <FaRegSquareCheck className="w-4 h-4" />
                     </button>
@@ -127,7 +130,7 @@ const TaskCard = ({
                         </div>
 
                         {/* Task title */}
-                        <div className="flex items-center transition-all duration-300 pl-6 md:pl-0 md:group-hover:pl-5 md:group-hover:max-w-[5rem]">
+                        <div className={`flex items-center transition-all duration-300 ${isRTL ? 'pr-6 md:pr-0 md:group-hover:pr-5' : 'pl-6 md:pl-0 md:group-hover:pl-5'} md:group-hover:max-w-[5rem]`}>
                             {editingTask === task._id && editingField === "title" ? (
                                 <input
                                     ref={editInputRef}
@@ -158,15 +161,15 @@ const TaskCard = ({
                 </div>
 
                 {/* Right side with actions and image */}
-                <div className="relative flex items-center ml-2">
+                <div className={`relative flex items-center ${isRTL ? 'mr-2' : 'ml-2'}`}>
                     {/* Action buttons */}
                     <div
-                        className="
-                absolute right-0 top-1/2 -translate-y-1/2 flex items-center
+                        className={`
+                absolute ${isRTL ? 'left-0' : 'right-0'} top-1/2 -translate-y-1/2 flex items-center
                 opacity-100 md:opacity-0 md:group-hover:opacity-100
-                transform md:translate-x-2 md:group-hover:translate-x-0
+                transform ${isRTL ? 'md:-translate-x-2 md:group-hover:translate-x-0' : 'md:translate-x-2 md:group-hover:translate-x-0'}
                 transition-all duration-300 z-20
-            "
+            `}
                     >
                         {onEnterFocusMode && (
                             <button
@@ -366,7 +369,7 @@ const TaskCard = ({
                         <NoteEditor
                             key={`note-${task._id}`}
                             onUpdate={handleSaveNote}
-                            placeholder="Add notes for this task..."
+                            placeholder="..."
                             autoSave={true}
                             initialContent={noteContent}
                         />

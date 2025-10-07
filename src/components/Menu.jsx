@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-
+import { useTranslation } from "react-i18next";
 function Menu({ button, items = [], footer }) {
     const [open, setOpen] = useState(false);
     const menuRef = useRef(null);
-
+    const { i18n } = useTranslation("global");
     useEffect(() => {
         function handleClickOutside(e) {
             if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -24,7 +24,7 @@ function Menu({ button, items = [], footer }) {
             {/* Dropdown menu */}
             {open && (
                 <div 
-                    className={`absolute right-0 mt-1 w-48 origin-top-right rounded-lg bg-dark-bg2 border border-dark-stroke shadow-lg z-50 ${
+                    className={`absolute ${i18n.dir() === "ltr" ? "right-0" : "left-0"} mt-1 w-48 origin-top-right rounded-lg bg-dark-bg2 border border-dark-stroke shadow-lg z-50 ${
                         items.length > 4 ? 'max-h-[240px] overflow-y-auto menu-scroll' : ''
                     }`}
                     style={{
@@ -39,7 +39,7 @@ function Menu({ button, items = [], footer }) {
                                 setOpen(false);
                                 item.onClick?.();
                             }}
-                            className={`w-full px-4 py-2 pt-3 text-left text-sm  ${
+                            className={`w-full px-4 py-2 pt-3 text-left rtl:text-right text-sm  ${
                                 item.danger
                                     ? "text-red-500 hover:bg-red-600 hover:text-white"
                                     : "text-dark-text1 hover:bg-dark-hover"

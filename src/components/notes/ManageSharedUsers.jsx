@@ -4,8 +4,10 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosClient } from "@/api/axios.jsx";
 import { FaTrash } from "react-icons/fa";
 import {getUserImage} from "@/utils/getUserImage.jsx";
+import { useTranslation } from "react-i18next";
 
 function ManageSharedUsers({ isOpen, onClose, noteId }) {
+    const { t } = useTranslation("global");
     const queryClient = useQueryClient();
 
     const { data: sharedUsers = [], isLoading } = useQuery({
@@ -30,12 +32,12 @@ function ManageSharedUsers({ isOpen, onClose, noteId }) {
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} size="md">
-            <h2 className="text-xl font-bold text-dark-text1 mb-4">Manage Shared Users</h2>
+            <h2 className="text-xl font-bold text-dark-text1 mb-4">{t('manage-shared-users')}</h2>
 
             {isLoading ? (
-                <p className="text-dark-text2">Loading...</p>
+                <p className="text-dark-text2">{t('loading')}</p>
             ) : sharedUsers.length === 0 ? (
-                <p className="text-dark-text2">No users shared with this note.</p>
+                <p className="text-dark-text2">{t('no-users-shared')}</p>
             ) : (
                 <div className="space-y-2 max-h-64 overflow-y-auto">
                     {sharedUsers.map((user, key) => (
@@ -60,7 +62,7 @@ function ManageSharedUsers({ isOpen, onClose, noteId }) {
                                 onClick={() => handleRemoveUser(user._id)}
                                 className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-red-600 text-white text-sm hover:bg-opacity-80 transition cursor-pointer"
                             >
-                                <FaTrash /> Remove
+                                <FaTrash /> {t('remove')}
                             </button>
                         </div>
                     ))}

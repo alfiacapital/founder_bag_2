@@ -3,8 +3,10 @@ import { FiPlus, FiSend, FiTrash2, FiMenu, FiX, FiMessageSquare } from "react-ic
 import { axiosClient } from "@/api/axios.jsx";
 import { format } from "date-fns";
 import ReactMarkdown from 'react-markdown';
+import { useTranslation } from "react-i18next";
 
 export default function AlfiaAI() {
+    const { t } = useTranslation("global");
     const [conversations, setConversations] = useState([]);
     const [activeConversationId, setActiveConversationId] = useState(null);
     const [messages, setMessages] = useState([]);
@@ -75,7 +77,7 @@ export default function AlfiaAI() {
     const createNewConversation = async () => {
         try {
             const response = await axiosClient.post("/conversations", {
-                title: "New Conversation"
+                title: t('new-conversation')
             });
             setConversations([response.data, ...conversations]);
             setActiveConversationId(response.data._id);
@@ -86,7 +88,7 @@ export default function AlfiaAI() {
     };
 
     const deleteConversation = async (conversationId) => {
-        if (!confirm("Are you sure you want to delete this conversation?")) return;
+        if (!confirm(t('are-you-sure-delete-conversation'))) return;
 
         try {
             await axiosClient.delete(`/conversations/${conversationId}`);
@@ -147,7 +149,7 @@ export default function AlfiaAI() {
         } catch (error) {
             console.error("Error sending message:", error);
             // Optionally show error to user
-            alert("Failed to send message. Please try again.");
+            alert(t('failed-send-message'));
         } finally {
             setIsLoading(false);
         }
@@ -192,7 +194,7 @@ export default function AlfiaAI() {
                     <div className="p-4 border-b border-dark-stroke flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <FiMessageSquare className="text-blue-500" size={20} />
-                            <span className="font-semibold text-dark-text1">Conversations</span>
+                            <span className="font-semibold text-dark-text1">{t('conversations')}</span>
                         </div>
                         <button
                             onClick={() => setShowSidebar(false)}
@@ -212,7 +214,7 @@ export default function AlfiaAI() {
                         className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 rounded-button transition-all hover:scale-[1.02] active:scale-[0.98]"
                     >
                         <FiPlus size={20} />
-                        <span className="font-medium">New Chat</span>
+                        <span className="font-medium">{t('new-chat')}</span>
                     </button>
                 </div>
 
@@ -221,8 +223,8 @@ export default function AlfiaAI() {
                         {conversations.length === 0 ? (
                             <div className="p-6 text-center text-dark-text2">
                                 <FiMessageSquare className="mx-auto mb-3 opacity-30" size={48} />
-                                <p className="text-sm text-dark-text1">No conversations yet</p>
-                                <p className="text-xs mt-1 opacity-70">Create one to get started!</p>
+                                <p className="text-sm text-dark-text1">{t('no-conversations-yet')}</p>
+                                <p className="text-xs mt-1 opacity-70">{t('create-one-to-get-started')}</p>
                             </div>
                         ) : (
                             <div className="space-y-1">
@@ -245,7 +247,7 @@ export default function AlfiaAI() {
                                         <div className="flex items-start justify-between gap-2">
                                             <div className="flex-1 min-w-0">
                                                 <h3 className="text-sm font-medium text-dark-text1 truncate mb-1">
-                                                    {conv.title || "New Conversation"}
+                                                    {conv.title || t('new-conversation')}
                                                 </h3>
                                                 <p className="text-xs text-dark-text2">
                                                     {conv.updatedAt ? format(new Date(conv.updatedAt), 'MMM d, h:mm a') : ''}
@@ -299,16 +301,16 @@ export default function AlfiaAI() {
                         <div className="flex items-center justify-center h-full">
                             <div className="text-center max-w-md px-4">
                                 <div className="relative mb-6">
-                                    <div className="absolute inset-0 blur-3xl bg-blue-600/20 rounded-full"></div>
+                                    <div className="absolute inset-0 rounded-full"></div>
                                     <img 
                                         src="/alfia-ai.png" 
                                         alt="ALFIA AI" 
                                         className="relative w-20 h-20 lg:w-24 lg:h-24 mx-auto"
                                     />
                                 </div>
-                                <h2 className="text-xl lg:text-2xl font-bold mb-3">Welcome to ALFIA AI</h2>
+                                <h2 className="text-xl lg:text-2xl font-bold mb-3 text-dark-text1">{t('welcome-to-alfia-ai')}</h2>
                                 <p className="text-dark-text2 text-sm lg:text-base">
-                                    Start a conversation by typing a message below. I'm here to help!
+                                    {t('start-conversation-message')}
                                 </p>
                             </div>
                         </div>
@@ -407,7 +409,7 @@ export default function AlfiaAI() {
                                 value={inputMessage}
                                 onChange={(e) => setInputMessage(e.target.value)}
                                 onKeyPress={handleKeyPress}
-                                placeholder="Type your message..."
+                                placeholder={t('type-your-message')}
                                 disabled={isLoading}
                                 className="flex-1 bg-transparent text-dark-text1 placeholder-dark-text2 resize-none focus:outline-none max-h-32 min-h-[24px] text-sm lg:text-base"
                                 rows={1}
@@ -429,7 +431,7 @@ export default function AlfiaAI() {
                             </button>
                         </div>
                         <p className="text-xs text-dark-text2 text-center mt-2 sm:mt-3">
-                            Press <span className="text-dark-text1 font-medium">Enter</span> to send, <span className="text-dark-text1 font-medium">Shift + Enter</span> for new line
+                            {t('press-enter-to-send')} <span className="text-dark-text1 font-medium">{t('enter-to-send')}</span> {t('to-send')} <span className="text-dark-text1 font-medium">{t('shift-enter-new-line')}</span> {t('for-new-line')}
                         </p>
                     </div>
                 </div>

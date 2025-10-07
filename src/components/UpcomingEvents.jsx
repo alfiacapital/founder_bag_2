@@ -1,8 +1,29 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 function UpcomingEvents() {
-  // Mock data - you can replace this with real API data later
-  const events = [
+  const { t, i18n } = useTranslation("global");
+  const isArabic = i18n.language === 'ar';
+
+  // Mock data - conditional based on language
+  const events = isArabic ? [
+    {
+      id: 1,
+      title: 'فعالية ALFIA للشركات الناشئة',
+      date: 'اليوم',
+      dateDetail: 'أكتوبر 4',
+      time: '9 صباحاً',
+      location: 'بركان',
+    },
+    {
+      id: 2,
+      title: 'فعالية CIH و ALFIA',
+      date: 'الأحد',
+      dateDetail: 'أكتوبر 5',
+      time: '10 صباحاً',
+      location: 'وجدة',
+    }
+  ] : [
     {
       id: 1,
       title: 'ALFIA Startup Event',
@@ -19,7 +40,15 @@ function UpcomingEvents() {
       time: '10 AM',
       location: 'Oujda',
     }
-  ]
+  ];
+
+  const content = isArabic ? {
+    title: 'لا تفوت ما يهمك',
+    description: 'ابق في الصدارة مع الفعاليات القادمة في لمحة. من اجتماعات الفريق إلى المواعيد النهائية المهمة، احتفظ بكل شيء منظمًا ولا تفقد أبدًا تتبع ما هو التالي في جدول أعمالك.'
+  } : {
+    title: 'Never Miss What Matters',
+    description: 'Stay ahead with your upcoming events at a glance. From team meetings to important deadlines, keep everything organized and never lose track of what\'s next on your agenda.'
+  }
 
   return (
     <div className="bg-dark-bg2 border border-dark-stroke rounded-xl p-4 sm:p-6">     
@@ -29,16 +58,16 @@ function UpcomingEvents() {
         <div className="flex flex-col justify-between">
           <div>
             <h3 className="text-dark-text1 font-semibold text-base sm:text-lg mb-2 sm:mb-3">
-              Never Miss What Matters
+              {content.title}
             </h3>
             <p className="text-dark-text2 text-sm sm:text-base leading-relaxed">
-              Stay ahead with your upcoming events at a glance. From team meetings to important deadlines, keep everything organized and never lose track of what's next on your agenda.
+              {content.description}
             </p>
           </div>
         </div>
 
         {/* Right Section: Events List */}
-        <div className="border-t lg:border-t-0 lg:border-l border-dark-stroke pt-6 lg:pt-0 lg:pl-6 xl:pl-8 space-y-4 sm:space-y-5">
+        <div className="border-t lg:border-t-0 lg:border-l rtl:lg:border-l-0 rtl:lg:border-r border-dark-stroke pt-6 lg:pt-0 lg:pl-6 xl:pl-8 rtl:lg:pl-0 rtl:lg:pr-6 rtl:xl:pr-8 space-y-4 sm:space-y-5">
           {events.map((event, index) => (
             <div key={event.id}>
               <div className="flex gap-3 sm:gap-4">

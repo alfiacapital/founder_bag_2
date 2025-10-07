@@ -9,8 +9,10 @@ import CardsView from "@/components/notes/CardsView.jsx";
 import ListView from "@/components/notes/ListView.jsx";
 import {PiListBulletsLight} from "react-icons/pi";
 import {RxDashboard} from "react-icons/rx";
+import { useTranslation } from "react-i18next";
 
 function Notes() {
+    const { t } = useTranslation("global");
     const [page, setPage] = useState(1);
     const [shareModal, setShareModal] = useState({ isOpen: false, note: null })
     const [deleteModal, setDeleteModal] = useState({ isOpen: false, note: null });
@@ -79,13 +81,13 @@ function Notes() {
             {/* Content */}
             <div className="flex-1">
                 <div className="flex justify-between items-center mb-6">
-                    <h1 className="text-2xl font-bold text-dark-text1">My Notes</h1>
+                    <h1 className="text-2xl font-bold text-dark-text1">{t('my-notes')}</h1>
                     <NotesViewToggle notesView={notesView} setNotesView={setNotesView} />
                 </div>
 
 
                 {notes.length === 0 ? (
-                    <p className="text-dark-text2">No notes found.</p>
+                    <p className="text-dark-text2">{t('no-notes-found')}</p>
                 ) : (
                     notesView === "list" ?
                         <ListView notes={localNotes} setNotes={setLocalNotes} setManageUsersModal={setManageUsersModal} setShareModal={setShareModal} setDeleteModal={setDeleteModal} /> :
@@ -101,11 +103,11 @@ function Notes() {
                         onClick={() => setPage((p) => p - 1)}
                         className="px-3 py-1 rounded-default border border-dark-stroke text-dark-text2 hover:bg-dark-hover hover:text-dark-text1 disabled:opacity-40 disabled:cursor-not-allowed"
                     >
-                        Prev
+                        {t('prev')}
                     </button>
 
                     <span className="text-dark-text2">
-                  Page {pagination.page} of {pagination.totalPages}
+                  {t('page')} {pagination.page} {t('of')} {pagination.totalPages}
                 </span>
 
                     <button
@@ -113,18 +115,18 @@ function Notes() {
                         onClick={() => setPage((p) => p + 1)}
                         className="px-3 py-1 rounded-default border border-dark-stroke text-dark-text2 hover:bg-dark-hover hover:text-dark-text1 disabled:opacity-40 disabled:cursor-not-allowed"
                     >
-                        Next
+                        {t('next')}
                     </button>
                 </div>
             )}
 
             <DeleteModal
                 isOpen={deleteModal.isOpen}
-                title="Trash Note"
-                message={`Are you sure you want to trash "${deleteModal.note?.title}"? `}
+                title={t('trash-note')}
+                message={`${t('are-you-sure-trash-note')} "${deleteModal.note?.title}"? `}
                 onClick={confirmDeleteNote}
                 onClose={() => setDeleteModal({ isOpen: false, note: null })}
-                buttonMessage="Trash"
+                buttonMessage={t('trash')}
             />
 
             <ShareNote
@@ -146,6 +148,7 @@ export default Notes;
 
 
 function NotesViewToggle({ notesView, setNotesView }) {
+    const { t } = useTranslation("global");
     const listRef = useRef(null);
     const cardsRef = useRef(null);
     const [bgStyle, setBgStyle] = useState({ width: 0, left: 0 });
@@ -182,7 +185,7 @@ function NotesViewToggle({ notesView, setNotesView }) {
                 }`}
             >
                 <PiListBulletsLight className="h-5 w-5 pb-1" />
-                All
+                {t('all')}
             </button>
 
             <button
@@ -193,7 +196,7 @@ function NotesViewToggle({ notesView, setNotesView }) {
                 }`}
             >
                 <RxDashboard className="h-5 w-5 pb-1" />
-                Recently Edited
+                {t('recently-edited')}
             </button>
         </div>
     );

@@ -14,6 +14,7 @@ import SidebarCalendar from "@/pages/calendar/comp/SidebarCalendar.jsx";
 import Modal from "@/components/Modal.jsx";
 import EventForm from "@/pages/calendar/comp/EventForm.jsx";
 import { axiosClient } from "@/api/axios.jsx";
+import { useTranslation } from "react-i18next";
 
 
 const locales = { "en-US": enUS };
@@ -30,6 +31,7 @@ const localizer = dateFnsLocalizer({
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 
 export default function CalendarPage() {
+    const { i18n } = useTranslation("global");
     const [currentView, setCurrentView] = useState("month");
     const [currentDate, setCurrentDate] = useState(new Date());
     const [showMiniCalendar, setShowMiniCalendar] = useState(false);
@@ -348,7 +350,7 @@ export default function CalendarPage() {
                             onClick={() => handleDeleteEvent(selectedEvent.id)}
                             className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
                         >
-                            Delete Event
+                            {i18n.dir() === "rtl" ? "حذف الحدث" : "Delete Event"}
                         </button>
                     </div>
                 )}

@@ -1,18 +1,21 @@
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { useTranslation } from 'react-i18next';
 
 const ActivityChart = ({ activityData = [], timeRange, setTimeRange }) => {
+    const { t } = useTranslation("global");
+    
     const timeRangeButtons = [
-        { value: 'week', label: 'Week' },
-        { value: 'month', label: 'Month' },
-        { value: 'year', label: 'Year' }
+        { value: 'week', label: t('week') },
+        { value: 'month', label: t('month') },
+        { value: 'year', label: t('year') }
     ];
 
     return (
         <div className='rounded-button border border-dark-stroke bg-dark-bg2 p-6'>
             {/* Chart Header with Time Range Selector */}
             <div className='flex justify-between items-center mb-6'>
-                <h3 className='text-dark-text1 text-lg font-semibold'>Activity Overview</h3>
+                <h3 className='text-dark-text1 text-lg font-semibold'>{t('activity-overview')}</h3>
                 <div className='flex gap-2'>
                     {timeRangeButtons.map(({ value, label }) => (
                         <button
@@ -84,7 +87,7 @@ const ActivityChart = ({ activityData = [], timeRange, setTimeRange }) => {
                     <Area 
                         type="monotone" 
                         dataKey="spaces" 
-                        name="Spaces"
+                        name={t('your-spaces')}
                         stroke="#8b5cf6" 
                         strokeWidth={2}
                         fillOpacity={1} 
@@ -94,7 +97,7 @@ const ActivityChart = ({ activityData = [], timeRange, setTimeRange }) => {
                     <Area 
                         type="monotone" 
                         dataKey="tasks" 
-                        name="Tasks"
+                        name={t('tasks')}
                         stroke="#3b82f6" 
                         strokeWidth={2}
                         fillOpacity={1} 
@@ -104,7 +107,7 @@ const ActivityChart = ({ activityData = [], timeRange, setTimeRange }) => {
                     <Area 
                         type="monotone" 
                         dataKey="notes" 
-                        name="Notes"
+                        name={t('notes')}
                         stroke="#22c55e" 
                         strokeWidth={2}
                         fillOpacity={1} 
@@ -114,7 +117,7 @@ const ActivityChart = ({ activityData = [], timeRange, setTimeRange }) => {
                     <Area 
                         type="monotone" 
                         dataKey="events" 
-                        name="Events"
+                        name={t('events')}
                         stroke="#f59e0b" 
                         strokeWidth={2}
                         fillOpacity={1} 

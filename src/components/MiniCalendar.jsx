@@ -2,11 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import Calendar from "react-calendar";
 import { format } from "date-fns";
 import "react-calendar/dist/Calendar.css";
+import { useTranslation } from "react-i18next";
 
 function MiniCalendar({ onDateSelect, selectedDate, isOpen, onClose }) {
   const [currentDate, setCurrentDate] = useState(selectedDate || new Date());
   const calendarRef = useRef(null);
-
+  const { i18n } = useTranslation("global");
   const handleDateChange = (date) => {
     setCurrentDate(date);
     onDateSelect(date);
@@ -53,7 +54,7 @@ function MiniCalendar({ onDateSelect, selectedDate, isOpen, onClose }) {
           className="react-calendar-custom"
           showNeighboringMonth={false}
           formatShortWeekday={(locale, date) => {
-            const weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+            const weekdays = i18n.dir() === "rtl" ? ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س'] : ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
             return weekdays[date.getDay()];
           }}
         />

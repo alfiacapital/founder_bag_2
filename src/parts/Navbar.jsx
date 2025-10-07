@@ -5,12 +5,14 @@ import { HiMenuAlt2 } from "react-icons/hi";
 import { useUserContext } from '@/context/UserProvider';
 import UserMenu from '@/components/UserMenu';
 import { services } from '@/utils/servicesConfig';
+import { useTranslation } from "react-i18next";
 
 function Navbar({ setSidebarOpen }) {
     const [open, setOpen] = useState(false);
     const dropdownRef = useRef(null);
-    const { user, logout, darkMode, setDarkMode } = useUserContext()
-
+    const { darkMode } = useUserContext()
+    const { i18n } = useTranslation("global");
+    const { t } = useTranslation("global");
     useEffect(() => {
         function handleClickOutside(event) {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -51,7 +53,7 @@ function Navbar({ setSidebarOpen }) {
 
                     {/* Dropdown Cards with transition */}
                     <div
-                        className={`absolute left-0 mt-3 
+                        className={`absolute ${i18n.dir() === "ltr" ? "left-0" : "right-0"} mt-3 
                           w-[calc(100vw-2rem)] sm:w-[500px] md:w-[600px] lg:w-[700px]
                           max-w-[700px]
                           max-h-[calc(100vh-100px)]
@@ -92,21 +94,21 @@ function Navbar({ setSidebarOpen }) {
                     className="text-dark-text1 cursor-pointer text-sm border border-dark-stroke rounded-button px-4 py-2 hover:border-dark-stroke hover:text-dark-text1 hover:border-dark-stroke hover:bg-dark-hover font-bold
                      transition-all duration-300"
                 >
-                    Support Portal
+                    {t('support-portal')}
                 </span>
                 <span
                     
                     className="text-dark-text1 cursor-pointer text-sm border border-dark-stroke rounded-button px-4 py-2 hover:border-dark-stroke hover:text-dark-text1 hover:border-dark-stroke hover:bg-dark-hover font-bold
                      transition-all duration-300"
                 >
-                    Manage Funds
+                    {t('manage-funds')}
                 </span>
                 <span
                     
                     className="text-dark-text2 cursor-pointer text-sm border border-dark-stroke rounded-button px-4 py-2 hover:border-dark-stroke hover:text-dark-text1 hover:border-dark-stroke hover:bg-dark-hover font-bold
                      transition-all duration-300"
                 >
-                    Docs
+                    {t('docs')}
                 </span>
                 <UserMenu />
             </nav>

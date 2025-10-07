@@ -1,33 +1,34 @@
 import React from 'react';
 import { FiFolder, FiCheckSquare, FiFileText, FiCalendar } from 'react-icons/fi';
-
+import { useTranslation } from 'react-i18next';
 const SummaryCards = ({ summary = {} }) => {
+    const { t } = useTranslation("global");
     const cards = [
         {
-            title: 'Total Spaces',
+            title: t('total-spaces'),
             value: summary?.totalSpaces || 0,
-            label: summary?.totalSpaces === 1 ? 'Space' : 'Spaces',
+            label: summary?.totalSpaces === 1 ? t('space') : t('spaces'),
             icon: FiFolder,
             color: 'from-blue-500 to-blue-600'
         },
         {
-            title: 'Total Tasks',
+            title: t('total-tasks'),
             value: summary?.totalTasks || 0,
-            label: summary?.totalTasks === 1 ? 'Task' : 'Tasks',
+            label: summary?.totalTasks === 1 ? t('task') : t('tasks'),
             icon: FiCheckSquare,
             color: 'from-green-500 to-green-600'
         },
         {
-            title: 'Total Notes',
+            title: t('total-notes'),
             value: summary?.totalNotes || 0,
-            label: summary?.totalNotes === 1 ? 'Note' : 'Notes',
+            label: summary?.totalNotes === 1 ? t('note') : t('notes'),
             icon: FiFileText,
             color: 'from-purple-500 to-purple-600'
         },
         {
-            title: 'Total Events',
+            title: t('total-events'),
             value: summary?.totalEvents || 0,
-            label: summary?.totalEvents === 1 ? 'Event' : 'Events',
+            label: summary?.totalEvents === 1 ? t('event') : t('events'),
             icon: FiCalendar,
             color: 'from-orange-500 to-orange-600'
         }

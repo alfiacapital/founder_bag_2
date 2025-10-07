@@ -7,8 +7,10 @@ import {useNavigate} from "react-router-dom";
 import {useUserContext} from "@/context/UserProvider.jsx";
 import {useQuery} from "@tanstack/react-query";
 import {axiosClient} from "@/api/axios.jsx";
+import { useTranslation } from "react-i18next";
 
 function CardsView({setDeleteModal, setShareModal, setManageUsersModal}) {
+    const { t } = useTranslation("global");
     const { data: notes, isLoading } = useQuery({
         queryKey: ["recently-notes"],
         queryFn: async () => {
@@ -19,7 +21,7 @@ function CardsView({setDeleteModal, setShareModal, setManageUsersModal}) {
     const navigate = useNavigate();
     const {user} = useUserContext();
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <div>{t('loading')}</div>;
     return (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {notes.map((note, key) => {
@@ -56,15 +58,15 @@ function CardsView({setDeleteModal, setShareModal, setManageUsersModal}) {
                                 }
                                 items={[
                                     {
-                                        label: "Share",
+                                        label: t('share'),
                                         onClick: () => setShareModal({ isOpen: true, note }),
                                     },
                                     {
-                                        label: "Manage",
+                                        label: t('manage'),
                                         onClick: () => setManageUsersModal({ isOpen: true, note }),
                                     },
                                     {
-                                        label: "Trash",
+                                        label: t('trash'),
                                         onClick: () => setDeleteModal({ isOpen: true, note }),
                                     },
                                 ]}

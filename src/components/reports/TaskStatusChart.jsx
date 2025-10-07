@@ -1,10 +1,13 @@
 import React from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { useTranslation } from 'react-i18next';
 
 const TaskStatusChart = ({ taskStatusData = [] }) => {
+    const { t } = useTranslation("global");
+    
     return (
         <div className='rounded-button border border-dark-stroke bg-dark-bg2 p-6'>
-            <h3 className='text-dark-text1 text-lg font-semibold mb-6'>Task Status Distribution</h3>
+            <h3 className='text-dark-text1 text-lg font-semibold mb-6'>{t('task-status-distribution')}</h3>
             
             <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={taskStatusData} layout="vertical" margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
@@ -32,7 +35,7 @@ const TaskStatusChart = ({ taskStatusData = [] }) => {
                             color: 'var(--color-text1)',
                             boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
                         }}
-                        formatter={(value) => [`${value} tasks`, 'Count']}
+                        formatter={(value) => [`${value} ${t('tasks-count')}`, t('count')]}
                         cursor={{ fill: 'var(--color-stroke)' }}
                     />
                     <Bar 
@@ -87,7 +90,7 @@ const TaskStatusChart = ({ taskStatusData = [] }) => {
                 <p className='text-3xl font-bold text-dark-text1'>
                     {taskStatusData.reduce((sum, item) => sum + item.value, 0)}
                 </p>
-                <p className='text-xs text-dark-text2 mt-2'>Total Tasks</p>
+                <p className='text-xs text-dark-text2 mt-2'>{t('total-tasks')}</p>
             </div>
         </div>
     );

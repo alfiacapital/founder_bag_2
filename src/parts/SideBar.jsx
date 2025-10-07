@@ -12,6 +12,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {axiosClient} from "@/api/axios.jsx";
 import {SiGoogledocs} from "react-icons/si";
+import { useTranslation } from "react-i18next";
 
 
 function SideBar({ sidebarOpen, setSidebarOpen }) {
@@ -21,7 +22,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
     const [createSpaceForm, setCreateSpaceForm] = useState(false)
     const [deleteModal, setDeleteModal] = useState({ isOpen: false, note: null })
     const [searchModalOpen, setSearchModalOpen] = useState(false)
-    
+    const { t } = useTranslation("global");
     // Keyboard shortcut for search (Cmd/Ctrl + K)
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -36,8 +37,8 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
     }, []);
 
     const mainMenuItems = [
-        { image: "/alfia-ai.png", label: "Alfia AI", id: "alfia-ai", active: false, onClick: () => navigate("/alfia-ai") },
-        { icon: FaRegCalendarCheck , label: "Calendar", id: "calendar", active: false, onClick: () => navigate("/calendar") },
+        { image: "/alfia-ai.png", label: t("alfia-ai"), id: "alfia-ai", active: false, onClick: () => navigate("/alfia-ai") },
+        { icon: FaRegCalendarCheck , label: t("calendar"), id: "calendar", active: false, onClick: () => navigate("/calendar") },
     ];
     const { data: notes = [] } = useQuery({
         queryKey: ["notes"],
@@ -150,13 +151,13 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                         {/* Main menu items */}
                         <MenuItem
                             icon={GoSearch}
-                            label={"Search"}
+                            label={t("search")}
                             active={false}
                             onClick={() => setSearchModalOpen(true)}
                         />
                         <MenuItem
                             icon={LiaHomeSolid}
-                            label={"Home"}
+                            label={t("home")}
                             active={location.pathname === "/v2"}
                             onClick={() => navigate("/v2")}
                         />
@@ -172,7 +173,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                         ))}
                         <MenuItem
                             icon={SiGoogledocs}
-                            label={"Docs"}
+                            label={t("docs")}
                             active={location.pathname === "/notes"}
                             onClick={() => navigate("/notes")}
                         />
@@ -180,7 +181,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                         {/* Private section */}
                         <div className="mt-6">
                             <div className={"flex items-center justify-between"}>
-                                <p className="text-[13px] font-bold text-dark-text2 px-4 pt-1 ">Private</p>
+                                <p className="text-[13px] font-bold text-dark-text2 px-4 pt-1 ">{t("private")}</p>
                                 <GoPlus className={"text-dark-text2 h-5 w-5 hover:text-dark-text2 transition-all duration-300 ease-in-out cursor-pointer "} onClick={async () => {
                                     await axiosClient.post('/notes', {
                                         title: 'New Note',
@@ -195,7 +196,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                             {notes.length === 0 && (
                                 <MenuItem
                                     icon={FiPlus}
-                                    label="Add new"
+                                    label={t('add-new-note')}
                                     onClick={() => {
                                         axiosClient.post('/notes', {
                                             title: 'New Note',
@@ -211,7 +212,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                             {notes?.slice(0,3)?.filter(note => !note?.sharedWith?.length)?.map((note, key) => {
                                 const isActive = location.pathname === `/note/${note._id}`;
                                 return (
-                                    <div className={"ml-7"} key={key}>
+                                    <div className={"ml-7 rtl:mr-7"} key={key}>
                                         <div
                                             className={`flex items-center justify-between my-1 p-1 px-4 rounded-button hover:bg-dark-hover text-dark-text2 hover:text-dark-text2 cursor-pointer group transition-all duration-300 ease-in-out ${
                                                 isActive ? 'bg-dark-active text-dark-text2' : ''
@@ -251,7 +252,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                 );
                             })}
                             {notes?.length > 3 && (
-                                <div className={"ml-7"} >
+                                <div className={"ml-7 rtl:mr-7"} >
                                     <div
                                         className={`flex items-center justify-between my-1 p-1 px-4 rounded-button hover:bg-dark-hover  cursor-pointer group transition-all duration-300 ease-in-out text-dark-text2 `}
                                         role="button"
@@ -264,7 +265,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                             }
                                         }}
                                     >
-                                            <span className={`text-sm font-bold pt-1 transition-all duration-300 ease-in-out `}>Show All ...</span>
+                                            <span className={`text-sm font-bold pt-1 transition-all duration-300 ease-in-out `}>{t('show-all')} ...</span>
                                     </div>
                                 </div>
                             )}
@@ -272,11 +273,11 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
 
                         {/* Shared section */}
                         <div className="mt-4">
-                            <p className="text-[13px] font-bold text-dark-text2  mb-2 px-4">Shared</p>
+                            <p className="text-[13px] font-bold text-dark-text2  mb-2 px-4">{t("shared")}</p>
                             {notes?.slice(0,3)?.filter(note => note?.sharedWith?.length > 0)?.map((note, key) => {
                                 const isActive = location.pathname === `/note/${note._id}`;
                                 return (
-                                    <div className={"ml-7"} key={key}>
+                                    <div className={"ml-7 rtl:mr-7"} key={key}>
                                         <div
                                             className={`flex items-center justify-between my-1 p-1 px-4 rounded-button hover:bg-dark-hover text-dark-text2 hover:text-dark-text2 cursor-pointer group transition-all duration-300 ease-in-out ${
                                                 isActive ? 'bg-dark-active text-dark-text2' : ''
@@ -316,7 +317,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                 );
                             })}
                             {notes?.length > 3 && (
-                                <div className={"ml-7"} >
+                                <div className={"ml-7 rtl:mr-7"} >
                                     <div
                                         className={`flex items-center justify-between my-1 p-1 px-4 rounded-button hover:bg-dark-hover  cursor-pointer group transition-all duration-300 ease-in-out text-dark-text2 `}
                                         role="button"
@@ -329,7 +330,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                             }
                                         }}
                                     >
-                                        <span className={`text-sm font-bold pt-1 transition-all duration-300 ease-in-out `}>Show All ...</span>
+                                        <span className={`text-sm font-bold pt-1 transition-all duration-300 ease-in-out `}>{t('show-all')} ...</span>
                                     </div>
                                 </div>
                             )}
@@ -357,7 +358,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                 <span className={`text-sm font-bold pt-1 transition-all duration-300 ease-in-out ${
                                     location.pathname === "/trashed-notes" ? "text-dark-text2" : "text-dark-text2"
                                 }`}>
-                                    Trash
+                                    {t("trash")}
                                 </span>
                             </div>
                             {trashCounts > 0 && (
@@ -378,14 +379,14 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                             tabIndex={0}
                         >
                             <FiPlus className={"text-xl  font-bold   transition-all duration-300 ease-in-out"}/>
-                            <span className={`text-sm  font-bold pt-1  transition-all duration-300 ease-in-out `}>Create new space</span>
+                            <span className={`text-sm  font-bold pt-1  transition-all duration-300 ease-in-out `}>{t("create-new-space")}</span>
                         </div>
                         <div onClick={() => navigate("/")}
                             className={`flex items-center gap-2 p-1 px-4 rounded-button bg-dark-active text-dark-text2 hover:bg-dark-hover hover:text-dark-text2   cursor-pointer transition-all duration-300 ease-in-out `}
                             role="button"
                             tabIndex={0}
                         >
-                            <span className={`text-sm  font-bold pt-1  transition-all duration-300 ease-in-out `}>All my spaces</span>
+                            <span className={`text-sm  font-bold pt-1  transition-all duration-300 ease-in-out `}>{t("all-my-spaces")}</span>
                         </div>
                         <div
                             className={`flex justify-between items-center gap-2 p-1 px-4 rounded-button bg-dark-active text-dark-text2 hover:bg-dark-hover hover:text-dark-text2  cursor-pointer transition-all duration-300 ease-in-out `}
@@ -393,7 +394,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                             tabIndex={0}
                             onClick={() => navigate("/archived-spaces")}
                         >
-                            <span className={`text-sm  font-bold pt-1  transition-all duration-300 ease-in-out `}>Archived spaces</span>
+                            <span className={`text-sm  font-bold pt-1  transition-all duration-300 ease-in-out `}>{t("archived-spaces")}</span>
                             {spaceTrashCounts > 0 && (
                                 <span className={`border border-dark-stroke bg-dark-hover text-dark-text2 text-xs font-bold px-2 pt-1 rounded-full `}>{spaceTrashCounts}</span>
                             )}
