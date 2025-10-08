@@ -176,5 +176,14 @@
     "to-send": "للإرسال،",
     "shift-enter-new-line": "Shift + Enter",
     "for-new-line": "لسطر جديد",
-    "failed-send-message": "فشل إرسال الرسالة. حاول مرة أخرى."
+    "failed-send-message": "فشل إرسال الرسالة. حاول مرة أخرى.",
+    "delete-event": "حذف الحدث",
+    "are-you-sure-delete-event": "هل أنت متأكد من حذف هذا الحدث؟",
+    "shared-with-me": "مشاركة معي",
+    "shared-by-me": "مشاركة مني",
+    "leave-note": "مغادرة الملاحظة",
+    "are-you-sure-leave-note": "هل أنت متأكد من مغادرة هذه الملاحظة؟",
+    "are-you-sure-leave-note-message": "هل أنت متأكد من مغادرة",
+    "left-note-successfully": "لقد غادرت الملاحظة بنجاح",
+    "failed-to-leave-note": "فشل في مغادرة الملاحظة"
 }

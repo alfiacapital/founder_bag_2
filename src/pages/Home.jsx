@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 function Home() {
     const {user} = useUserContext()
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 7;
+    const itemsPerPage = 11;
     const { t } = useTranslation("global");
     
     const { data: spacesResponse, isLoading: isLoadingSpaces, isError } = useQuery({

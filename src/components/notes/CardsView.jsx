@@ -4,7 +4,6 @@ import {FaEllipsisVertical} from "react-icons/fa6";
 import {formatDistanceToNow} from "date-fns";
 import {getUserImage} from "@/utils/getUserImage.jsx";
 import {useNavigate} from "react-router-dom";
-import {useUserContext} from "@/context/UserProvider.jsx";
 import {useQuery} from "@tanstack/react-query";
 import {axiosClient} from "@/api/axios.jsx";
 import { useTranslation } from "react-i18next";
@@ -19,7 +18,6 @@ function CardsView({setDeleteModal, setShareModal, setManageUsersModal}) {
         },
     });
     const navigate = useNavigate();
-    const {user} = useUserContext();
 
     if (isLoading) return <div>{t('loading')}</div>;
     return (
@@ -33,7 +31,7 @@ function CardsView({setDeleteModal, setShareModal, setManageUsersModal}) {
                             block.content?.map((c) => c.text).join(" ")
                         )
                         .join(" ");
-                } catch (e) {
+                } catch {
                     parsedDesc = note.description;
                 }
 
@@ -50,7 +48,7 @@ function CardsView({setDeleteModal, setShareModal, setManageUsersModal}) {
                             >
                                 {note.title}
                             </h2>
-                            <Menu
+                            {/* <Menu
                                 button={
                                     <button className="p-1.5 mb-2 rounded-button border border-dark-stroke hover:bg-dark-hover cursor-pointer text-dark-text2 hover:text-dark-text1">
                                         <FaEllipsisVertical />
@@ -70,7 +68,7 @@ function CardsView({setDeleteModal, setShareModal, setManageUsersModal}) {
                                         onClick: () => setDeleteModal({ isOpen: true, note }),
                                     },
                                 ]}
-                            />
+                            /> */}
                         </div>
 
                         {/* Description */}
@@ -89,21 +87,21 @@ function CardsView({setDeleteModal, setShareModal, setManageUsersModal}) {
 
                             {/* Right: Owner + shared users */}
                             <div className="flex items-center -space-x-3">
-                                {/* Owner avatar */}
+                                {/* Note owner avatar */}
                                 <img
                                     className="border-2 border-dark-stroke bg-dark-bg rounded-full h-7 w-7 object-cover"
-                                    src={getUserImage(user?.image)}
-                                    alt={user?.full_name || "Owner"}
+                                    src={getUserImage(note.userId?.image)}
+                                    alt={note.userId?.full_name || "Owner"}
                                 />
 
                                 {/* Shared users avatars */}
                                 {note.sharedWith &&
-                                    note.sharedWith.slice(0, 4).map((user, key) => (
+                                    note.sharedWith.slice(0, 4).map((sharedUser, key) => (
                                         <img
                                             key={key}
                                             className="border-2 border-dark-stroke bg-dark-bg rounded-full h-7 w-7 object-cover"
-                                            src={getUserImage(user.image)}
-                                            alt={user.full_name}
+                                            src={getUserImage(sharedUser.image)}
+                                            alt={sharedUser.full_name}
                                         />
                                     ))}
 

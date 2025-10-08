@@ -47,7 +47,14 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
             return res.data.notes;
         },
     });
-
+    const { data: sharedNotes = [] } = useQuery({
+        queryKey: ["shared-notes"],
+        queryFn: async () => {
+            const res = await axiosClient.get('/notes/shared-with-user')
+            return res.data.notes;
+        },
+    });
+    
     // Query to get trashed notes count
     const { data: trashCounts = 0 } = useQuery({
         queryKey: ["notes-trash-counts"],
@@ -209,7 +216,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                     }}
                                 />
                             )}
-                            {notes?.slice(0,3)?.filter(note => !note?.sharedWith?.length)?.map((note, key) => {
+                            {notes?.slice(0,3)?.map((note, key) => {
                                 const isActive = location.pathname === `/note/${note._id}`;
                                 return (
                                     <div className={"ml-7 rtl:mr-7"} key={key}>
@@ -227,7 +234,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                                 }
                                             }}
                                         >
-                                            <span className={`text-sm font-bold pt-1 transition-all duration-300 truncate ease-in-out ${
+                                            <span className={`text-sm font-bold text-dark-text2 pt-1 transition-all duration-300 truncate ease-in-out ${
                                                 isActive ? 'text-dark-text2' : 'text-dark-text2'
                                             }`}>{note?.title}</span>
                                             <button
@@ -265,7 +272,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                             }
                                         }}
                                     >
-                                            <span className={`text-sm font-bold pt-1 transition-all duration-300 ease-in-out `}>{t('show-all')} ...</span>
+                                            <span className={`text-sm text-dark-text2 font-bold pt-1 transition-all duration-300 ease-in-out `}>{t('show-all')} ...</span>
                                     </div>
                                 </div>
                             )}
@@ -274,7 +281,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                         {/* Shared section */}
                         <div className="mt-4">
                             <p className="text-[13px] font-bold text-dark-text2  mb-2 px-4">{t("shared")}</p>
-                            {notes?.slice(0,3)?.filter(note => note?.sharedWith?.length > 0)?.map((note, key) => {
+                            {sharedNotes?.slice(0,3)?.map((note, key) => {
                                 const isActive = location.pathname === `/note/${note._id}`;
                                 return (
                                     <div className={"ml-7 rtl:mr-7"} key={key}>
@@ -295,7 +302,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                             <span className={`text-sm font-bold pt-1 transition-all truncate duration-300 ease-in-out ${
                                                 isActive ? 'text-dark-text2' : 'text-dark-text2'
                                             }`}>{note?.title}</span>
-                                            <button
+                                            {/* <button
                                                 className={`p-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 text-dark-text2 hover:text-dark-text2 cursor-pointer transition-all duration-300 ease-in-out ${
                                                     isActive ? 'text-dark-text2 hover:text-dark-text2' : 'text-dark-text2 hover:text-dark-text2'
                                                 }`}
@@ -311,12 +318,12 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                                 }}
                                             >
                                                 <MdDeleteOutline className="" />
-                                            </button>
+                                            </button> */}
                                         </div>
                                     </div>
                                 );
                             })}
-                            {notes?.length > 3 && (
+                            {sharedNotes?.length > 3 && (
                                 <div className={"ml-7 rtl:mr-7"} >
                                     <div
                                         className={`flex items-center justify-between my-1 p-1 px-4 rounded-button hover:bg-dark-hover  cursor-pointer group transition-all duration-300 ease-in-out text-dark-text2 `}
@@ -330,7 +337,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
                                             }
                                         }}
                                     >
-                                        <span className={`text-sm font-bold pt-1 transition-all duration-300 ease-in-out `}>{t('show-all')} ...</span>
+                                        <span className={`text-sm font-bold pt-1 text-dark-text2 transition-all duration-300 ease-in-out `}>{t('show-all')} ...</span>
                                     </div>
                                 </div>
                             )}

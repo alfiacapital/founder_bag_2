@@ -17,10 +17,41 @@ import {
 import { Command, createSuggestionItems, renderItems } from "novel";
 import { createRoot } from 'react-dom/client';
 import EmojiPicker from 'emoji-picker-react';
+import { axiosClient } from "@/api/axios.jsx";
 
-// Simple upload function
+// Image upload function
+// This function uploads images to your backend (Vercel Blob) and returns the URL
 const uploadFn = async (file) => {
-  return URL.createObjectURL(file);
+  try {
+    // Create FormData to send the file
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    // Upload to your backend API
+    const response = await axiosClient.post('/upload-image', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    
+    // Check if upload was successful
+    if (response.data.success && response.data.url) {
+      console.log('Image uploaded successfully:', response.data.url);
+      return response.data.url;
+    } else {
+      throw new Error(response.data.message || 'Failed to upload image');
+    }
+    
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    
+    // Show user-friendly error message
+    const errorMessage = error.response?.data?.message || error.message || 'Failed to upload image';
+    alert(`Upload failed: ${errorMessage}`);
+    
+    // Don't use fallback - let user try again
+    throw error;
+  }
 };
 
 export const suggestionItems = createSuggestionItems([
@@ -192,8 +223,16 @@ export const suggestionItems = createSuggestionItems([
       input.onchange = async () => {
         if (input.files?.length) {
           const file = input.files[0];
-          const pos = editor.view.state.selection.from;
-          uploadFn(file, editor.view, pos);
+          try {
+            // Upload the file and get the URL
+            const url = await uploadFn(file);
+            
+            // Insert the image into the editor at the current position
+            editor.chain().focus().setImage({ src: url }).run();
+          } catch (error) {
+            console.error("Error uploading image:", error);
+            alert("Failed to upload image. Please try again.");
+          }
         }
       };
       input.click();

@@ -261,3 +261,44 @@
 .rbc-current-time-indicator {
     background-color: var(--color-text1) !important;
 }
+
+/* RTL Support */
+[dir="rtl"] .rbc-time-header-content {
+    border-left: none !important;
+    border-right: 1px solid var(--color-stroke) !important;
+}
+
+[dir="rtl"] .rbc-time-content > * + * > * {
+    border-left: none !important;
+    border-right: 1px solid var(--color-stroke) !important;
+}
+
+[dir="rtl"] .rbc-time-view .rbc-time-gutter {
+    border-right: none !important;
+    border-left: 0px solid var(--color-stroke) !important;
+}
+
+[dir="rtl"] .rbc-time-view .rbc-header {
+    border-right: none !important;
+    border-left: 1px solid var(--color-stroke) !important;
+}
+
+[dir="rtl"] .rbc-time-header.rbc-overflowing {
+    border-right: none !important;
+    border-left: 1px solid var(--color-stroke) !important;
+}
+
+[dir="rtl"] .rbc-time-view *:not(.rbc-event) {
+    border-left-color: transparent !important;
+    border-right-color: var(--color-stroke) !important;
+}
+
+[dir="rtl"] .rbc-month-view .rbc-month-row:nth-last-child(5) {
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 22px !important;
+}
+
+[dir="rtl"] .rbc-month-view {
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 22px !important;
+}

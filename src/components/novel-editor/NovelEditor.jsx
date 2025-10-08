@@ -22,15 +22,45 @@ import { ColorSelector } from './selectors/color-selector.jsx';
 import { MathSelector } from './selectors/math-selector.jsx';
 import { Separator } from './selectors/separator.jsx';
 import GenerativeMenuSwitch from './selectors/generative-menu-switch.jsx';
+import { axiosClient } from '@/api/axios.jsx';
 // Combine extensions with slash command
 const extensions = [...defaultExtensions, slashCommand];
 import './novel-editor.css';
 import './editor-content.css';
 import './editor-menus.css';
 
-// Simple upload function - you can customize this for your backend
+// Image upload function - uploads to backend (Vercel Blob)
 const uploadFn = async (file) => {
-  return URL.createObjectURL(file);
+  try {
+    // Create FormData to send the file
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    // Upload to your backend API
+    const response = await axiosClient.post('/upload-image', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    
+    // Check if upload was successful
+    if (response.data.success && response.data.url) {
+      console.log('Image uploaded successfully:', response.data.url);
+      return response.data.url;
+    } else {
+      throw new Error(response.data.message || 'Failed to upload image');
+    }
+    
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    
+    // Show user-friendly error message
+    const errorMessage = error.response?.data?.message || error.message || 'Failed to upload image';
+    alert(`Upload failed: ${errorMessage}`);
+    
+    // Don't use fallback - let user try again
+    throw error;
+  }
 };
 
 // Default content for the editor - Description only (no title)

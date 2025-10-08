@@ -28,7 +28,7 @@ export default function CustomToolbar({ label, onNavigate, onView, view, onOpenM
         };
     }, [setOpen]);  return (
         <div>
-            <div ref={toolbarRef} dir="ltr" className="fixed top-0 left-0 right-0 z-999   flex justify-between items-center bg-dark-bg2  text-dark-text2 py-4 px-3  ">
+            <div ref={toolbarRef}  className="fixed top-0 left-0 right-0 z-999   flex justify-between items-center bg-dark-bg2  text-dark-text2 py-4 px-3  ">
                 <div className={"flex items-center gap-4"}>
                     {/* Sidebar Toggle Button */}
                     <div
@@ -87,10 +87,10 @@ export default function CustomToolbar({ label, onNavigate, onView, view, onOpenM
                         <span className={"text-md font-medium"}>{t('today')}</span>
                     </div>
                     <div onClick={() => onNavigate("PREV")} className={"hidden md:flex p-2 text-dark-text2 hover:text-dark-text1 hover:bg-dark-hover rounded-full cursor-pointer"}>
-                        <IoIosArrowBack className={"h-6 w-6"} />
+                        <IoIosArrowBack className={"h-6 w-6 rtl:rotate-180"} />
                     </div>
                     <div onClick={() => onNavigate("NEXT")} className={"hidden md:flex p-2 text-dark-text2 hover:text-dark-text1 hover:bg-dark-hover rounded-full cursor-pointer"}>
-                        <IoIosArrowForward className={"h-6 w-6"} />
+                        <IoIosArrowForward className={"h-6 w-6 rtl:rotate-180   "} />
                     </div>
                     <div className="relative">
                         <div

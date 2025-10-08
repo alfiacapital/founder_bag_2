@@ -176,5 +176,14 @@
     "to-send": "to send,",
     "shift-enter-new-line": "Shift + Enter",
     "for-new-line": "for new line",
-    "failed-send-message": "Failed to send message. Please try again."
+    "failed-send-message": "Failed to send message. Please try again.",
+    "delete-event": "Delete Event",
+    "are-you-sure-delete-event": "Are you sure you want to delete this event?",
+    "shared-with-me": "Shared with me",
+    "shared-by-me": "Shared by me",
+    "leave-note": "Leave Note",
+    "are-you-sure-leave-note": "Are you sure you want to leave this note?",
+    "are-you-sure-leave-note-message": "Are you sure you want to leave",
+    "left-note-successfully": "You have successfully left the note",
+    "failed-to-leave-note": "Failed to leave note"
 }

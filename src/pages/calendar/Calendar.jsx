@@ -31,7 +31,8 @@ const localizer = dateFnsLocalizer({
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 
 export default function CalendarPage() {
-    const { i18n } = useTranslation("global");
+    const { i18n, t } = useTranslation("global");
+    const isRTL = i18n.dir() === "rtl";
     const [currentView, setCurrentView] = useState("month");
     const [currentDate, setCurrentDate] = useState(new Date());
     const [showMiniCalendar, setShowMiniCalendar] = useState(false);
@@ -139,7 +140,7 @@ export default function CalendarPage() {
 
     // Delete event
     const handleDeleteEvent = async (eventId) => {
-        if (!confirm("Are you sure you want to delete this event?")) return;
+        if (!confirm(t("are-you-sure-delete-event") || "Are you sure you want to delete this event?")) return;
         
         try {
             await axiosClient.delete(`/events/${eventId}`);
@@ -211,9 +212,9 @@ export default function CalendarPage() {
     };
 
     return (
-        <div className="h-screen overflow-hidden bg-dark-bg2 text-dark-text2">
+        <div className="h-screen overflow-hidden bg-dark-bg2 text-dark-text2" dir={i18n.dir()}>
             {/* Fixed Toolbar */}
-            <div className={`fixed top-0 left-0 right-0 z-30 transition-all duration-300 ${showSidebar && window.innerWidth >= 768 ? 'ml-70' : 'ml-0'}`}>
+            <div className={`fixed top-0 left-0 right-0 z-30 transition-all duration-300 ${showSidebar && window.innerWidth >= 768 ? (isRTL ? 'mr-70' : 'ml-70') : (isRTL ? 'mr-0' : 'ml-0')}`}>
                 <CustomToolbar
                     label={getLabel()}
                     onNavigate={(action) => {
@@ -251,7 +252,7 @@ export default function CalendarPage() {
 
             {/* Sidebar - Desktop */}
             {showSidebar && window.innerWidth >= 768 && (
-                <div className="fixed top-0 left-0 w-70 h-full bg-dark-bg2 z-20 p-4 px-7 overflow-y-auto">
+                <div className={`fixed top-0 ${isRTL ? 'right-0' : 'left-0'} w-70 h-full bg-dark-bg2 z-20 p-4 px-7 overflow-y-auto`}>
                     <div className="">
                         <SidebarCalendar
                             selectedDate={selectedDate}
@@ -277,7 +278,7 @@ export default function CalendarPage() {
                     />
 
                     {/* Drawer */}
-                    <div className="fixed top-0 left-0 w-70 h-full bg-dark-bg2 z-50 p-4 px-7 overflow-y-auto transform transition-transform duration-300 ease-in-out">
+                    <div className={`fixed top-0 ${isRTL ? 'right-0' : 'left-0'} w-70 h-full bg-dark-bg2 z-50 p-4 px-7 overflow-y-auto transform transition-transform duration-300 ease-in-out`}>
                         <div className="flex justify-between items-center mb-4">
                             <h2 className="text-dark-text1 font-medium text-lg">Calendar</h2>
                             <button
@@ -303,7 +304,7 @@ export default function CalendarPage() {
             )}
 
             {/* Calendar Content */}
-            <div className={`pt-20 transition-all duration-300 ${showSidebar && window.innerWidth >= 768 ? 'ml-70' : 'ml-0'} flex-1 flex flex-col overflow-hidden`}>
+            <div className={`pt-20 transition-all duration-300 ${showSidebar && window.innerWidth >= 768 ? (isRTL ? 'mr-70' : 'ml-70') : (isRTL ? 'mr-0' : 'ml-0')} flex-1 flex flex-col overflow-hidden`}>
                 <DragAndDropCalendar
                     localizer={localizer}
                     events={events}
@@ -350,7 +351,7 @@ export default function CalendarPage() {
                             onClick={() => handleDeleteEvent(selectedEvent.id)}
                             className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
                         >
-                            {i18n.dir() === "rtl" ? "حذف الحدث" : "Delete Event"}
+                            {t("delete-event") || (i18n.dir() === "rtl" ? "حذف الحدث" : "Delete Event")}
                         </button>
                     </div>
                 )}
