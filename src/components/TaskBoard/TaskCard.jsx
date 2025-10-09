@@ -1,16 +1,18 @@
 import React, { useRef, useState } from 'react';
 import DatePicker from "react-datepicker";
 import { FaRegSquareCheck, FaRegCopy } from "react-icons/fa6";
-import { FaTasks } from "react-icons/fa";
+import { FaTasks, FaUserTag } from "react-icons/fa";
 import { BiNote } from "react-icons/bi";
 import { AiOutlineDelete } from "react-icons/ai";
 import { MdOutlineCenterFocusStrong } from "react-icons/md";
 import { CustomTimeInput, CustomDateInput } from './CustomInputs';
 import SubtaskList from './SubtaskList';
+import TagUsersModal from './TagUsersModal';
 import { NoteEditor } from '@/components/novel-editor';
 import { axiosClient } from '@/api/axios';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
+import { getUserImage } from '@/utils/getUserImage';
 
 const TaskCard = ({
                       task,
@@ -27,7 +29,6 @@ const TaskCard = ({
                       handleTaskCopy,
                       handleEditStart,
                       handleEditSave,
-                      handleEditCancel,
                       handleEditKeyDown,
                       visibleSubtasks,
                       toggleSubtasks,
@@ -40,7 +41,8 @@ const TaskCard = ({
                       editSubtaskValue,
                       setEditingSubtaskId,
                       setEditSubtaskValue,
-                      onEnterFocusMode
+                      onEnterFocusMode,
+                      spaceData = []
                   }) => {
     const { i18n } = useTranslation();
     const isRTL = i18n.dir() === 'rtl';
@@ -50,6 +52,7 @@ const TaskCard = ({
     const dueDatePickerRef = useRef(null);
     const [showNoteEditor, setShowNoteEditor] = useState(false);
     const [noteContent, setNoteContent] = useState(null);
+    const [showTagUsersModal, setShowTagUsersModal] = useState(false);
 
     // Initialize note content when editor is shown
     React.useEffect(() => {
@@ -207,6 +210,16 @@ const TaskCard = ({
                             <BiNote className="h-5 w-5" />
                         </button>
                         <button
+                            title="tag users"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setShowTagUsersModal(true);
+                            }}
+                            className="task-action-button text-dark-text2 hover:text-dark-text1 cursor-pointer pr-1.5"
+                        >
+                            <FaUserTag className="h-4 w-4" />
+                        </button>
+                        <button
                             title="duplicate"
                             onClick={(e) => {
                                 e.stopPropagation();
@@ -228,16 +241,35 @@ const TaskCard = ({
                         </button>
                     </div>
 
-                    {/* Task image */}
-                    <img
-                        src={task?.spaceId?.image || "/icon.png"}
-                        alt={task?.title}
-                        className="
-                w-6 h-6 rounded-button border border-dark-stroke object-cover flex-shrink-0
-                opacity-0 md:opacity-100 md:group-hover:opacity-0
-                transition-opacity duration-300
-            "
-                    />
+                    {/* Tagged users avatars */}
+                    {task.userIds && task.userIds.length > 0 ? (
+                        <div className="flex -space-x-1 opacity-0 md:opacity-100 md:group-hover:opacity-0 transition-opacity duration-300">
+                            {task.userIds.slice(0, 2).map((user) => (
+                                <img
+                                    key={user._id}
+                                    src={getUserImage(user.image)}
+                                    alt={user.full_name}
+                                    title={user.full_name}
+                                    className="w-6 h-6 rounded-full border border-dark-stroke object-cover"
+                                />
+                            ))}
+                            {task.userIds.length > 2 && (
+                                <div className="w-6 h-6 rounded-full border border-dark-stroke bg-dark-bg flex items-center justify-center">
+                                    <span className="text-xs text-dark-text2">+{task.userIds.length - 2}</span>
+                                </div>
+                            )}
+                        </div>
+                    ) : (
+                        <img
+                            src={spaceData?.image || "/icon.png"}
+                            alt={task?.title}
+                            className="
+                    w-6 h-6 rounded-button border border-dark-stroke object-cover flex-shrink-0
+                    opacity-0 md:opacity-100 md:group-hover:opacity-0
+                    transition-opacity duration-300
+                "
+                        />
+                    )}
                 </div>
             </div>
 
@@ -377,6 +409,16 @@ const TaskCard = ({
                 </div>
             )}
         </div>
+
+        {/* Tag Users Modal */}
+        {showTagUsersModal && (
+            <TagUsersModal
+                isOpen={showTagUsersModal}
+                onClose={() => setShowTagUsersModal(false)}
+                task={task}
+                spaceData={spaceData}
+            />
+        )}
         </>
     );
 };

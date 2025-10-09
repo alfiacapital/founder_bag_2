@@ -10,6 +10,8 @@ import {MdDone, MdOpenInFull} from "react-icons/md";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import DeleteModal from "../components/DeleteModal.jsx";
+import ShareSpaceModal from "../components/ShareSpaceModal.jsx";
+import ManageSharedSpaceUsers from "../components/space/ManageSharedSpaceUsers.jsx";
 import { useTranslation } from "react-i18next";
 
 function Home() {
@@ -48,6 +50,8 @@ function Home() {
     const [createSpaceForm, setCreateSpaceForm] = useState(false)
     const [deleteSpaceForm, setDeleteSpaceForm] = useState(null)
     const [editSpaceForm, setEditSpaceForm] = useState(null)
+    const [shareSpaceForm, setShareSpaceForm] = useState(null)
+    const [manageSpaceForm, setManageSpaceForm] = useState(null)
     const queryClient = useQueryClient()
 
     useEffect(() => {
@@ -69,6 +73,19 @@ function Home() {
             toast.error(e.message || "Server Error!");
         } finally {
             setDeleteSpaceForm(null)
+        }
+    }
+
+    const shareSpace = async (email) => {
+        try {
+            if (!shareSpaceForm || !shareSpaceForm?._id || !email) return;
+            await axiosClient.post(`/space/${shareSpaceForm._id}/invite`, { email });
+            await queryClient.invalidateQueries("spaces")
+            toast.success(t('invite-sent-successfully') || "Invitation sent successfully!");
+            setShareSpaceForm(null);
+        } catch (e) {
+            console.error(e);
+            toast.error(e.response?.data?.message || e.message || "Failed to send invitation!");
         }
     }
 
@@ -288,8 +305,8 @@ function Home() {
                                             />
                                             <span className="text-lg text-dark-text1 font-medium truncate pr-1">{space?.name}</span>
                                         </div>
-
-                                        <Menu
+                                        {space?.userId?._id === user?._id && (
+                                            <Menu
                                             button={
                                                 <button className="p-2 rounded-button border border-dark-stroke hover:bg-dark-hover cursor-pointer text-dark-text2 hover:text-dark-text1">
                                                     <FaEllipsisVertical />
@@ -297,9 +314,12 @@ function Home() {
                                             }
                                             items={[
                                                 { label: t('edit'), onClick: () => setEditSpaceForm(space) },
+                                                { label: t('share'), onClick: () => setShareSpaceForm(space) },
+                                                { label: t('manage'), onClick: () => setManageSpaceForm(space) },
                                                 { label: t('archive'), onClick: () => setDeleteSpaceForm(space) },
                                             ]}
                                         />
+                                        )}
                                     </div>
 
                                     {/* Tasks */}
@@ -467,6 +487,18 @@ function Home() {
                 onClick={() => deleteSpace(deleteSpaceForm)}
                 onClose={() => setDeleteSpaceForm(null)}
                 buttonMessage={t('archive')}
+            />}
+            {shareSpaceForm && <ShareSpaceModal
+                isOpen={!!shareSpaceForm}
+                space={shareSpaceForm}
+                onShare={shareSpace}
+                onClose={() => setShareSpaceForm(null)}
+            />}
+            {manageSpaceForm && <ManageSharedSpaceUsers
+                isOpen={!!manageSpaceForm}
+                spaceId={manageSpaceForm._id}
+                sharedUsers={manageSpaceForm.invited || []}
+                onClose={() => setManageSpaceForm(null)}
             />}
         </>
     );

@@ -185,5 +185,16 @@
     "are-you-sure-leave-note": "Are you sure you want to leave this note?",
     "are-you-sure-leave-note-message": "Are you sure you want to leave",
     "left-note-successfully": "You have successfully left the note",
-    "failed-to-leave-note": "Failed to leave note"
+    "failed-to-leave-note": "Failed to leave note",
+    "share-space": "Share Space",
+    "share-space-info": "Search for users by email or name to invite them to collaborate on this space.",
+    "invite": "Invite",
+    "invite-sent-successfully": "Invitation sent successfully!",
+    "user-removed-successfully": "User removed successfully!",
+    "tag-users": "Tag Users",
+    "tag-users-info": "Select users to tag in this task. Tagged users will be notified about task updates.",
+    "no-users-available": "No users available to tag",
+    "save-tags": "Save Tags",
+    "users-tagged-successfully": "Users tagged successfully!",
+    "failed-to-tag-users": "Failed to tag users!"
 }

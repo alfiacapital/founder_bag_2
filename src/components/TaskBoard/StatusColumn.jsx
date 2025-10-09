@@ -8,7 +8,6 @@ const StatusColumn = ({
     status,
     tasksByStatus,
     draggedTask,
-    draggedOverStatus,
     creatingTaskFor,
     setCreatingTaskFor,
     newTask,
@@ -41,7 +40,8 @@ const StatusColumn = ({
     editSubtaskValue,
     setEditingSubtaskId,
     setEditSubtaskValue,
-    onEnterFocusMode
+    onEnterFocusMode, 
+    spaceData = []
 }) => {
     const { i18n } = useTranslation();
     const isRTL = i18n.dir() === 'rtl';
@@ -112,6 +112,7 @@ const StatusColumn = ({
                             setEditingSubtaskId={setEditingSubtaskId}
                             setEditSubtaskValue={setEditSubtaskValue}
                             onEnterFocusMode={onEnterFocusMode}
+                            spaceData={spaceData}
                         />
                     ))}
 

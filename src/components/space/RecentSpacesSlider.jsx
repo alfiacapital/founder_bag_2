@@ -121,9 +121,9 @@ function RecentSpacesSlider({ spaces = [], isLoading = false }) {
             // Empty state
             <SwiperSlide className="!w-auto">
               <div className="w-44 sm:w-48 h-32 bg-dark-bg2 border border-dark-stroke rounded-xl p-3 sm:p-4 flex flex-col items-center justify-center text-center">
-                <FiFolder className="w-8 h-8 text-gray-600 mb-2" />
+                <FiFolder className="w-8 h-8 text-dark-text1 mb-2" />
                 <p className="text-dark-text2 text-sm">No spaces yet</p>
-                <p className="text-gray-500 text-xs">Create your first space</p>
+                <p className="text-dak-text2 text-xs">Create your first space</p>
               </div>
             </SwiperSlide>
           )}

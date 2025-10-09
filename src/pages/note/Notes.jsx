@@ -42,7 +42,7 @@ function Notes() {
             return res.data;
         },
         keepPreviousData: true,
-        enabled: notesView === "shared-with-me", // Only fetch when this view is active
+        enabled: notesView === "shared-with-me",
     });
 
     useEffect(() => {

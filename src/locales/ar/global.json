@@ -185,5 +185,16 @@
     "are-you-sure-leave-note": "هل أنت متأكد من مغادرة هذه الملاحظة؟",
     "are-you-sure-leave-note-message": "هل أنت متأكد من مغادرة",
     "left-note-successfully": "لقد غادرت الملاحظة بنجاح",
-    "failed-to-leave-note": "فشل في مغادرة الملاحظة"
+    "failed-to-leave-note": "فشل في مغادرة الملاحظة",
+    "share-space": "مشاركة المساحة",
+    "share-space-info": "ابحث عن المستخدمين بالبريد الإلكتروني أو الاسم لدعوتهم للتعاون في هذه المساحة.",
+    "invite": "دعوة",
+    "invite-sent-successfully": "تم إرسال الدعوة بنجاح!",
+    "user-removed-successfully": "تم إزالة المستخدم بنجاح!",
+    "tag-users": "وضع علامة على المستخدمين",
+    "tag-users-info": "اختر المستخدمين لوضع علامة عليهم في هذه المهمة. سيتم إشعار المستخدمين المميزين بتحديثات المهمة.",
+    "no-users-available": "لا يوجد مستخدمون متاحون للتمييز",
+    "save-tags": "حفظ العلامات",
+    "users-tagged-successfully": "تم وضع علامة على المستخدمين بنجاح!",
+    "failed-to-tag-users": "فشل في وضع علامة على المستخدمين!"
 }
