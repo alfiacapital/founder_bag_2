@@ -6,9 +6,11 @@ import { FaRegUser } from "react-icons/fa6";
 import { RxExit } from "react-icons/rx";
 import { MdOutlineLanguage, MdOutlineLightMode, MdOutlineNightlight } from "react-icons/md";
 import i18n from "@/i18n";
+import ThemeTransition from './ThemeTransition';
 
 function UserMenu() {
     const [open, setOpen] = useState(false);
+    const [showTransition, setShowTransition] = useState(false);
     const menuRef = useRef(null);
     const { user, logout, darkMode, setDarkMode } = useUserContext();
 
@@ -30,6 +32,21 @@ function UserMenu() {
         });
     };
 
+    const handleThemeChange = (newDarkMode) => {
+        setShowTransition(true);
+        setOpen(false);
+        
+        // Apply theme change after transition starts
+        setTimeout(() => {
+            setDarkMode(newDarkMode);
+            setCookie("darkMode", newDarkMode, 365);
+        }, 200);
+    };
+
+    const handleTransitionComplete = () => {
+        setShowTransition(false);
+    };
+
 
     return (
         <div className="relative inline-block text-left" ref={menuRef}>
@@ -45,7 +62,7 @@ function UserMenu() {
             {/* Dropdown menu */}
             {open && (
                 <div 
-                    className={`absolute ${i18n.dir() === "ltr" ? "right-0" : "left-0"} mt-1 w-48 origin-top-right rounded-lg bg-dark-bg2 border border-dark-stroke shadow-lg z-50`}
+                    className={`absolute ${i18n.dir() === "ltr" ? "right-0" : "left-0"} mt-1 w-48 origin-top-right rounded-default bg-dark-bg2 border border-dark-stroke shadow-lg z-50`}
                 >
                     <div className="px-3 py-2 border-b border-dark-stroke">
                         <p className="text-sm font-medium capitalize truncate text-dark-text1 pt-1 pl-1">{user.full_name}</p>
@@ -109,10 +126,7 @@ function UserMenu() {
                         </p>
                         <div className="flex gap-2">
                             <button
-                                onClick={() => {
-                                    setDarkMode(false)
-                                    setCookie("darkMode", false, 365);
-                                }}
+                                onClick={() => handleThemeChange(false)}
                                 className={`flex-1 px-2 py-1.5 rounded-button text-xs font-medium transition-all duration-200 ${
                                     !darkMode
                                         ? "bg-dark-active text-dark-text1 border border-dark-stroke"
@@ -125,10 +139,7 @@ function UserMenu() {
                                 </div>
                             </button>
                             <button
-                                onClick={() => {
-                                    setDarkMode(true)
-                                    setCookie("darkMode", true, 365);
-                                }}
+                                onClick={() => handleThemeChange(true)}
                                 className={`flex-1 px-2 py-1.5 rounded-button text-xs font-medium transition-all duration-200 ${
                                     darkMode
                                         ? "bg-dark-active text-dark-text1 border border-dark-stroke"
@@ -155,6 +166,12 @@ function UserMenu() {
                     </button>
                 </div>
             )}
+            
+            {/* Theme Transition */}
+            <ThemeTransition 
+                isActive={showTransition} 
+                onComplete={handleTransitionComplete} 
+            />
         </div>
     );
 }

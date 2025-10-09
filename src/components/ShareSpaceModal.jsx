@@ -55,7 +55,7 @@ function ShareSpaceModal({ isOpen, space, onShare, onClose }) {
             <div className="flex flex-col space-y-4">
                 {/* Header */}
                 <div className="flex items-center gap-3">
-                    <div className="bg-blue-500/10 text-blue-500 rounded-full p-3">
+                    <div className="bg-dark-active text-dark-text2 rounded-full p-3">
                         <FiShare2 className="w-6 h-6" />
                     </div>
                     <div>
@@ -77,7 +77,7 @@ function ShareSpaceModal({ isOpen, space, onShare, onClose }) {
                 <input
                     type="text"
                     placeholder={t('search-by-email-or-name') || 'Search by email or name'}
-                    className="w-full px-4 py-2 rounded-lg bg-dark-bg border border-dark-stroke text-dark-text1 placeholder-dark-text2 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full px-4 py-2 rounded-button bg-dark-bg border border-dark-stroke text-dark-text1 placeholder-dark-text2 focus:outline-none "
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                 />
@@ -114,7 +114,6 @@ function ShareSpaceModal({ isOpen, space, onShare, onClose }) {
                         ))
                     ) : (
                         <p className="text-dark-text2 text-sm text-center py-8">
-                            {search.trim() ? (t('no-users-found') || 'No users found') : (t('start-typing-to-search') || 'Start typing to search for users')}
                         </p>
                     )}
                 </div>

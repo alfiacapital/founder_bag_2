@@ -99,7 +99,7 @@ function UpcomingEvents() {
   }) || [];
 
   return (
-    <div className="bg-dark-bg2 border border-dark-stroke rounded-xl p-4 sm:p-6">     
+    <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-4 sm:p-6">     
       {/* Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
         {/* Left Section: Description */}

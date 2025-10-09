@@ -61,17 +61,17 @@ function RecentSpacesSlider({ spaces = [], isLoading = false }) {
             // Loading skeleton
             Array.from({ length: 4 }).map((_, index) => (
               <SwiperSlide key={`loading-${index}`} className="!w-auto">
-                <div className="w-44 sm:w-48 h-32 bg-dark-bg2 border border-dark-stroke rounded-xl p-3 sm:p-4 animate-pulse">
+                <div className="w-44 sm:w-48 h-32 bg-dark-bg2 border border-dark-stroke rounded-default p-3 sm:p-4 animate-pulse">
                   <div className="flex justify-center mb-3">
-                    <div className="w-6 h-6 bg-gray-700 rounded"></div>
+                    <div className="w-6 h-6 bg-dark-bg2 rounded"></div>
                   </div>
                   <div className="text-center mb-3">
-                    <div className="h-4 bg-gray-700 rounded mb-2"></div>
-                    <div className="h-3 bg-gray-700 rounded w-3/4 mx-auto"></div>
+                    <div className="h-4 bg-dark-bg2 rounded mb-2"></div>
+                    <div className="h-3 bg-dark-bg2 rounded w-3/4 mx-auto"></div>
                   </div>
                   <div className="flex items-center justify-center gap-2">
-                    <div className="w-5 h-5 bg-gray-700 rounded-full"></div>
-                    <div className="h-3 w-12 bg-gray-700 rounded"></div>
+                    <div className="w-5 h-5 bg-dark-bg2 rounded-full"></div>
+                    <div className="h-3 w-12 bg-dark-bg2 rounded"></div>
                   </div>
                 </div>
               </SwiperSlide>
@@ -80,7 +80,7 @@ function RecentSpacesSlider({ spaces = [], isLoading = false }) {
             spaces.map((space, index) => (
               <SwiperSlide key={index} className="!w-auto">
                 <div 
-                  className="w-44 sm:w-48 h-30 bg-dark-bg border border-dark-stroke rounded-xl hover:border-dark-stroke transition-all duration-300 cursor-pointer group hover:shadow-lg hover:shadow-black/20 flex flex-col"
+                  className="w-44 sm:w-48 h-30 bg-dark-bg border border-dark-stroke rounded-default hover:border-dark-stroke transition-all duration-300 cursor-pointer group  flex flex-col"
                   onClick={() => navigate(`/space/${space.id}/board`)}
                 >
                   {/* Icon */}
@@ -98,7 +98,7 @@ function RecentSpacesSlider({ spaces = [], isLoading = false }) {
                   </div>
 
                   {/* Footer */}
-                  <div className="flex items-center justify-between pb-2 pt-2 px-2 rounded-b-xl text-xs bg-dark-bg2">
+                  <div className="flex items-center justify-between pb-2 pt-2 px-2 rounded-b-3xl text-xs bg-dark-bg2">
                     <div className="flex items-center gap-1">
                       <div className="w-4 h-4 bg-dark-active rounded-full flex items-center justify-center">
                         <FiUser className="w-2 h-2 text-dark-text2" />
@@ -120,7 +120,7 @@ function RecentSpacesSlider({ spaces = [], isLoading = false }) {
           ) : (
             // Empty state
             <SwiperSlide className="!w-auto">
-              <div className="w-44 sm:w-48 h-32 bg-dark-bg2 border border-dark-stroke rounded-xl p-3 sm:p-4 flex flex-col items-center justify-center text-center">
+              <div className="w-44 sm:w-48 h-32 bg-dark-bg2 border border-dark-stroke rounded-default p-3 sm:p-4 flex flex-col items-center justify-center text-center">
                 <FiFolder className="w-8 h-8 text-dark-text1 mb-2" />
                 <p className="text-dark-text2 text-sm">No spaces yet</p>
                 <p className="text-dak-text2 text-xs">Create your first space</p>

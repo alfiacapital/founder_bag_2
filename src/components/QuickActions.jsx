@@ -48,10 +48,10 @@ function QuickActions() {
           <button
             key={action.id}
             onClick={action.action}
-            className="group relative bg-dark-bg border border-dark-stroke rounded-lg p-4 hover:border-dark-stroke transition-all duration-300 hover:shadow-lg hover:shadow-black/20 text-left"
+            className="group relative bg-dark-bg border border-dark-stroke rounded-default p-4 hover:border-dark-stroke transition-all duration-300 hover:shadow-lg hover:shadow-black/20 text-left"
           >
             {/* Icon with gradient background */}
-            <div className={`w-12 h-12 rounded-lg  bg-dark-active flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300`}>
+            <div className={`w-12 h-12 rounded-button  bg-dark-active flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300`}>
               <action.icon className="w-6 h-6 text-dark-text1" />
             </div>
 

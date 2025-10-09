@@ -72,7 +72,7 @@ function TagUsersModal({ isOpen, onClose, task }) {
 
                 {/* Header */}
                 <div className="flex items-center gap-3">
-                    <div className="bg-blue-500/10 text-blue-500 rounded-full p-3">
+                    <div className="bg-dark-active text-dark-text2 rounded-default p-3">
                         <FaUserTag className="w-6 h-6" />
                     </div>
                     <div>
@@ -97,31 +97,43 @@ function TagUsersModal({ isOpen, onClose, task }) {
                             {t('no-users-available') || 'No users available to tag'}
                         </p>
                     ) : (
-                        spaceUsers.map((user) => (
-                            <div
-                                key={user._id}
-                                className="flex items-center justify-between p-3 rounded-lg border border-dark-stroke bg-dark-bg hover:bg-dark-hover transition"
-                            >
-                                <div className="flex items-center gap-3">
+                        spaceUsers.map((user) => {
+                            const isSelected = selectedUsers.includes(user._id);
+                            return (
+                                <div
+                                    key={user._id}
+                                    onClick={() => handleUserToggle(user._id)}
+                                    className={`flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer ${
+                                        isSelected 
+                                            ? 'border-dark-stroke bg-dark-active hover:bg-dark-active hover:border-dark-stroke' 
+                                            : 'border-dark-stroke bg-dark-bg hover:bg-dark-hover '
+                                    }`}
+                                >
                                     <img
                                         src={getUserImage(user.image)}
                                         alt={user.full_name}
                                         className="w-10 h-10 rounded-full object-cover border border-dark-stroke"
                                     />
-                                    <div>
-                                        <p className="text-dark-text1 font-medium">{user.full_name}</p>
+                                    <div className="flex-1">
+                                        <p className={`font-medium ${isSelected ? 'text-dark-text1' : 'text-dark-text2'}`}>
+                                            {user.full_name}
+                                        </p>
                                         <p className="text-dark-text2 text-sm">{user.email}</p>
                                     </div>
+                                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
+                                        isSelected 
+                                            ? 'border-blue-500 bg-blue-500' 
+                                            : 'border-dark-stroke bg-transparent'
+                                    }`}>
+                                        {isSelected && (
+                                            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                            </svg>
+                                        )}
+                                    </div>
                                 </div>
-
-                                <input
-                                    type="checkbox"
-                                    checked={selectedUsers.includes(user._id)}
-                                    onChange={() => handleUserToggle(user._id)}
-                                    className="w-4 h-4 text-blue-600 bg-dark-bg border-dark-stroke rounded focus:ring-blue-500 focus:ring-2"
-                                />
-                            </div>
-                        ))
+                            );
+                        })
                     )}
                 </div>
 
@@ -129,13 +141,13 @@ function TagUsersModal({ isOpen, onClose, task }) {
                 <div className="flex gap-3 pt-2">
                     <button
                         onClick={onClose}
-                        className="flex-1 py-2 rounded-xl bg-dark-bg hover:bg-dark-bg3 text-dark-text2 hover:text-dark-text1 transition"
+                        className="flex-1 py-2 rounded-button  bg-dark-bg hover:bg-dark-hover text-dark-text2 hover:text-dark-text1 transition"
                     >
                         {t('cancel') || 'Cancel'}
                     </button>
                     <button
                         onClick={handleSaveTags}
-                        className="flex-1 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium transition"
+                        className="flex-1 py-2 rounded-button border border-dark-stroke hover:border-dark-stroke bg-dark-active hover:bg-dark-hover text-dark-text1 font-medium transition"
                     >
                         {t('save-tags') || 'Save Tags'}
                     </button>

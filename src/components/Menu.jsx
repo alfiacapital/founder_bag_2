@@ -24,7 +24,7 @@ function Menu({ button, items = [], footer }) {
             {/* Dropdown menu */}
             {open && (
                 <div 
-                    className={`absolute ${i18n.dir() === "ltr" ? "right-0" : "left-0"} mt-1 w-48 origin-top-right rounded-lg bg-dark-bg2 border border-dark-stroke shadow-lg z-50 ${
+                    className={`absolute ${i18n.dir() === "ltr" ? "right-0" : "left-0"} mt-1 w-48 origin-top-right rounded-default bg-dark-bg2 border border-dark-stroke shadow-lg z-50 ${
                         items.length > 4 ? 'max-h-[240px] overflow-y-auto menu-scroll' : ''
                     }`}
                     style={{
