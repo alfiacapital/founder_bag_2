@@ -129,7 +129,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
             <aside
                 className={`
                     fixed xl:static inset-y-0 left-0 z-40 bg-dark-bg xl:py-6 px-6 xl:px-8
-                    transform transition-all duration-300 ease-in-out
+                    transform transition-transform  duration-300 ease-in-out
                     flex flex-col h-screen xl:h-full xl:my-0
                     shadow-xl xl:shadow-none xl:ml-0 
                     ${sidebarOpen 
