@@ -14,7 +14,7 @@ function TaskBoard() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [tasks, setTasks] = useState([]);
-
+    
     // Queries
     const { data, isError, isLoading } = useQuery({
         queryKey: ["tasks"],

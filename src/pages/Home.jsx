@@ -219,34 +219,6 @@ function Home() {
                 </div>
             </div>
 
-            {/* Weekly Trend */}
-            {/* <div className="bg-dark-bg2 border border-dark-stroke rounded-default p-6 mb-8">
-                <h3 className="text-lg font-semibold text-white mb-4">Productivity Trend</h3>
-                <ResponsiveContainer width="100%" height={250}>
-                    <LineChart data={weeklyTrendData}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                        <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#9CA3AF'}} />
-                        <YAxis axisLine={false} tickLine={false} tick={{fill: '#9CA3AF'}} />
-                        <Tooltip 
-                            contentStyle={{
-                                backgroundColor: '#1F2937',
-                                border: '1px solid #374151',
-                                borderRadius: '8px',
-                                color: '#F9FAFB'
-                            }}
-                        />
-                        <Line 
-                            type="monotone" 
-                            dataKey="productivity" 
-                            stroke="#8B5CF6" 
-                            strokeWidth={3}
-                            dot={{ fill: '#8B5CF6', strokeWidth: 2, r: 6 }}
-                            activeDot={{ r: 8, stroke: '#8B5CF6', strokeWidth: 2 }}
-                        />
-                    </LineChart>
-                </ResponsiveContainer>
-            </div> */}
-
             <h1 className="text-md text-dark-text1 font-medium mb-4 mt-8">{t('your-spaces')}</h1>
 
             {!hasSpaces || isLoadingSpaces ? (
@@ -298,11 +270,21 @@ function Home() {
                                     {/* Card header */}
                                     <div className="flex justify-between items-center w-full">
                                         <div className="flex items-center gap-2 min-w-0">
-                                            <img
-                                                src={space?.image || "/icon.png"}
-                                                className="h-8 w-8 rounded-button border border-dark-stroke object-cover"
-                                                alt={space?.name}
-                                            />
+                                            {space?.image ? (
+                                                <img
+                                                    src={space?.image || "/icon.png"}
+                                                    className="h-8 w-8 rounded-button border border-dark-stroke object-cover"
+                                                    alt={space?.name}
+                                                />
+                                            ) : space?.color ? (
+                                                <div className="h-8 w-8 rounded-button border border-dark-stroke " style={{ backgroundColor: space?.color}} />
+                                            ) : (
+                                                <img
+                                                    src={space?.image || "/icon.png"}
+                                                    className="h-8 w-8 rounded-button border border-dark-stroke object-cover"
+                                                    alt={space?.name}
+                                                />
+                                            )}
                                             <span className="text-lg text-dark-text1 font-medium truncate pr-1">{space?.name}</span>
                                         </div>
                                         {space?.userId?._id === user?._id && (

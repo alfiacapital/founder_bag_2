@@ -260,15 +260,31 @@ const TaskCard = ({
                             )}
                         </div>
                     ) : (
-                        <img
-                            src={spaceData?.image || "/icon.png"}
-                            alt={task?.title}
-                            className="
-                    w-6 h-6 rounded-button border border-dark-stroke object-cover flex-shrink-0
-                    opacity-0 md:opacity-100 md:group-hover:opacity-0
-                    transition-opacity duration-300
-                "
-                        />
+                //         <img
+                //             src={spaceData?.image || "/icon.png"}
+                //             alt={task?.title}
+                //             className="
+                //     w-6 h-6 rounded-button border border-dark-stroke object-cover flex-shrink-0
+                //     opacity-0 md:opacity-100 md:group-hover:opacity-0
+                //     transition-opacity duration-300
+                // "
+                //         />
+
+                        task?.spaceId?.image ? (
+                            <img
+                                src={task?.spaceId?.image || "/icon.png"}
+                                className="h-6 w-6 rounded-button border border-dark-stroke object-cover flex-shrink-0 opacity-0 md:opacity-100 md:group-hover:opacity-0 transition-opacity duration-300"
+                                alt={task?.spaceId?.name}
+                            />
+                        ) : task?.spaceId?.color ? (
+                            <div className="h-6 w-6 rounded-button border border-dark-stroke  flex-shrink-0 opacity-0 md:opacity-100 md:group-hover:opacity-0 transition-opacity duration-300" style={{ backgroundColor: task?.spaceId?.color}} />
+                        ) : (
+                            <img
+                                src={"/icon.png"}
+                                className="h-6 w-6 rounded-button border border-dark-stroke object-cover flex-shrink-0 opacity-0 md:opacity-100 md:group-hover:opacity-0 transition-opacity duration-300"
+                                alt={task?.spaceId?.name}
+                            />
+                        )
                     )}
                 </div>
             </div>
