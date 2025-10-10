@@ -168,10 +168,10 @@ function UserMenu() {
             )}
             
             {/* Theme Transition */}
-            <ThemeTransition 
+            {/* <ThemeTransition 
                 isActive={showTransition} 
                 onComplete={handleTransitionComplete} 
-            />
+            /> */}
         </div>
     );
 }
