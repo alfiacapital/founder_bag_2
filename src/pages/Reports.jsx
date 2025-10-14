@@ -69,9 +69,12 @@ function Reports() {
 
     // Fetch Space Activity
     const { data: spaceActivityData = [], isLoading: spaceActivityLoading } = useQuery({
-        queryKey: ['reports-space-activity'],
+        queryKey: ['reports-space-activity', selectedSpace],
         queryFn: async () => {
-            const res = await axiosClient.get('/reports/space-activity');
+            const url = selectedSpace 
+                ? `/reports/space-activity?spaceId=${selectedSpace}`
+                : '/reports/space-activity';
+            const res = await axiosClient.get(url);
             return res.data;
         },
         enabled: !!user,
@@ -145,7 +148,7 @@ function Reports() {
             <div className='my-6'>
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
                     <TaskStatusChart taskStatusData={taskStatusData} />
-                    <SpaceActivityChart spaceActivityData={spaceActivityData} />
+                    <SpaceActivityChart spaceActivityData={spaceActivityData} selectedSpace={selectedSpace} />
                 </div>
             </div>
 

@@ -39,6 +39,7 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
     const mainMenuItems = [
         { image: "/alfia-ai.png", label: t("alfia-ai"), id: "alfia-ai", active: false, onClick: () => navigate("/alfia-ai") },
         { icon: FaRegCalendarCheck , label: t("calendar"), id: "calendar", active: false, onClick: () => navigate("/calendar") },
+        { icon: FiPlus, label: t("templates"), id: "templates", active: location.pathname === "/templates", onClick: () => navigate("/templates") },
     ];
     const { data: notes = [] } = useQuery({
         queryKey: ["notes"],

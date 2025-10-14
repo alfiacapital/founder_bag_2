@@ -18,16 +18,23 @@ export const useSubtaskOperations = () => {
         }));
     };
 
-    const handleAddSubtask = async (taskId) => {
+    const handleAddSubtask = async (taskId, parentSubtaskId = null) => {
         if (!newSubtaskTitle.trim()) {
             setAddingSubtaskFor(null);
             return;
         }
 
         try {
-            await axiosClient.post(`/tasks/${taskId}/subtasks`, {
+            const payload = {
                 title: newSubtaskTitle.trim()
-            });
+            };
+            
+            // If adding a subtask to a subtask, include the parentSubtaskId
+            if (parentSubtaskId) {
+                payload.parentSubtaskId = parentSubtaskId;
+            }
+            
+            await axiosClient.post(`/tasks/${taskId}/subtasks`, payload);
             await queryClient.invalidateQueries("tasks");
             setNewSubtaskTitle("");
             setAddingSubtaskFor(null);

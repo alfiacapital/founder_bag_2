@@ -18,7 +18,7 @@ import AlfiaAiLayout from "@/layout/AlfiaAiLayout.jsx";
 import SecondHome from "@/pages/SecondHome.jsx";
 import TestError from "@/pages/TestError.jsx";
 import RouterErrorPage from "@/pages/RouterErrorPage.jsx";
-
+import Templates from "@/pages/Templates.jsx";
 
 export const router = createBrowserRouter([
     {
@@ -55,6 +55,10 @@ export const router = createBrowserRouter([
                     {
                         path: "/v2",
                         element: <SecondHome />
+                    },
+                    {
+                        path: "/templates",
+                        element: <Templates />
                     }
                 ]
             },

@@ -120,6 +120,14 @@ const SubtaskList = ({
                             setEditingSubtaskId={setEditingSubtaskId}
                             setEditSubtaskValue={setEditSubtaskValue}
                             subtasks={task.subtasks}
+                            // Pass down the new props for nested subtasks
+                            visibleSubtasks={visibleSubtasks}
+                            toggleSubtasks={toggleSubtasks}
+                            addingSubtaskFor={addingSubtaskFor}
+                            newSubtaskTitle={newSubtaskTitle}
+                            setNewSubtaskTitle={setNewSubtaskTitle}
+                            setAddingSubtaskFor={setAddingSubtaskFor}
+                            handleAddSubtask={handleAddSubtask}
                         />
                     ))}
         </div>

@@ -23,6 +23,8 @@ function TaskBoard() {
         onError: (err) => toast.error(err.message || "Failed to get tasks")
     });
 
+    console.log(data);
+
     const { data: statuses = [], isError: spacesError } = useQuery({
         queryKey: ["status"],
         queryFn: async () => await axiosClient.get(`/tasks/status/${id}`),
