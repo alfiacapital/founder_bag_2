@@ -11,12 +11,12 @@ import SubtaskList from './SubtaskList';
 import TagUsersModal from './TagUsersModal';
 import { NoteEditor } from '@/components/novel-editor';
 import { axiosClient } from '@/api/axios';
-import { templateApi } from '@/api/templates';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { getUserImage } from '@/utils/getUserImage';
 import CreateTemplateFromTaskModal from '@/components/templates/CreateTemplateFromTaskModal';
 import SelectTemplateModal from '@/components/templates/SelectTemplateModal';
+import TaskDetailModal from './TaskDetailModal';
 
 const TaskCard = ({
                       task,
@@ -62,8 +62,8 @@ const TaskCard = ({
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [showCreateTemplateModal, setShowCreateTemplateModal] = useState(false);
     const [showSelectTemplateModal, setShowSelectTemplateModal] = useState(false);
+    const [showTaskDetailModal, setShowTaskDetailModal] = useState(false);
 
-    console.log(task)
     // Initialize note content when editor is shown
     React.useEffect(() => {
         if (showNoteEditor && task.description) {
@@ -143,6 +143,7 @@ const TaskCard = ({
                 // Always close menu when mouse leaves the card
                 setIsMenuOpen(false);
             }}
+            onDoubleClick={() => setShowTaskDetailModal(true)}
             className={`bg-dark-active rounded-button p-3 sm:p-3 shadow-sm border border-dark-stroke hover:border-dark-stroke hover:shadow-md transition-all duration-200 relative group ${draggedTask ? 'cursor-grabbing' : 'cursor-grab'}`}
         >
             {/* Task Header */}
@@ -301,18 +302,6 @@ const TaskCard = ({
                                     >
                                         <FaSave className="h-4 w-4 mr-2" />
                                         <span>Save as Template</span>
-                                    </button>
-                                    <button
-                                        title="select template"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setShowSelectTemplateModal(true);
-                                            setIsMenuOpen(false);
-                                        }}
-                                        className="flex items-center w-full px-4 py-2 text-sm text-dark-text2 hover:bg-dark-hover hover:text-dark-text1"
-                                    >
-                                        <FaRectangleList className="h-4 w-4 mr-2" />
-                                        <span>Template</span>
                                     </button>
                                     <button
                                         title="duplicate"
@@ -606,6 +595,37 @@ const TaskCard = ({
                     queryClient.invalidateQueries('tasks');
                 }}
                 spaceId={task.spaceId?._id || task.spaceId}
+            />
+        )}
+
+        {/* Task Detail Modal */}
+        {showTaskDetailModal && (
+            <TaskDetailModal
+                isOpen={showTaskDetailModal}
+                onClose={() => setShowTaskDetailModal(false)}
+                task={task}
+                onEnterFocusMode={onEnterFocusMode}
+                handleTaskComplete={handleTaskComplete}
+                handleTaskDelete={handleTaskDelete}
+                handleTaskCopy={handleTaskCopy}
+                visibleSubtasks={visibleSubtasks}
+                toggleSubtasks={toggleSubtasks}
+                addingSubtaskFor={addingSubtaskFor}
+                newSubtaskTitle={newSubtaskTitle}
+                setNewSubtaskTitle={setNewSubtaskTitle}
+                setAddingSubtaskFor={setAddingSubtaskFor}
+                handleAddSubtask={handleAddSubtask}
+                editingSubtaskId={editingSubtaskId}
+                editSubtaskValue={editSubtaskValue}
+                setEditingSubtaskId={setEditingSubtaskId}
+                setEditSubtaskValue={setEditSubtaskValue}
+                noteContent={noteContent}
+                isNoteExpanded={isNoteExpanded}
+                setIsNoteExpanded={setIsNoteExpanded}
+                onSaveNote={handleSaveNote}
+                onOpenTagUsers={() => setShowTagUsersModal(true)}
+                onOpenCreateTemplate={() => setShowCreateTemplateModal(true)}
+                spaceData={spaceData}
             />
         )}
         </>

@@ -23,7 +23,6 @@ function TaskBoard() {
         onError: (err) => toast.error(err.message || "Failed to get tasks")
     });
 
-    console.log(data);
 
     const { data: statuses = [], isError: spacesError } = useQuery({
         queryKey: ["status"],
@@ -154,6 +153,7 @@ function TaskBoard() {
                                 setEditingSubtaskId={subtaskOperations.setEditingSubtaskId}
                                 setEditSubtaskValue={subtaskOperations.setEditSubtaskValue}
                                 onEnterFocusMode={handleEnterFocusMode}
+                                spaceId={id}
                             />
                         ))}
                     </div>

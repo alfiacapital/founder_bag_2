@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { FiPlus } from "react-icons/fi";
 import { MdDone } from "react-icons/md";
 import TaskForm from './TaskForm';
 import TaskCard from './TaskCard';
 import { useTranslation } from 'react-i18next';
+import { FaRectangleList } from 'react-icons/fa6';
+import { SelectTemplateModal } from '../templates';
+import { useQueryClient } from '@tanstack/react-query';
 const StatusColumn = ({
     status,
     tasksByStatus,
@@ -41,10 +44,14 @@ const StatusColumn = ({
     setEditingSubtaskId,
     setEditSubtaskValue,
     onEnterFocusMode, 
-    spaceData = []
+    spaceData = [],
+    spaceId
 }) => {
     const { i18n } = useTranslation();
     const isRTL = i18n.dir() === 'rtl';
+    const [showSelectTemplateModal, setShowSelectTemplateModal] = useState(false)
+    const [selectedStatus, setSelectedStatus] = useState(null);
+    const queryClient = useQueryClient()
     return (
         <div
             key={status._id}
@@ -60,12 +67,27 @@ const StatusColumn = ({
                         <h3 className="font-semibold text-sm md:text-base text-dark-text1 capitalize">{status.title}</h3>
                     </div>
                 </div>
-                <button
-                    onClick={() => setCreatingTaskFor(status._id)}
-                    className="text-dark-text2 hover:text-white cursor-pointer pb-1 transition-colors duration-200"
-                >
-                    <FiPlus className="w-4 h-4 md:w-5 md:h-5" />
-                </button>
+                <div className='flex items-center gap-4'>
+                    <button
+                        title="select template"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedStatus(status);
+                            setShowSelectTemplateModal(true);
+                        }}
+                        className="text-dark-text2 hover:text-dark-active cursor-pointer pb-1 transition-colors duration-200"
+                    >
+                        <FaRectangleList className="w-4 h-4" />
+                    </button>
+                    <button
+                        title="Add Task"
+                        onClick={() => setCreatingTaskFor(status._id)}
+                        className="text-dark-text2 hover:text-dark-active cursor-pointer pb-1 transition-colors duration-200"
+                    >
+                        <FiPlus className="w-4 h-4 md:w-5 md:h-5" />
+                    </button>
+                </div>
+                
             </div>
 
             {/* Scrollable Content Area */}
@@ -129,6 +151,17 @@ const StatusColumn = ({
                     )}
                 </div>
             </div>
+            {showSelectTemplateModal && (
+                <SelectTemplateModal
+                    isOpen={showSelectTemplateModal}
+                    onClose={() => setShowSelectTemplateModal(false)}
+                    statusId={selectedStatus?._id}
+                    spaceId={spaceId}
+                    onTemplateSelected={() => {
+                    queryClient.invalidateQueries('tasks');
+                }}
+                />
+            )}
         </div>
     );
 };

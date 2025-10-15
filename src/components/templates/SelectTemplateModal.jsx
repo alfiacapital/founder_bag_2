@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { templateApi } from '@/api/templates';
 import { axiosClient } from '@/api/axios';
 import { useUserContext } from '@/context/UserProvider';
 import { useTranslation } from 'react-i18next';
 import Modal from '@/components/Modal';
 import { toast } from 'react-toastify';
+import { MdDeleteOutline } from 'react-icons/md';
 
-const SelectTemplateModal = ({ isOpen, onClose, onTemplateSelected, spaceId }) => {
+const SelectTemplateModal = ({ isOpen, onClose, onTemplateSelected, spaceId, statusId }) => {
     const { user } = useUserContext();
     const { t } = useTranslation("global");
     const [selectedTemplate, setSelectedTemplate] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [filter, setFilter] = useState('mine'); // mine, shared, public
+    const queryClient = useQueryClient()
 
     // Fetch templates
     const { data: templates = [], isLoading } = useQuery({
@@ -44,7 +46,7 @@ const SelectTemplateModal = ({ isOpen, onClose, onTemplateSelected, spaceId }) =
     const handleSelectTemplate = async () => {
         if (selectedTemplate && spaceId) {
             try {
-                await templateApi.importToSpace(selectedTemplate._id, spaceId);
+                await templateApi.importToSpace(selectedTemplate._id, spaceId, statusId);
                 onTemplateSelected(selectedTemplate);
                 toast.success(t('template-imported-successfully'));
                 onClose();
@@ -85,7 +87,7 @@ const SelectTemplateModal = ({ isOpen, onClose, onTemplateSelected, spaceId }) =
                         >
                             {t('my-templates')}
                         </button>
-                        <button 
+                        {/* <button 
                             onClick={() => setFilter('shared')}
                             className={`px-3 py-1 rounded-button text-sm ${
                                 filter === 'shared' 
@@ -104,7 +106,7 @@ const SelectTemplateModal = ({ isOpen, onClose, onTemplateSelected, spaceId }) =
                             }`}
                         >
                             {t('public-templates')}
-                        </button>
+                        </button> */}
                     </div>
                 </div>
 
@@ -128,10 +130,15 @@ const SelectTemplateModal = ({ isOpen, onClose, onTemplateSelected, spaceId }) =
                                 >
                                     <div className="flex justify-between items-center">
                                         <h3 className="font-medium text-dark-text1">{template.name}</h3>
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-xs text-dark-text2">
-                                                {template.tasksCount} {t('tasks')}
-                                            </span>
+                                        <div className="flex items-center gap-2 bg-dark-active py-1 px-1 rounded-full text-red-500" onClick={async () => {
+                                            const confirmation = window.confirm("Are you sure to delete this template ?")
+                                            if(confirmation){
+                                                await templateApi.delete(template._id);
+                                                await queryClient.invalidateQueries("task-templates")
+                                                toast.success(t('template-deleted-successfully'));
+                                            }
+                                        }}>
+                                            <MdDeleteOutline className='h-4 w-4 ' />
                                         </div>
                                     </div>
                                     {template.description && (

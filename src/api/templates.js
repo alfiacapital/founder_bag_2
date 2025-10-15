@@ -33,8 +33,8 @@ export const templateApi = {
     },
 
     // Import template to space
-    importToSpace: (templateId, spaceId) => {
-        return axiosClient.post(`/task-templates/import/${templateId}`, { spaceId });
+    importToSpace: (templateId, spaceId, statusId) => {
+        return axiosClient.post(`/task-templates/import/${templateId}`, { spaceId, statusId });
     },
 
     // Share template with user

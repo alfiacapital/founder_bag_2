@@ -9,6 +9,7 @@ const Modal = ({ isOpen, onClose, children, size = "md" }) => {
         md: "max-w-md",
         lg: "max-w-lg",
         xl: "max-w-xl",
+        '2xl': "max-w-4xl",
         full: "w-full",
     };
     const { i18n } = useTranslation("global");
